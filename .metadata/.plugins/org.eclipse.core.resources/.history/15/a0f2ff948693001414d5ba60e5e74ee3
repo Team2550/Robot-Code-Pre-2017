@@ -3,10 +3,9 @@
 
 #include "WPILib.h"
 
-class Robot : public IterativeRobot {
+class Robot: public IterativeRobot {
 private:
 	LiveWindow *lw;
-public:
 	void RobotInit();
 	void AutonomousInit();
 	void AutonomousPeriodic();
