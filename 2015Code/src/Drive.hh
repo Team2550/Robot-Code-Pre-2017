@@ -2,14 +2,12 @@
 #define DRIVE_H
 #include <math.h>
 #include "WPILib.h"
-#include "xBox.hh"
 
 class Drive {
 private:
-	//left and right Drive motors
 	Victor left;
 	Victor right;
-	float speedMult;//speed multiplier
+	float speedMult; //speed multiplier
 public:
 	Drive();
 	void move(float leftSpeed, float rightSpeed);

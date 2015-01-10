@@ -4,16 +4,16 @@
 		<extension point="org.eclipse.cdt.core.LanguageSettingsProvider">
 			<provider id="org.eclipse.cdt.build.crossgcc.CrossGCCBuiltinSpecsDetector">
 				<language id="org.eclipse.cdt.core.gcc">
-					<entry kind="includePath" name="C:/frc/lib/gcc/arm-frc-linux-gnueabi/4.9.1/include">
+					<entry kind="includePath" name="/usr/lib/x86_64-linux-gnu/gcc/arm-frc-linux-gnueabi/4.9/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/frc/lib/gcc/arm-frc-linux-gnueabi/4.9.1/include-fixed">
+					<entry kind="includePath" name="/usr/lib/x86_64-linux-gnu/gcc/arm-frc-linux-gnueabi/4.9/include-fixed">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/frc/arm-frc-linux-gnueabi/include">
+					<entry kind="includePath" name="/usr/arm-frc-linux-gnueabi/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/frc/usr/include">
+					<entry kind="includePath" name="/usr/arm-frc-linux-gnueabi/usr/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
 					<entry kind="macro" name="_PREDEFS_H" value="">
@@ -1107,25 +1107,25 @@
 					</entry>
 				</language>
 				<language id="org.eclipse.cdt.core.g++">
-					<entry kind="includePath" name="C:/frc/arm-frc-linux-gnueabi/include/c++/4.9.1">
+					<entry kind="includePath" name="/usr/arm-frc-linux-gnueabi/include/c++/4.9.1">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/frc/arm-frc-linux-gnueabi/include/c++/4.9.1/arm-frc-linux-gnueabi">
+					<entry kind="includePath" name="/usr/arm-frc-linux-gnueabi/include/c++/4.9.1/arm-frc-linux-gnueabi">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/frc/arm-frc-linux-gnueabi/include/c++/4.9.1/backward">
+					<entry kind="includePath" name="/usr/arm-frc-linux-gnueabi/include/c++/4.9.1/backward">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/frc/lib/gcc/arm-frc-linux-gnueabi/4.9.1/include">
+					<entry kind="includePath" name="/usr/lib/x86_64-linux-gnu/gcc/arm-frc-linux-gnueabi/4.9/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/frc/lib/gcc/arm-frc-linux-gnueabi/4.9.1/include-fixed">
+					<entry kind="includePath" name="/usr/lib/x86_64-linux-gnu/gcc/arm-frc-linux-gnueabi/4.9/include-fixed">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/frc/arm-frc-linux-gnueabi/include">
+					<entry kind="includePath" name="/usr/arm-frc-linux-gnueabi/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/frc/usr/include">
+					<entry kind="includePath" name="/usr/arm-frc-linux-gnueabi/usr/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
 					<entry kind="macro" name="_GNU_SOURCE" value="1">

@@ -1,5 +1,4 @@
-12:26:25 **** Rebuild of configuration Debug for project 2015Code ****
+13:45:44 **** Incremental Build of configuration Debug for project 2015Code ****
 Info: Internal Builder is used for build
-arm-frc-linux-gnueabi-g++ -std=c++1y "-IC:\\Users\\2550/wpilib/cpp/current/include" "-IC:\\Users\\2550\\Desktop\\roboRIO-Code\\2015Code\\src" -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\2015Code.o" "..\\src\\2015Code.cc" 
-arm-frc-linux-gnueabi-g++ "-LC:\\Users\\2550/wpilib/cpp/current/lib" -Wl,-rpath,/opt/GenICam_v2_3/bin/Linux_armv7-a -o FRCUserProgram "src\\2015Code.o" -lwpi 
-c:/frc/bin/../lib/gcc/arm-frc-linux-gnueabi/4.9.1/../../../../arm-frc-linux-gnueabi/bin/ld.exe: warning: libstdc++.so.6, needed by C:\Users\2550/wpilib/cpp/current/lib\libFRC_NetworkCommunication.so.1.5.0, not found (try using -rpath or -rpath-link)
+arm-frc-linux-gnueabi-g++ -std=c++1y -I/home/caleb/wpilib/cpp/current/include -I/home/caleb/Documents/FRC2550-Git/roboRIO-Code/2015Code/src -O0 -g3 -Wall -c -fmessage-length=0 -o src/2015Code.o ../src/2015Code.cc 
+arm-frc-linux-gnueabi-g++ -L/home/caleb/wpilib/cpp/current/lib -Wl,-rpath,/opt/GenICam_v2_3/bin/Linux_armv7-a -o FRCUserProgram src/Drive.o src/2015Code.o -lwpi 

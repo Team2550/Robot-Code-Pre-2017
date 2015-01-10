@@ -1,0 +1,34 @@
+#include "2015Code.hh"
+
+Robot::Robot() : driver(1) {
+	lw = LiveWindow::GetInstance();
+}
+
+Robot::~Robot() {
+	delete lw;
+}
+
+void Robot::RobotInit() {
+}
+
+void Robot::AutonomousInit() {
+
+}
+
+void Robot::AutonomousPeriodic() {
+
+}
+
+void Robot::TeleopInit() {
+
+}
+
+void Robot::TeleopPeriodic() {
+
+}
+
+void Robot::TestPeriodic() {
+	lw->Run();
+}
+
+START_ROBOT_CLASS(Robot);

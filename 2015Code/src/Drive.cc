@@ -1,9 +1,6 @@
 #include "Drive.hh"
 
-Drive::Drive() {
-	//motor creation
-	left = new Jaguar(1);
-	right = new Jaguar(2);
+Drive::Drive() : left(1), right(2) {
 	speedMult = .65;
 }
 
@@ -33,8 +30,8 @@ void Drive::stop() {
  */
 void Drive::remoteDrive(float leftStick, float rightStick, bool boost) {
 	//basic movements
-	//fabs() is the float version of abs()
-	if (fabs(leftStick) > 0.2)//number accounts for dead zone
+	//fabs(float) is the float version of abs()
+	if (fabs(leftStick) > 0.2) //number accounts for dead zone
 		left.Set(-leftStick * speedMult);
 	else
 		left.Set(0);

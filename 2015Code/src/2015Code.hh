@@ -2,11 +2,17 @@
 #define SRC_2015CODE_HH_
 
 #include "WPILib.h"
+#include "Drive.hh"
+#include "xBox.hh"
 
 class Robot : public IterativeRobot {
 private:
-	LiveWindow *lw;
+	//LiveWindow *lw;
+	Joystick driver;
+	Drive drive;
 public:
+	Robot();
+	~Robot();
 	void RobotInit();
 	void AutonomousInit();
 	void AutonomousPeriodic();
