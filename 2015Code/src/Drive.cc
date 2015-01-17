@@ -1,7 +1,7 @@
 #include "Drive.hh"
 
-Drive::Drive() : left(1), right(2) {
-	speedMult = .65;
+Drive::Drive() : left(0), right(1) {
+	speedMult = .4;
 }
 
 void Drive::move(float leftSpeed, float rightSpeed) {
@@ -44,7 +44,7 @@ void Drive::remoteDrive(float leftStick, float rightStick, bool boost) {
 	if (boost)
 		speedMult = 1;
 	else
-		speedMult = .65;
+		speedMult = .4;
 }
 
 /*

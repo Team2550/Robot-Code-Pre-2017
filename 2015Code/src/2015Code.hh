@@ -7,7 +7,7 @@
 
 class Robot : public IterativeRobot {
 private:
-	//LiveWindow *lw;
+	LiveWindow *lw;
 	Joystick driver;
 	Drive drive;
 public:
