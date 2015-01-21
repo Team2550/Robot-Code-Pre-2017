@@ -4,6 +4,7 @@
 #include "WPILib.h"
 #include "Drive.hh"
 #include "xBox.hh"
+#include "Lift.hh"
 
 class Robot : public IterativeRobot {
 private:

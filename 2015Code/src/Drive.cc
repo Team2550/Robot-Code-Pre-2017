@@ -24,9 +24,6 @@ void Drive::stop() {
  * DESCRIPTION:
  * 	Handles movement based on joystick input.
  * 	Currently configured for xbox controllers.
- * PARAMETERS:
- * 	(I) stick - the joystick to use for input
- * 		pointed due to WPILib size
  */
 void Drive::remoteDrive(float leftStick, float rightStick, bool boost) {
 	//basic movements
