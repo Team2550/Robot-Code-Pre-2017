@@ -14,6 +14,7 @@ public:
 	void up();
 	void down();
 	void goTo(int boxes);
+	void remoteLift(float leftStick, bool leftButton, bool rightButton);
 };
 
 

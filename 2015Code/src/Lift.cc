@@ -10,7 +10,7 @@ void Lift::bottom() {
 }
 
 void Lift::top() {
-
+	//to be written
 }
 
 double Lift::getPosition() {
@@ -30,5 +30,17 @@ void Lift::down() {
 }
 
 void Lift::goTo(int boxes) {
+	//also to be written
+}
 
+void Lift::remoteLift(float leftStick, bool leftButton, bool rightButton) {
+	if(leftStick < -.2)
+		up();
+	else if(leftStick > .2)
+		down();
+	else if(leftButton == 1)
+		bottom();
+	else if(rightButton == 1) {
+		top();
+	}
 }

@@ -1,6 +1,6 @@
 #include "2015Code.hh"
 
-Robot::Robot() : driver(0) {
+Robot::Robot() : driver(0), liftControl(1) {
 	lw = LiveWindow::GetInstance();
 }
 
@@ -28,6 +28,9 @@ void Robot::TeleopPeriodic() {
 	drive.remoteDrive(driver.GetRawAxis(1),
 					  driver.GetRawAxis(5),
 					  driver.GetRawButton(xbox::btn::rb));
+	forkLift.remoteLift(liftControl.GetRawAxis(1),
+						liftControl.GetRawButton(xbox::btn::lb),
+						liftControl.GetRawButton(xbox::btn::rb));
 }
 
 void Robot::TestPeriodic() {

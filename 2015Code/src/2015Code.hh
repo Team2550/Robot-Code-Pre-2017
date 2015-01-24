@@ -10,7 +10,9 @@ class Robot : public IterativeRobot {
 private:
 	LiveWindow *lw;
 	Joystick driver;
+	Joystick liftControl;
 	Drive drive;
+	Lift forkLift;
 public:
 	Robot();
 	~Robot();
