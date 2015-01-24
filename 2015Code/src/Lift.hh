@@ -4,12 +4,16 @@
 
 class Lift {
 private:
-	CANJaguar motor;
+	CANJaguar liftMotor;
 public:
 	Lift();
-	~Lift();
-	void lowerLift();
-	void raiseLift();
+	void bottom();
+	void top();
+	double getPosition();
+	void setPosition(double dist);
+	void up();
+	void down();
+	void goTo(int boxes);
 };
 
 
