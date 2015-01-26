@@ -5,6 +5,8 @@
 class Lift {
 private:
 	CANJaguar liftMotor;
+	//Add currentPosition here, it will keep track of exactly where the lift is
+	//by counting encoder ticks.
 public:
 	Lift();
 	void bottom();
@@ -13,8 +15,10 @@ public:
 	void setPosition(double dist);
 	void up();
 	void down();
+	//add stop()
 	void goTo(int boxes);
-	void remoteLift(float leftStick, bool leftButton, bool rightButton);
+	void remoteLift(float axis, bool leftButton, bool rightButton);
+	//What is leftButton and rightButton for?
 };
 
 
