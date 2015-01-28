@@ -7,6 +7,9 @@ Lift::Lift() : liftMotor(2) { //We will probably need to change this numbers
 	
 	liftMotor.EnableControl(); //Maybe we should have an enable/disable method
 	    //for the whole lift.
+
+	distanceRemaining = 0;
+	done = true;
 }
 
 void Lift::bottom() {
@@ -65,3 +68,16 @@ void Lift::remoteLift(float leftStick, bool leftButton, bool rightButton) {
 		top();
 	}
 }
+
+/*
+ * This function is meant to check and update the lift encoder value.
+ * In order to multi-task, the lift has to be updated each time the entire
+ * IterativeRobot::TeleopPeriodic runs. If control were to be passed to this class
+ * whenever the lift was supposed to move to a position, the robot would either stop
+ * driving or drive continuously, depending on what the drivers were doing when they
+ * pushed the lift button.
+ */
+void Lift::update() {
+
+}
+
