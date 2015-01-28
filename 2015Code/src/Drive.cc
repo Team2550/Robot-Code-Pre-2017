@@ -4,6 +4,12 @@ Drive::Drive() : left(0), right(1) {
 	speedMult = .4;
 }
 
+Drive::Drive(int leftPort, int rightPort, float defaultSpeed = .4) :
+    left(leftPort), right(rightPort)
+{
+    speedMult = defaultSpeed;
+}
+
 void Drive::move(float leftSpeed, float rightSpeed) {
 	left.Set(leftSpeed);
 	right.Set(-rightSpeed);

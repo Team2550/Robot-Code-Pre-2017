@@ -10,6 +10,7 @@ private:
 	float speedMult; //speed multiplier
 public:
 	Drive();
+	Drive(int leftPort, int rightPort, float defaultSpeed);
 	void move(float leftSpeed, float rightSpeed);
 	void remoteDrive(float leftStick, float rightStick, bool boost);
 	void stop();
