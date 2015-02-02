@@ -35,7 +35,6 @@ Lift::Lift() : liftMotor(2) { //We may need to change this number
 void Lift::bottom() {
 	liftMotor.Set(0); //This may not work, I think we need to manually
 	//manage the encoder. It is going to run for multiple rotations.
-	
 }
 
 void Lift::top() {
@@ -62,10 +61,16 @@ void Lift::setPosition(double dist) {
 	//should move the lift motor # of ticks, stops count if limit switch is pressed
 	
 	/*
-	    while (moved < dist && limit switch not pressed)
-	        move motor
-	        update currentPosition
-	    stop motor
+	distRemaining = (current position) - final position
+	if distRemaining == 0 //this will create issues with a float
+	    stop
+	    done = true
+	else if (dist remainging < 0)
+	    move down
+	    done = false
+    else
+        move up
+        done = false
 	*/
 }
 
@@ -86,23 +91,12 @@ void Lift::goTo(int boxes) { //rename to moveTo
     
     //The box level version may be slightly more complicated, here I will write
     //pcode for the move to position version.
-	/*
-	distRemaining = (current position) - final position
-	if distRemaining == 0 //this will create issues with a float
-	    stop
-	    done = true
-	else if (dist remainging < 0)
-	    move down
-	    done = false
-    else
-        move up
-        done = false
-	*/
 }
 
 void Lift::remoteLift(float leftStick, bool leftButton, bool rightButton) {
     //buttons should not be called left/right, they should be called
     //up/downButton
+    //leftStick should be changed to stick
 	if(leftStick < -.2)
 		up();
 	else if(leftStick > .2)
@@ -123,6 +117,8 @@ void Lift::remoteLift(float leftStick, bool leftButton, bool rightButton) {
  * pushed the lift button.
  */
 void Lift::update() {
-
+    //create an enum with the different actions that can't be finished in one cycle
+    //call necessary functions based on what is not done. Accepts an argument that,
+    //if false, will reset so that manual control can take over.
 }
 
