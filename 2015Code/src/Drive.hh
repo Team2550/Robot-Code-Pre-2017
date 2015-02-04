@@ -7,7 +7,7 @@ class Drive {
 private:
 	Victor left;
 	Victor right;
-	float speedMult; //speed multiplier
+	float speedMult;
 public:
 	Drive();
 	Drive(int leftPort, int rightPort, float defaultSpeed);

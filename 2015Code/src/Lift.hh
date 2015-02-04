@@ -15,12 +15,10 @@ public:
 	void top();
 	double getPosition();
 	void setPosition(double dist);
-	void up();
-	void down();
-	//add stop()
+	void move(float direction);
+	void stop();
 	void goTo(int boxes);
 	void remoteLift(float axis, bool leftButton, bool rightButton);
-	//What is leftButton and rightButton for?
 	void update();
 };
 
