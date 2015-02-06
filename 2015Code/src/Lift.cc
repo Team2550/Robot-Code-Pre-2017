@@ -19,40 +19,51 @@ Lift::Lift() : liftMotor(2) { //We WILL need to change this number
 	done = true;
 }
 
-void Lift::bottom() {
-	if(!liftMotor.GetReverseLimitOK())
-		{
-			liftMotor.Set(-1);
-		}
+const LiftTask Lift::bottom() {
+	if(!liftMotor.GetReverseLimitOK()) //Good.
+	{
+		liftMotor.Set(-1);
+	}
+	//Note: we don't know which direction is up and down yet.
 }
 
-void Lift::top() {
+const LiftTask Lift::top() {
 	if(!liftMotor.GetForwardLimitOK())
 	{
 		liftMotor.Set(1);
 	}
     //We will probably need to tweak exactly how we manage the done member.
-    //In order to protect the hardware, maybe we should not allow the lift to
+    //In order to protect the hardware, it should not allow the lift to
     //change tasks in the middle of something.
 }
 
 double Lift::getPosition() {
 	return liftMotor.GetPosition();
+	//Works for now, but it may be useful to return an absolute position
+	//(from the top or bottom).
 }
 
-void Lift::setPosition(double dist) {
-	if(dist < getPosition())
-		liftMotor.Set(1);
-	else if(dist > getPosition())
-		liftMotor.Set(-1);
+const LiftTask Lift::setPosition(double pos, unsigned float speed) {	
+	if(pos < getPosition())
+		liftMotor.Set(speed);
+	else if(pos > getPosition())
+		liftMotor.Set(speed);
 	else
 		liftMotor.Set(0);
+	//This one really needs to return something
+}
+
+const LiftTask Lift::setPosition(int boxLevel) {
 }
 
 //Replace up and down with single move function accepting +-1 which determines
 //speed and direction
-void Lift::move(float direction) {
-    	liftMotor.Set(direction);
+void Lift::move(float speed) {
+    	liftMotor.Set(speed);
+}
+
+//Speed accepts speed and direction
+const LiftTask Lift::moveDist(int dist, float speed) {
 }
 
 void Lift::stop()
@@ -60,21 +71,16 @@ void Lift::stop()
 	liftMotor.Set(0);
 }
 
-void Lift::goTo(int boxes) {
-    
-}
-
-void Lift::remoteLift(float leftStick, bool leftButton, bool rightButton) {
-    //buttons should not be called left/right, they should be called
-    //up/downButton
-    //leftStick should be changed to stick
-	if(leftStick < -.2 and leftStick > .2)
-		move(leftStick);
-	else if(leftButton == 1)
+void Lift::remoteLift(float stick, bool upButton, bool downButton, stopButton) {
+    //Needs to make sure it is not interrupting anything
+	if(stick < -.2 && stick > .2)
+		move(stick);
+	else if(downButton == true)
 		bottom();
-	else if(rightButton == 1) {
+	else if(upButton == true)
 		top();
-	}
+	else if(stopButton == true)
+		stop();
 }
 
 /*
@@ -85,7 +91,7 @@ void Lift::remoteLift(float leftStick, bool leftButton, bool rightButton) {
  * driving or drive continuously, depending on what the drivers were doing when they
  * pushed the lift button.
  */
-void Lift::update() {
+const LiftTask Lift::update() {
     //create an enum with the different actions that can't be finished in one cycle
     //call necessary functions based on what is not done. Accepts an argument that,
     //if false, will reset so that manual control can take over.
