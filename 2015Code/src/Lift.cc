@@ -1,22 +1,17 @@
 #include "Lift.hh"
 
-Lift::Lift() : liftMotor(2) { //We WILL need to change this number
-	liftMotor.SetPercentMode(CANJaguar::QuadEncoder, 256);
+Lift::Lift() : liftMotor(1) { //1 is the board id of the jaguar
+	liftMotor.SetPercentMode(CANJaguar::QuadEncoder, 1);
 	/* double CANJaguar::GetPosition,
 	   bool CANJaguar::GetForwardLimitOK
 	   bool CANJaguar::GetReverseLimitOK
 	*/
-	
-	liftMotor.EnableControl();
-	    
+
 	/* We will need to mess with the robot some to figure out how to determine
 	   an initial position. I'm not sure if it is better to move the lift to its
 	   upper and lower limits first or to make sure that team members place it in
 	   a known position each time (probably at the bottom.)
 	*/
-
-	distanceRemaining = 0;
-	done = true;
 }
 
 const LiftTask Lift::bottom() {
@@ -43,11 +38,12 @@ double Lift::getPosition() {
 	//(from the top or bottom).
 }
 
-const LiftTask Lift::setPosition(double pos, unsigned float speed) {	
+const LiftTask Lift::setPosition(double pos, float speed) {
+	speed = fabs(speed);
 	if(pos < getPosition())
 		liftMotor.Set(speed);
 	else if(pos > getPosition())
-		liftMotor.Set(speed);
+		liftMotor.Set(-speed);
 	else
 		liftMotor.Set(0);
 	//This one really needs to return something
@@ -59,7 +55,7 @@ const LiftTask Lift::setPosition(int boxLevel) {
 //Replace up and down with single move function accepting +-1 which determines
 //speed and direction
 void Lift::move(float speed) {
-    	liftMotor.Set(speed);
+    liftMotor.Set(speed);
 }
 
 //Speed accepts speed and direction
@@ -71,16 +67,25 @@ void Lift::stop()
 	liftMotor.Set(0);
 }
 
-void Lift::remoteLift(float stick, bool upButton, bool downButton, stopButton) {
+void Lift::remoteLift(float stick, bool upButton, bool downButton, bool stopButton) {
     //Needs to make sure it is not interrupting anything
-	if(stick < -.2 && stick > .2)
-		move(stick);
-	else if(downButton == true)
+#include <iostream>
+	if(stick < -.2 || stick > .2)
+	{
+		liftMotor.Set(stick);
+		std::cout << "Move: " << stick << '\n';
+	}
+	/*else if(downButton == true)
 		bottom();
 	else if(upButton == true)
 		top();
 	else if(stopButton == true)
+		stop();*/
+	else
+	{
 		stop();
+		std::cout << "STOP\n";
+	}
 }
 
 /*

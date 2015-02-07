@@ -5,13 +5,14 @@ namespace xbox
 {
 	namespace axis
 	{
-		const uint32_t leftY = 2;
+		const uint32_t leftY = 1;
 		const uint32_t rightY = 5;
 		
-		const uint32_t leftX = 1;
+		const uint32_t leftX = 0;
 		const uint32_t rightX = 4;
 		
-		const uint32_t RTLT = 3;
+		const uint32_t LT = 2;
+		const uint32_t RT = 3;
 		const uint32_t dpadX = 6;
 	}
 	namespace btn
