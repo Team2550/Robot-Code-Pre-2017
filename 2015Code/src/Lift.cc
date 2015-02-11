@@ -2,6 +2,7 @@
 
 Lift::Lift() : liftMotor(1) { //1 is the board id of the jaguar
 	liftMotor.SetPercentMode(CANJaguar::QuadEncoder, 1);
+	liftMotor.SetSafetyEnabled(false);
 	/* double CANJaguar::GetPosition,
 	   bool CANJaguar::GetForwardLimitOK
 	   bool CANJaguar::GetReverseLimitOK
@@ -74,6 +75,7 @@ void Lift::remoteLift(float stick, bool upButton, bool downButton, bool stopButt
 	{
 		liftMotor.Set(stick);
 		std::cout << "Move: " << stick << '\n';
+		std::cout << "The Jaguar is set to " << liftMotor.Get() << '\n';
 	}
 	/*else if(downButton == true)
 		bottom();
