@@ -1,18 +1,7 @@
 #include "Lift.hh"
 
-Lift::Lift() : liftMotor(1) { //1 is the board id of the jaguar
+Lift::Lift() : liftMotor(1) { //maybe the boardID is what's messing with the robot?
 	liftMotor.SetPercentMode(CANJaguar::QuadEncoder, 1);
-	liftMotor.SetSafetyEnabled(false);
-	/* double CANJaguar::GetPosition,
-	   bool CANJaguar::GetForwardLimitOK
-	   bool CANJaguar::GetReverseLimitOK
-	*/
-
-	/* We will need to mess with the robot some to figure out how to determine
-	   an initial position. I'm not sure if it is better to move the lift to its
-	   upper and lower limits first or to make sure that team members place it in
-	   a known position each time (probably at the bottom.)
-	*/
 }
 
 const LiftTask Lift::bottom() {
@@ -77,12 +66,12 @@ void Lift::remoteLift(float stick, bool upButton, bool downButton, bool stopButt
 		std::cout << "Move: " << stick << '\n';
 		std::cout << "The Jaguar is set to " << liftMotor.Get() << '\n';
 	}
-	/*else if(downButton == true)
+	else if(downButton == true)
 		bottom();
 	else if(upButton == true)
 		top();
 	else if(stopButton == true)
-		stop();*/
+		stop();
 	else
 	{
 		stop();

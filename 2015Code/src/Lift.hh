@@ -13,16 +13,17 @@ enum LiftMode {
     READY
 };
 
-struct LiftTask {
+/*struct LiftTask {
     LiftMode current;
     uint8_t position, goal;
     float speed;
-};
+};*/
 
 class Lift {
 private:
 	CANJaguar liftMotor;
-	LiftTask task;
+	LiftMode task;
+	//LiftTask task;
 public:
 	Lift();
 	const LiftTask bottom();
@@ -39,8 +40,4 @@ public:
 	//the currently running one first.
 	//All move members should make sure they are not interrupting a task
 };
-
-
-
-
 #endif /* SRC_LIFT_HH_ */
