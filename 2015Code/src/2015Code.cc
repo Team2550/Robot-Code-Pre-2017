@@ -1,6 +1,6 @@
 #include "2015Code.hh"
 
-Robot::Robot() : driver(0), liftControl(1), drive(0, 1, 0.4) {
+Robot::Robot() : driver(0), liftControl(1), drive(0, 1, 0.4), forkLift() {
 
 }
 
@@ -28,7 +28,6 @@ void Robot::TeleopPeriodic() {
 	drive.remoteDrive(driver.GetRawAxis(xbox::axis::leftY),
 					  driver.GetRawAxis(xbox::axis::rightY),
 					  driver.GetRawButton(xbox::btn::rb));
-	std::cout << liftControl.GetRawAxis(xbox::axis::leftY) << '\n';
 	forkLift.remoteLift(liftControl.GetRawAxis(xbox::axis::leftY),
 						liftControl.GetRawButton(xbox::btn::lb),
 						liftControl.GetRawButton(xbox::btn::rb),

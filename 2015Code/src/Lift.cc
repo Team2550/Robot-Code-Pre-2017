@@ -1,10 +1,10 @@
 #include "Lift.hh"
 
-Lift::Lift() : liftMotor(1) { //maybe the boardID is what's messing with the robot?
-	liftMotor.SetPercentMode(CANJaguar::QuadEncoder, 1);
+Lift::Lift() : liftMotor(2) {
+
 }
 
-const LiftTask Lift::bottom() {
+/*const LiftTask Lift::bottom() {
 	if(!liftMotor.GetReverseLimitOK()) //Good.
 	{
 		liftMotor.Set(-1);
@@ -20,12 +20,10 @@ const LiftTask Lift::top() {
     //We will probably need to tweak exactly how we manage the done member.
     //In order to protect the hardware, it should not allow the lift to
     //change tasks in the middle of something.
-}
+}*/
 
 double Lift::getPosition() {
-	return liftMotor.GetPosition();
-	//Works for now, but it may be useful to return an absolute position
-	//(from the top or bottom).
+	//program for encoder separate from motor controller
 }
 
 const LiftTask Lift::setPosition(double pos, float speed) {
@@ -63,19 +61,16 @@ void Lift::remoteLift(float stick, bool upButton, bool downButton, bool stopButt
 	if(stick < -.2 || stick > .2)
 	{
 		liftMotor.Set(stick);
-		std::cout << "Move: " << stick << '\n';
-		std::cout << "The Jaguar is set to " << liftMotor.Get() << '\n';
 	}
-	else if(downButton == true)
+	/*else if(downButton == true)
 		bottom();
 	else if(upButton == true)
 		top();
 	else if(stopButton == true)
-		stop();
+		stop();*/
 	else
 	{
 		stop();
-		std::cout << "STOP\n";
 	}
 }
 

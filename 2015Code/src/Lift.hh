@@ -13,20 +13,20 @@ enum LiftMode {
     READY
 };
 
-/*struct LiftTask {
+struct LiftTask {
     LiftMode current;
     uint8_t position, goal;
     float speed;
-};*/
+};
 
 class Lift {
 private:
-	CANJaguar liftMotor;
-	LiftMode task;
-	//LiftTask task;
+	Talon liftMotor;
+	//LiftMode task;
+	LiftTask task;
 public:
 	Lift();
-	const LiftTask bottom();
+const LiftTask bottom();
 	const LiftTask top();
 	double getPosition();
 	const LiftTask setPosition(double pos, float speed);
