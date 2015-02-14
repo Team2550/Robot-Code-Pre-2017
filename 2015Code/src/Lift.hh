@@ -31,6 +31,6 @@ public:
 	void bottom();
 	void top();
 	void stop();
-	void remoteLift(float stick, bool upButton, bool downButton, bool stopButton);
+	void remoteLift(bool upButton, bool downButton, bool stopButton);
 };
 #endif /* SRC_LIFT_HH_ */

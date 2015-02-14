@@ -24,11 +24,11 @@ void Robot::TeleopPeriodic() {
 	drive.remoteDrive(driver.GetRawAxis(xbox::axis::leftY),
 					  driver.GetRawAxis(xbox::axis::rightY),
 					  driver.GetRawButton(xbox::btn::rb));
-	lift.remoteLift(liftControl.GetRawAxis(xbox::axis::leftY),
-						liftControl.GetRawButton(xbox::btn::rb),
-						liftControl.GetRawButton(xbox::btn::lb),
-						liftControl.GetRawButton(xbox::btn::a));
-	std::cout << pdp.GetCurrent(3) << '\n'; //Log the output current of the lift motor.
+	lift.remoteLift(liftControl.GetRawButton(xbox::btn::rb),
+					liftControl.GetRawButton(xbox::btn::lb),
+					liftControl.GetRawButton(xbox::btn::a));
+	//std::cout << pdp.GetCurrent(3) << '\n'; //Log the output current of the lift motor.
+	//Lift motor ~4-6A when on stall, ~23-28A when running.
 }
 
 void Robot::DisabledInit() {

@@ -25,16 +25,8 @@ void Lift::top(){
 	}
 }
 
-void Lift::remoteLift(float stick, bool upButton, bool downButton, bool stopButton) {
-	if(stick < -.2 && !topSwitch.Get())
-	{
-		liftMotor.Set(stick);
-	}
-	else if(stick > .2 && !bottomSwitch.Get())
-	{
-			liftMotor.Set(stick);
-	}
-	else if(downButton == true)
+void Lift::remoteLift(bool upButton, bool downButton, bool stopButton) {
+	if(downButton == true)
 	{
 		bottom();
 	}
