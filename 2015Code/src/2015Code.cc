@@ -1,6 +1,6 @@
 #include "2015Code.hh"
 
-Robot::Robot() : driver(0), liftControl(1), drive(0, 1, 0.4), forkLift() {
+Robot::Robot() : driver(0), liftControl(1), drive(0, 1, 0.5), forkLift() {
 
 }
 
@@ -11,10 +11,6 @@ void Robot::RobotInit() {
 }
 
 void Robot::AutonomousInit() {
-	//forkLift.enable(true);
-	forkLift.move(.5);
-	Wait(.25);
-	forkLift.stop();
 }
 
 void Robot::AutonomousPeriodic() {
@@ -35,11 +31,11 @@ void Robot::TeleopPeriodic() {
 }
 
 void Robot::DisabledInit() {
-	std::cout << "DisabledInit has run.\n";
+
 }
 
 void Robot::DisabledPeriodic() {
-	std::cout << forkLift.getPosition() << '\n';
+
 }
 
 START_ROBOT_CLASS(Robot);
