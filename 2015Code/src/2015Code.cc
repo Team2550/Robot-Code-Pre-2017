@@ -29,8 +29,8 @@ void Robot::TeleopPeriodic() {
 					  driver.GetRawAxis(xbox::axis::rightY),
 					  driver.GetRawButton(xbox::btn::rb));
 	forkLift.remoteLift(liftControl.GetRawAxis(xbox::axis::leftY),
-						liftControl.GetRawButton(xbox::btn::lb),
 						liftControl.GetRawButton(xbox::btn::rb),
+						liftControl.GetRawButton(xbox::btn::lb),
 						liftControl.GetRawButton(xbox::btn::a));
 }
 

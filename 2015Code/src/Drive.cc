@@ -1,10 +1,10 @@
 #include "Drive.hh"
 
 Drive::Drive() : left(0), right(1) {
-	speedMult = .4;
+	speedMult = .5;
 }
 
-Drive::Drive(int leftPort, int rightPort, float defaultSpeed = .4) :
+Drive::Drive(int leftPort, int rightPort, float defaultSpeed = .5) :
     left(leftPort), right(rightPort)
 {
     speedMult = defaultSpeed;
@@ -34,6 +34,8 @@ void Drive::stop() {
 void Drive::remoteDrive(float leftStick, float rightStick, bool boost) {
 	//basic movements
 	//fabs(float) is the float version of abs()
+	static int speedCounter2;
+	static int speedCounter;
 	if (fabs(leftStick) > 0.2) //number accounts for dead zone
 		left.Set(-leftStick * speedMult);
 	else
@@ -42,12 +44,18 @@ void Drive::remoteDrive(float leftStick, float rightStick, bool boost) {
 		right.Set(rightStick * speedMult);
 	else
 		right.Set(0);
-	
+
 	//speed limiting
 	if (boost)
-		speedMult = 1;
+	{
+		speedMult = .75;
+	}
 	else
-		speedMult = .4;
+	{
+		speedCounter = 0;
+		speedCounter2 = 0;
+		speedMult = .5;
+	}
 }
 
 /*

@@ -1,7 +1,6 @@
 #include "Lift.hh"
 
-Lift::Lift() : liftMotor(2) {
-
+Lift::Lift() : liftMotor(2), bottomSwitch(0), topSwitch(1){
 }
 
 /*const LiftTask Lift::bottom() {
@@ -24,20 +23,47 @@ const LiftTask Lift::top() {
 
 double Lift::getPosition() {
 	//program for encoder separate from motor controller
+	return 0;
 }
 
-const LiftTask Lift::setPosition(double pos, float speed) {
+void Lift::bottom(){
+	if(bottomSwitch.Get() == 0)
+	{
+		liftMotor.SetSpeed(.45);
+	}
+	else
+	{
+		stop();
+	}
+}
+
+void Lift::top(){
+	if(topSwitch.Get() == 0)
+	{
+		liftMotor.SetSpeed(-.6);
+	}
+	else
+	{
+		stop();
+	}
+}
+void Lift::setPosition(double pos, float speed) {
 	speed = fabs(speed);
 	if(pos < getPosition())
+	{
 		liftMotor.Set(speed);
+	}
 	else if(pos > getPosition())
+	{
 		liftMotor.Set(-speed);
-	else
+	}
+	else if(topSwitch.Get() == 1 || bottomSwitch.Get() == 1 || pos == getPosition())
+	{
 		liftMotor.Set(0);
-	//This one really needs to return something
+	}
 }
 
-const LiftTask Lift::setPosition(int boxLevel) {
+void Lift::setPosition(int boxLevel) {
 }
 
 //Replace up and down with single move function accepting +-1 which determines
@@ -47,7 +73,7 @@ void Lift::move(float speed) {
 }
 
 //Speed accepts speed and direction
-const LiftTask Lift::moveDist(int dist, float speed) {
+void Lift::moveDist(int dist, float speed) {
 }
 
 void Lift::stop()
@@ -57,20 +83,36 @@ void Lift::stop()
 
 void Lift::remoteLift(float stick, bool upButton, bool downButton, bool stopButton) {
     //Needs to make sure it is not interrupting anything
-#include <iostream>
-	if(stick < -.2 || stick > .2)
+	static int counter;
+	if(stick < -.2 && topSwitch.Get())
 	{
 		liftMotor.Set(stick);
 	}
-	/*else if(downButton == true)
+	else if(stick > .2 && bottomSwitch.Get() == 0)
+	{
+			liftMotor.Set(stick);
+	}
+	else if(downButton == true)
+	{
 		bottom();
+	}
 	else if(upButton == true)
+	{
 		top();
-	else if(stopButton == true)
-		stop();*/
-	else
+	}
+	else if(stopButton == 1)
 	{
 		stop();
+		if(counter == 1)
+		{
+			liftMotor.Set(-.25);
+			counter = 0;
+		}
+		counter++;
+	}
+	else
+	{
+	stop();
 	}
 }
 
@@ -82,7 +124,7 @@ void Lift::remoteLift(float stick, bool upButton, bool downButton, bool stopButt
  * driving or drive continuously, depending on what the drivers were doing when they
  * pushed the lift button.
  */
-const LiftTask Lift::update() {
+void Lift::update() {
     //create an enum with the different actions that can't be finished in one cycle
     //call necessary functions based on what is not done. Accepts an argument that,
     //if false, will reset so that manual control can take over.

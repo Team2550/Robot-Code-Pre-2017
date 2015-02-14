@@ -22,20 +22,22 @@ struct LiftTask {
 class Lift {
 private:
 	Talon liftMotor;
+	DigitalInput bottomSwitch;
+	DigitalInput topSwitch;
 	//LiftMode task;
 	LiftTask task;
 public:
 	Lift();
-const LiftTask bottom();
-	const LiftTask top();
+	void bottom();
+	void top();
 	double getPosition();
-	const LiftTask setPosition(double pos, float speed);
-	const LiftTask setPosition(int boxLevel);
+	void setPosition(double pos, float speed);
+	void setPosition(int boxLevel);
 	void move(float speed);
-	const LiftTask moveDist(int dist, float speed);
+	void moveDist(int dist, float speed);
 	void stop();
 	void remoteLift(float stick, bool upButton, bool downButton, bool stopButton);
-	const LiftTask update();
+	void update();
 	//End-user of class should not be able to change a task without stopping
 	//the currently running one first.
 	//All move members should make sure they are not interrupting a task
