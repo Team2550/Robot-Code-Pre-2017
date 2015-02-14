@@ -21,10 +21,9 @@ struct LiftTask {
 
 class Lift {
 private:
-	Talon liftMotor;
+	CANJaguar liftMotor;
 	DigitalInput bottomSwitch;
 	DigitalInput topSwitch;
-	//LiftMode task;
 	//LiftTask task;
 public:
 	Lift();
