@@ -28,7 +28,6 @@ void Robot::TeleopPeriodic() {
 						liftControl.GetRawButton(xbox::btn::rb),
 						liftControl.GetRawButton(xbox::btn::lb),
 						liftControl.GetRawButton(xbox::btn::a));
-	std::cout << pdp.GetCurrent(3) << '\n'; //Log the output current of the lift motor.
 }
 
 void Robot::DisabledInit() {

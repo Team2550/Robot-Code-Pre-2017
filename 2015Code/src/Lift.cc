@@ -1,6 +1,6 @@
 #include "Lift.hh"
 
-Lift::Lift() : liftMotor(1), bottomSwitch(0), topSwitch(1){
+Lift::Lift() : liftMotor(2), bottomSwitch(0), topSwitch(1){
 	liftMotor.SetPercentMode();
 	liftMotor.EnableControl();
 }
@@ -10,7 +10,7 @@ void Lift::stop(){
 }
 
 void Lift::bottom(){
-	if(bottomSwitch.Get() == 0)
+	if(!bottomSwitch.Get())
 	{
 		liftMotor.Set(.35);
 	}
@@ -21,7 +21,7 @@ void Lift::bottom(){
 }
 
 void Lift::top(){
-	if(topSwitch.Get() == 0)
+	if(!topSwitch.Get())
 	{
 		liftMotor.Set(-.65);
 	}
@@ -40,11 +40,11 @@ void Lift::remoteLift(float stick, bool upButton, bool downButton, bool stopButt
 	{
 			liftMotor.Set(stick);
 	}
-	else if(downButton == true)
+	else if(downButton)
 	{
 		bottom();
 	}
-	else if(upButton == true)
+	else if(upButton)
 	{
 		top();
 	}
