@@ -14,11 +14,11 @@ void Robot::AutonomousInit() {
 	Timer currentTime;
 	currentTime.Start();
 	while(currentTime.Get() < 1.5) {
-		lift.remoteLift(1, 0, 0);
+		lift.remoteLift(1, 0, 0, 0);
 	}
 	currentTime.Reset();
 	while(currentTime.Get() < 1.1) {
-		lift.remoteLift(0, 0, 1);
+		lift.remoteLift(0, 0, 1, 0);
 		drive.remoteDrive(-.8, .8, 0);
 	}
 	currentTime.Reset();
@@ -31,7 +31,7 @@ void Robot::AutonomousInit() {
 	}
 	currentTime.Reset();
 	while(currentTime.Get() < 1) {
-		lift.remoteLift(0, 0, 0);
+		lift.remoteLift(0, 0, 0, 0);
 	}
 	currentTime.Stop();
 }
@@ -50,8 +50,8 @@ void Robot::TeleopPeriodic() {
 					  driver.GetRawButton(xbox::btn::rb));
 	lift.remoteLift(liftControl.GetRawButton(xbox::btn::rb),
 					liftControl.GetRawButton(xbox::btn::lb),
-					liftControl.GetRawButton(xbox::btn::a));
-	//std::cout << pdp.GetCurrent(3) << '\n'; //Log the output current of the lift motor.
+					liftControl.GetRawButton(xbox::btn::a),
+					liftControl.GetRawButton(xbox::btn::y));
 	//Lift motor ~4-6A when on stall, ~23-28A when running.
 }
 

@@ -28,9 +28,9 @@ private:
 	//LiftTask task;
 public:
 	Lift();
-	void bottom();
-	void top();
+	void bottom(bool boost);
+	void top(bool boost);
 	void stop();
-	void remoteLift(bool upButton, bool downButton, bool stopButton);
+	void remoteLift(bool upButton, bool downButton, bool stopButton, bool boost);
 };
 #endif /* SRC_LIFT_HH_ */

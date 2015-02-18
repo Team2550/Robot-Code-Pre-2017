@@ -13,7 +13,6 @@ private:
 	Joystick liftControl;
 	Drive drive;
 	Lift lift;
-	PowerDistributionPanel pdp;
 public:
 	Robot();
 	~Robot();

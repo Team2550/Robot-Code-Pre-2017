@@ -3,10 +3,13 @@
 Lift::Lift() : liftMotor(2), bottomSwitch(0), topSwitch(1){
 }
 
-void Lift::bottom(){
-	if(bottomSwitch.Get() == 0)
+void Lift::bottom(bool boost){
+	if(!bottomSwitch.Get())
 	{
-		liftMotor.Set(.45);
+		if(boost)
+			liftMotor.Set(.55);
+		else
+			liftMotor.Set(.45);
 	}
 	else
 	{
@@ -14,10 +17,13 @@ void Lift::bottom(){
 	}
 }
 
-void Lift::top(){
-	if(topSwitch.Get() == 0)
+void Lift::top(bool boost){
+	if(!topSwitch.Get())
 	{
-		liftMotor.Set(-.65);
+		if(boost)
+			liftMotor.Set(-.8);
+		else
+			liftMotor.Set(-.65);
 	}
 	else
 	{
@@ -25,14 +31,14 @@ void Lift::top(){
 	}
 }
 
-void Lift::remoteLift(bool upButton, bool downButton, bool stopButton) {
+void Lift::remoteLift(bool upButton, bool downButton, bool stopButton, bool boost) {
 	if(downButton == true)
 	{
-		bottom();
+		bottom(boost);
 	}
 	else if(upButton == true)
 	{
-		top();
+		top(boost);
 	}
 	else if(stopButton  && !topSwitch.Get())
 	{
