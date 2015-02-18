@@ -17,13 +17,13 @@ void Robot::AutonomousInit() {
 		lift.remoteLift(1, 0, 0);
 	}
 	currentTime.Reset();
-	while(currentTime.Get() < 1.2) {
+	while(currentTime.Get() < 1.1) {
 		lift.remoteLift(0, 0, 1);
 		drive.remoteDrive(-.8, .8, 0);
 	}
 	currentTime.Reset();
-	while(currentTime.Get() < 3) { //ADJUST THIS FOR FORWARD DRIVING TIME
-		drive.remoteDrive(.8, .8, 0);
+	while(currentTime.Get() < 2.5) {
+		drive.remoteDrive(.8, .85, 0);
 	}
 	currentTime.Reset();
 	while(currentTime.Get() < .2) {

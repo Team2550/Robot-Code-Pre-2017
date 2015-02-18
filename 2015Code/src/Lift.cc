@@ -6,7 +6,7 @@ Lift::Lift() : liftMotor(2), bottomSwitch(0), topSwitch(1){
 void Lift::bottom(){
 	if(bottomSwitch.Get() == 0)
 	{
-		liftMotor.Set(.35);
+		liftMotor.Set(.45);
 	}
 	else
 	{
