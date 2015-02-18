@@ -1,6 +1,6 @@
 #include "2015Code.hh"
 
-Robot::Robot() : driver(0), liftControl(1), drive(0, 1, 0.5), lift() {
+Robot::Robot() : driver(0), liftControl(1), drive(0, 1, 0.5), lift(2, 1) {
 
 }
 

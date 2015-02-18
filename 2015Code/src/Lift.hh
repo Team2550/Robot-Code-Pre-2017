@@ -4,7 +4,7 @@
 #include <cmath>
 #include "WPILib.h"
 
-/*enum LiftMode {
+enum LiftMode {
     BOTTOM,
     TOP,
     SET_POS,
@@ -14,22 +14,24 @@
 };
 
 struct LiftTask {
-    LiftMode current;
+    LiftMode mode;
     uint8_t position, goal;
     float speed;
-};*/
+};
 
 class Lift {
 private:
 	CANJaguar liftMotor;
-	DigitalInput bottomSwitch;
-	DigitalInput topSwitch;
-	//LiftTask task;
+	LiftTask task;
 public:
 	Lift();
-	void bottom();
-	void top();
-	void stop();
-	void remoteLift(float stick, bool upButton, bool downButton, bool stopButton);
+	Lift(uint8_t jagID, uint16_t encoderTicks);
+	const LiftTask stop();
+	const LiftTask bottom();
+	const LiftTask top();
+	const LiftTask moveDist(uint32_t dist);
+	const LiftTask setPosition(uint32_t position);
+	const LiftTask setBox(uint8_t boxLevel);
+	const LiftTask remoteLift(float stick, bool upButton, bool downButton, bool stopButton);
 };
 #endif /* SRC_LIFT_HH_ */
