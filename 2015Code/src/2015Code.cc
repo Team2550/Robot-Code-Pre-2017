@@ -11,9 +11,33 @@ void Robot::RobotInit() {
 }
 
 void Robot::AutonomousInit() {
+	Timer currentTime;
+	currentTime.Start();
+	while(currentTime.Get() < 1.5) {
+		lift.remoteLift(1, 0, 0);
+	}
+	currentTime.Reset();
+	while(currentTime.Get() < 1.2) {
+		lift.remoteLift(0, 0, 1);
+		drive.remoteDrive(-.8, .8, 0);
+	}
+	currentTime.Reset();
+	while(currentTime.Get() < 3) { //ADJUST THIS FOR FORWARD DRIVING TIME
+		drive.remoteDrive(.8, .8, 0);
+	}
+	currentTime.Reset();
+	while(currentTime.Get() < .2) {
+		drive.remoteDrive(0, 0, 0);
+	}
+	currentTime.Reset();
+	while(currentTime.Get() < 1) {
+		lift.remoteLift(0, 0, 0);
+	}
+	currentTime.Stop();
 }
 
 void Robot::AutonomousPeriodic() {
+
 }
 
 void Robot::TeleopInit() {
