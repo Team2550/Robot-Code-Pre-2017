@@ -18,7 +18,7 @@ void Lift::bottom(bool boost){
 }
 
 void Lift::top(bool boost){
-	if(!topSwitch.Get())
+	if(topSwitch.Get())
 	{
 		if(boost)
 			liftMotor.Set(-.8);
@@ -40,7 +40,7 @@ void Lift::remoteLift(bool upButton, bool downButton, bool stopButton, bool boos
 	{
 		top(boost);
 	}
-	else if(stopButton  && !topSwitch.Get())
+	else if(stopButton && topSwitch.Get())
 	{
 		liftMotor.Set(-.2);
 	}
