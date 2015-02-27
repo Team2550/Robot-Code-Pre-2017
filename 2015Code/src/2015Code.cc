@@ -22,7 +22,7 @@ void Robot::AutonomousInit() {
 		drive.remoteDrive(-.8, .8, 0);
 	}
 	currentTime.Reset();
-	while(currentTime.Get() < 2.5) {
+	while(currentTime.Get() < 2.7) { //This is the amount of time the robot reverses.
 		drive.remoteDrive(.8, .85, 0);
 	}
 	currentTime.Reset();
