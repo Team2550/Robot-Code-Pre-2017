@@ -1,10 +1,10 @@
 #include "Lift.hh"
 
-Lift::Lift() : liftMotor(2), bottomSwitch(0), topSwitch(1){
+Lift::Lift() : liftMotor(2), bottomSwitch(0), topSwitch(1) {
 }
 
 void Lift::bottom(bool boost){
-	if(!bottomSwitch.Get())
+	if(bottomSwitch.Get())
 	{
 		if(boost)
 			liftMotor.Set(.55);

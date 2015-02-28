@@ -22,7 +22,7 @@ void Robot::AutonomousInit() {
 		drive.remoteDrive(-.8, .8, 0);
 	}
 	currentTime.Reset();
-	while(currentTime.Get() < 2.8) { //Use 2.5 for no bump, and 2.8(experimental) for bump
+	while(currentTime.Get() < 3) { //Use 2.5 for no bump, and 3 for bump
 		drive.remoteDrive(.8, .85, 0);
 	}
 	currentTime.Reset();
