@@ -8,6 +8,13 @@ Robot::~Robot() {
 }
 
 void Robot::RobotInit() {
+	// create an image
+	frame = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
+
+	// open the camera at the IP address assigned. This is the IP address that the camera
+	// can be accessed through the web interface.
+	camera = new AxisCamera("10.1.91.103");
+
 }
 
 void Robot::AutonomousInit() {
@@ -45,6 +52,13 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
+	// grab an image, draw the circle, and provide it for the camera server which will
+	// in turn send it to the dashboard.
+	camera->GetImage(frame);
+	imaqDrawShapeOnImage(frame, frame, { 10, 10, 100, 100 }, DrawMode::IMAQ_DRAW_VALUE, ShapeMode::IMAQ_SHAPE_OVAL, 0.0f);
+	CameraServer::GetInstance()->SetImage(frame);
+	Wait(0.05);
+
 	drive.remoteDrive(driver.GetRawAxis(xbox::axis::leftY),
 					  driver.GetRawAxis(xbox::axis::rightY),
 					  driver.GetRawButton(xbox::btn::rb));

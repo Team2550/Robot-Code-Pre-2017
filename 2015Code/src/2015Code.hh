@@ -13,6 +13,13 @@ private:
 	Joystick liftControl;
 	Drive drive;
 	Lift lift;
+
+	//AxisCamera setup
+	IMAQdxSession session;
+	Image *frame;
+	IMAQdxError imaqError;
+	AxisCamera *camera;
+
 public:
 	Robot();
 	~Robot();
