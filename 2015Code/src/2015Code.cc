@@ -1,7 +1,6 @@
 #include "2015Code.hh"
 
 Robot::Robot() : driver(0), liftControl(1), drive(0, 1, 0.5), lift() {
-
 }
 
 Robot::~Robot() {
@@ -14,11 +13,10 @@ void Robot::RobotInit() {
 	// open the camera at the IP address assigned. This is the IP address that the camera
 	// can be accessed through the web interface.
 	camera = new AxisCamera("10.1.91.103");
-
 }
 
 void Robot::AutonomousInit() {
-	Timer currentTime;
+	/*Timer currentTime;
 	currentTime.Start();
 	while(currentTime.Get() < 1.5) {
 		lift.remoteLift(1, 0, 0, 0);
@@ -40,7 +38,9 @@ void Robot::AutonomousInit() {
 	while(currentTime.Get() < 1) {
 		lift.remoteLift(0, 0, 0, 0);
 	}
-	currentTime.Stop();
+	currentTime.Stop();*/
+
+
 }
 
 void Robot::AutonomousPeriodic() {
@@ -52,12 +52,17 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
+	Timer roboTime;
+
 	// grab an image, draw the circle, and provide it for the camera server which will
 	// in turn send it to the dashboard.
+	if(roboTime.Get() < .05)
+	{
 	camera->GetImage(frame);
 	imaqDrawShapeOnImage(frame, frame, { 10, 10, 100, 100 }, DrawMode::IMAQ_DRAW_VALUE, ShapeMode::IMAQ_SHAPE_OVAL, 0.0f);
 	CameraServer::GetInstance()->SetImage(frame);
-	Wait(0.05);
+	roboTime.Reset();
+	}
 
 	drive.remoteDrive(driver.GetRawAxis(xbox::axis::leftY),
 					  driver.GetRawAxis(xbox::axis::rightY),

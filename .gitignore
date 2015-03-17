@@ -30,3 +30,6 @@ Debug
 *.exe
 *.out
 *.app
+
+# Debug folder
+/2015Code/Debug/
