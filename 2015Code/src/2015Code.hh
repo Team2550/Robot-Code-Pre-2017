@@ -13,6 +13,9 @@ private:
 	Joystick liftControl;
 	Drive drive;
 	Lift lift;
+	Solenoid *WhiteLED;
+	Solenoid *RedLED;
+	Timer cameraTime;
 
 	//AxisCamera setup
 	IMAQdxSession session;

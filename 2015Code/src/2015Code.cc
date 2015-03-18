@@ -1,21 +1,53 @@
 #include "2015Code.hh"
 
 Robot::Robot() : driver(0), liftControl(1), drive(0, 1, 0.5), lift() {
-}
-
-Robot::~Robot() {
-}
-
-void Robot::RobotInit() {
 	// create an image
 	frame = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
 
 	// open the camera at the IP address assigned. This is the IP address that the camera
 	// can be accessed through the web interface.
 	camera = new AxisCamera("10.1.91.103");
+
+	WhiteLED = new Solenoid(0);
+	RedLED = new Solenoid(1);
+}
+
+Robot::~Robot() {
+}
+
+void Robot::RobotInit() {
+
 }
 
 void Robot::AutonomousInit() {
+	for(int x = 0; x < 3; x++)
+		{
+			RedLED->Set(true);
+			WhiteLED->Set(false);
+			Wait(1);
+			RedLED->Set(false);
+			WhiteLED->Set(true);
+			Wait(1);
+		}
+	for(int x = 0; x < 5; x++)
+	{
+		RedLED->Set(true);
+		WhiteLED->Set(false);
+		Wait(0.5);
+		RedLED->Set(false);
+		WhiteLED->Set(true);
+		Wait(0.5);
+	}
+	for(int x = 0; x < 8; x++)
+	{
+		RedLED->Set(true);
+		WhiteLED->Set(false);
+		Wait(0.25);
+		RedLED->Set(false);
+		WhiteLED->Set(true);
+		Wait(0.25);
+	}
+
 	/*Timer currentTime;
 	currentTime.Start();
 	while(currentTime.Get() < 1.5) {
@@ -39,29 +71,24 @@ void Robot::AutonomousInit() {
 		lift.remoteLift(0, 0, 0, 0);
 	}
 	currentTime.Stop();*/
-
-
 }
 
 void Robot::AutonomousPeriodic() {
-
 }
 
 void Robot::TeleopInit() {
-
+	cameraTime.Start();
 }
 
 void Robot::TeleopPeriodic() {
-	Timer roboTime;
-
 	// grab an image, draw the circle, and provide it for the camera server which will
 	// in turn send it to the dashboard.
-	if(roboTime.Get() < .05)
+	if(cameraTime.Get() < .05)
 	{
 	camera->GetImage(frame);
 	imaqDrawShapeOnImage(frame, frame, { 10, 10, 100, 100 }, DrawMode::IMAQ_DRAW_VALUE, ShapeMode::IMAQ_SHAPE_OVAL, 0.0f);
 	CameraServer::GetInstance()->SetImage(frame);
-	roboTime.Reset();
+	cameraTime.Reset();
 	}
 
 	drive.remoteDrive(driver.GetRawAxis(xbox::axis::leftY),
