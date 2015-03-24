@@ -16,15 +16,15 @@ private:
 	Lift lift;
 
 	//LED setup
-	Solenoid *WhiteLED;
-	Solenoid *RedLED;
+	//Solenoid *WhiteLED;
+	//Solenoid *RedLED;
 
 	//AxisCamera setup
-	IMAQdxSession session;
+	/*IMAQdxSession session;
 	Image *frame;
 	IMAQdxError imaqError;
 	AxisCamera *camera;
-	Timer cameraTime;
+	Timer cameraTime; */
 
 public:
 	Robot();

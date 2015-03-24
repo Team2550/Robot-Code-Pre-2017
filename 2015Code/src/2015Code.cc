@@ -1,16 +1,9 @@
 #include "2015Code.hh"
 
 Robot::Robot() : driver(0), liftControl(1), drive(0, 1, 0.5), lift() {
-	// create an image
-	frame = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
-
-	// open the camera at the IP address assigned. This is the IP address that the camera
-	// can be accessed through the web interface.
-	camera = new AxisCamera("10.1.91.103");
-
 	//creates solenoid objects for the LEDs
-	WhiteLED = new Solenoid(0);
-	RedLED = new Solenoid(1);
+	//WhiteLED = new Solenoid(0);
+	//RedLED = new Solenoid(1);
 }
 
 Robot::~Robot() {
@@ -18,11 +11,17 @@ Robot::~Robot() {
 
 void Robot::RobotInit() {
 
+	// create an image
+	//frame = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
+
+	// open the camera at the IP address assigned. This is the IP address that the camera
+	// can be accessed through the web interface.
+	//camera = new AxisCamera("10.25.50.20");
 }
 
 void Robot::AutonomousInit() {
 	//LED code that blinks the LEDs at higher frequencies as autonamous time runs out. May or may not be used.
-	for(int x = 0; x < 3; x++)
+	/*for(int x = 0; x < 3; x++)
 		{
 			RedLED->Set(true);
 			WhiteLED->Set(false);
@@ -48,7 +47,7 @@ void Robot::AutonomousInit() {
 		RedLED->Set(false);
 		WhiteLED->Set(true);
 		Wait(0.25);
-	}
+	} */
 
 	/*Timer currentTime;
 	currentTime.Start();
@@ -80,20 +79,19 @@ void Robot::AutonomousPeriodic() {
 
 void Robot::TeleopInit() {
 	//starts the timer that controls the refresh rate of the camera
-	cameraTime.Start();
+	//cameraTime.Start();
 }
 
 void Robot::TeleopPeriodic() {
 	// grab an image, draw the circle, and provide it for the camera server which will
 	// in turn send it to the dashboard.
-	if(cameraTime.Get() < .05)
+	/*if(cameraTime.Get() > .05)
 	{
 	camera->GetImage(frame);
 	imaqDrawShapeOnImage(frame, frame, { 10, 10, 100, 100 }, DrawMode::IMAQ_DRAW_VALUE, ShapeMode::IMAQ_SHAPE_OVAL, 0.0f);
 	CameraServer::GetInstance()->SetImage(frame);
 	cameraTime.Reset();
-	}
-
+	}*/
 	//calls drive & lift functions
 	drive.remoteDrive(driver.GetRawAxis(xbox::axis::leftY),
 					  driver.GetRawAxis(xbox::axis::rightY),
