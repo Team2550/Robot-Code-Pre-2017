@@ -8,6 +8,7 @@ Robot::Robot() : driver(0), liftControl(1), drive(0, 1, 0.5), lift() {
 	// can be accessed through the web interface.
 	camera = new AxisCamera("10.1.91.103");
 
+	//creates solenoid objects for the LEDs
 	WhiteLED = new Solenoid(0);
 	RedLED = new Solenoid(1);
 }
@@ -20,6 +21,7 @@ void Robot::RobotInit() {
 }
 
 void Robot::AutonomousInit() {
+	//LED code that blinks the LEDs at higher frequencies as autonamous time runs out. May or may not be used.
 	for(int x = 0; x < 3; x++)
 		{
 			RedLED->Set(true);
@@ -77,6 +79,7 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
+	//starts the timer that controls the refresh rate of the camera
 	cameraTime.Start();
 }
 
@@ -91,6 +94,7 @@ void Robot::TeleopPeriodic() {
 	cameraTime.Reset();
 	}
 
+	//calls drive & lift functions
 	drive.remoteDrive(driver.GetRawAxis(xbox::axis::leftY),
 					  driver.GetRawAxis(xbox::axis::rightY),
 					  driver.GetRawButton(xbox::btn::rb));

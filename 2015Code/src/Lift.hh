@@ -4,21 +4,6 @@
 #include <cmath>
 #include "WPILib.h"
 
-/*enum LiftMode {
-    BOTTOM,
-    TOP,
-    SET_POS,
-    SET_BOX,
-    MOVE_DIST,
-    READY
-};
-
-struct LiftTask {
-    LiftMode current;
-    uint8_t position, goal;
-    float speed;
-};*/
-
 class Lift {
 private:
 	Talon liftMotor;

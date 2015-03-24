@@ -9,19 +9,22 @@
 
 class Robot : public IterativeRobot {
 private:
+	//Drive & Lift setup
 	Joystick driver;
 	Joystick liftControl;
 	Drive drive;
 	Lift lift;
+
+	//LED setup
 	Solenoid *WhiteLED;
 	Solenoid *RedLED;
-	Timer cameraTime;
 
 	//AxisCamera setup
 	IMAQdxSession session;
 	Image *frame;
 	IMAQdxError imaqError;
 	AxisCamera *camera;
+	Timer cameraTime;
 
 public:
 	Robot();
