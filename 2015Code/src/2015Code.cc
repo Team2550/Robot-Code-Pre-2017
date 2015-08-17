@@ -95,7 +95,9 @@ void Robot::TeleopPeriodic() {
 	//calls drive & lift functions
 	drive.remoteDrive(driver.GetRawAxis(xbox::axis::leftY),
 					  driver.GetRawAxis(xbox::axis::rightY),
-					  driver.GetRawButton(xbox::btn::rb));
+					  driver.GetRawButton(xbox::btn::rb),
+					  driver.GetRawButton(xbox::btn::lb),
+					  20);
 	lift.remoteLift(liftControl.GetRawButton(xbox::btn::rb),
 					liftControl.GetRawButton(xbox::btn::lb),
 					liftControl.GetRawButton(xbox::btn::a),
