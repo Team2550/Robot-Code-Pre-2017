@@ -55,6 +55,6 @@ void Drive::remoteDrive(float leftStick, float rightStick, bool boost, bool brak
 		braked = false;
 	}
 
-	left.Set(currentSpeedL);
+	left.Set(-currentSpeedL);
 	right.Set(currentSpeedR);
 }
