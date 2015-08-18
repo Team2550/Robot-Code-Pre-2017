@@ -112,6 +112,6 @@ void Robot::DisabledInit() {
 void Robot::DisabledPeriodic() {
 
 }
-
+// ~jadon why is this here my best quess is that the wpi library requires it.
 START_ROBOT_CLASS(Robot);
 

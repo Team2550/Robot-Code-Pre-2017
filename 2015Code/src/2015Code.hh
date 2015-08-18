@@ -1,12 +1,20 @@
 #ifndef SRC_2015CODE_HH_
 #define SRC_2015CODE_HH_
 
-#include <iostream>
+#include <iostream> // I don't believe that is needed here -- if any source file needs it put it in that source file.
 #include "WPILib.h"
 #include "Drive.hh"
 #include "xBox.hh"
 #include "Lift.hh"
-
+/*
+        this is the main class that controls all of the mechanical 
+        pieces of the robot.
+        
+     see Also: 
+        drive
+        lift 
+        joystick 
+ */ 
 class Robot : public IterativeRobot {
 private:
 	//Drive & Lift setup
