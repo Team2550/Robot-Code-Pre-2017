@@ -1,10 +1,13 @@
 #ifndef XBOX_H
 #define XBOX_H
-
-namespace xbox
+/*
+    holds all constants for getting the info
+    from the right input device.
+*/
+namespace xbox 
 {
 	namespace axis
-	{
+	{ 
 		const uint32_t leftY = 1;
 		const uint32_t rightY = 5;
 		
