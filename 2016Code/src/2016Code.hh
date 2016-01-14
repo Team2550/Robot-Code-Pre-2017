@@ -1,30 +1,16 @@
-#ifndef SRC_2015CODE_HH_
-#define SRC_2015CODE_HH_
+#ifndef SRC_2016CODE_HH_
+#define SRC_2016CODE_HH_
 
 #include <iostream>
 #include "WPILib.h"
 #include "Drive.hh"
 #include "xBox.hh"
-#include "Lift.hh"
 
 class Robot : public IterativeRobot {
 private:
-	//Drive & Lift setup
+	//Drive setup
 	Joystick driver;
-	Joystick liftControl;
 	Drive drive;
-	Lift lift;
-
-	//LED setup
-	//Solenoid *WhiteLED;
-	//Solenoid *RedLED;
-
-	//AxisCamera setup
-	/*IMAQdxSession session;
-	Image *frame;
-	IMAQdxError imaqError;
-	AxisCamera *camera;
-	Timer cameraTime; */
 
 public:
 	Robot();
@@ -38,4 +24,4 @@ public:
 	void DisabledPeriodic();
 };
 
-#endif /* SRC_2015CODE_HH_ */
+#endif /* SRC_2016CODE_HH_ */
