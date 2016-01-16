@@ -5,8 +5,8 @@
 
 class Drive {
 private:
-	Victor left;
-	Victor right;
+	Talon left;
+	Talon right;
 	float currentSpeedR;
 	float currentSpeedL;
     float currentGoalR;
@@ -14,13 +14,9 @@ private:
 	bool brakeOn;
 public:
 	Drive(int leftPort, int rightPort/*, float defaultSpeed*/);
-	void remoteDrive(float leftStick, float rightStick, bool boost, bool brake, float accelDiv);
+	void remoteDrive(float leftStick, float rightStick, bool boost, bool brake, bool quick, float accel = 0.2);
 	void stop();
 };
 
 #endif
-
-
-
-
 

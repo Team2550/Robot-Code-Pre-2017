@@ -12,7 +12,6 @@ void Robot::RobotInit() {
 }
 
 void Robot::AutonomousInit() {
-<<<<<<< HEAD
 
 }
 
@@ -31,13 +30,6 @@ void Robot::TeleopPeriodic() {
 						  driver.GetRawButton(xbox::btn::lb),
 						  driver.GetRawButton(xbox::btn::y),
 						  0.1);
-=======
-	drive.remoteDrive(driver.GetRawAxis(xbox::axis::leftY),
-					  driver.GetRawAxis(xbox::axis::rightY),
-					  driver.GetRawButton(xbox::btn::rb),
-					  driver.GetRawButton(xbox::btn::lb),
-					  0.2);
->>>>>>> origin/master
 }
 
 void Robot::DisabledInit() {
