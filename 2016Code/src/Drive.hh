@@ -14,7 +14,7 @@ private:
 	bool brakeOn;
 public:
 	Drive(int leftPort, int rightPort/*, float defaultSpeed*/);
-	void remoteDrive(float leftStick, float rightStick, bool boost, bool brake, bool quick, float accelDiv);
+	void remoteDrive(float leftStick, float rightStick, bool boost, bool brake, float accelDiv);
 	void stop();
 };
 
