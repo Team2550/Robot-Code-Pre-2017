@@ -11,6 +11,8 @@ private:
 	//Drive setup
 	Joystick driver;
 	Drive drive;
+	Joystick launcher;
+	Launch launch;
 
 public:
 	Robot();
