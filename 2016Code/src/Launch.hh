@@ -1,5 +1,6 @@
 #ifndef LAUNCH_H_INCLUDED
 #define LAUNCH_H_INCLUDED
+#include "WPILib.h"
 
 class Launch
 {
