@@ -17,7 +17,7 @@
 #include "2016Code.hh"
 
 Robot::Robot()
-    : driver(0), drive(0, 1), launcher(1), launch(2, 3) /*launching ports need revisions*/ {
+    : driver(0), drive(0, 1), launcher(1), launch(2, 3, 0, 1) /*launching ports need revisions*/ {
 
 }
 
@@ -49,7 +49,9 @@ void Robot::TeleopPeriodic() {
 						  0.1);
     launch.remoteLaunch(launcher.GetRawButton(xbox::btn::y),
                         launcher.GetRawButton(xbox::btn::x),
-                        launcher.GetRawButton(xbox::btn::b));
+                        launcher.GetRawButton(xbox::btn::b),
+						launcher.GetRawButton(xbox::btn::lb),
+						launcher.GetRawButton(xbox::btn::rb));
 }
 
 void Robot::DisabledInit() {
