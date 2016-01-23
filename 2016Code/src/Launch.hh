@@ -7,7 +7,7 @@ class Launch
 private:
     VictorSP left;
     VictorSP right;
-    Relay(0); // set 0 to be the correct  channel for rotating launcher.
+    Relay relay(0); // set 0 to be the correct  channel for rotating launcher.
 public:
     Launch(int leftPort, int rightPort);
     ~Launch();
