@@ -1,7 +1,7 @@
 #include "Launch.hh"
 
-Launch::Launch(int leftPort, int rightPort) :
-    left(leftPort), right(rightPort)
+Launch::Launch(int leftPort, int rightPort, int topPort, int bottomPort) :
+    left(leftPort), right(rightPort), topSwitch(topPort), bottomSwitch(bottomPort)
 {
     // One of the motors will have to be inverted;
     // I'm totally guessing as to which one.
@@ -34,23 +34,42 @@ void Launch::feedLaunch()
     // period of time
 }
 
-void Launch::remoteLaunch(bool launch, bool intake, bool stop)
+void Launch::remoteLaunch(bool launch, bool intake, bool stop, bool upButton, bool downButton)
 {
+	// feed control
     if(stop)
         feedStop();
     else if(launch)
         feedLaunch();
     else if(intake)
         feedIntake();
+
+    // motor control
+    if(upButton)
+    	rotateTheLauncherUp();
+    else if(downButton)
+    	rotateTheLauncherDown();
+    else
+    	stopRotate();
 }
 
 void Launch::rotateTheLauncherUp()
 { // note to self: rotating might be backwards.
-    relay.set(relay::value::kReverse);
+
+    if (topSwitch.Get())
+    	stopRotate();
+    else
+    	relay.set(relay::value::kReverse);
+
 }
 void Launch::rotateTheLauncherDown()
 {
-    relay.set(relay::value::kForward);
+    if (bottomSwitch.Get())
+    	stopRotate();
+    else
+    	relay.set(relay::value::kReverse);
+
+	relay.set(relay::value::kForward);
 }
 void Launch::stopRotate()
 {
