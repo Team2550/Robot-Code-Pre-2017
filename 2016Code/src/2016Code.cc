@@ -31,9 +31,15 @@ void Robot::TeleopPeriodic() {
 						  driver.GetRawButton(xbox::btn::lb),
 						  driver.GetRawButton(xbox::btn::y),
 						  0.1);
+<<<<<<< HEAD
+    launch.remoteLaunch(launcher.getRawButton(xbox::btn::y),
+                        launcher.getRawButton(xbox::btn::x),
+                        launcher.getRawButton(xbox::btn::b));
+=======
     launch.remoteLaunch(launcher.GetRawButton(xbox::btn::y),
                         launcher.GetRawButton(xbox::btn::x),
                         launcher.GetRawButton(xbox::btn::b));
+>>>>>>> 442a3bca4f438649f4467f8c6cfc41b297d1dd04
 }
 
 void Robot::DisabledInit() {
