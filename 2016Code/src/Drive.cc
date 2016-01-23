@@ -25,22 +25,23 @@ float getSpeedNeed(float current, float controlVal, float accel, float speedMult
 	float dif = goal - current;
 	if (fabs(dif) < accel) {
 		return goal;
-	} else {
+		}
+	else {
 		return current + (accel * (dif/fabs(dif)));
 	}
 }
 
 void Drive::remoteDrive(float leftStick, float rightStick, bool boost, bool brake, bool quick, float accel) {
 
-	float speedMult = .5;
+	float speedMult = .35;
 	//speed limiting
 	if (boost) {
 		speedMult = .75;
 	} else if (brake && brakeOn) {
-		speedMult = .35;
+		speedMult = .20;
 	}
 
-	//fabs(float) is the float version of abs()
+	//fabs(float) is the float version of fabs()
 	if (quick) {
 		currentSpeedL = leftStick * speedMult;
 		currentSpeedR = rightStick * speedMult;
