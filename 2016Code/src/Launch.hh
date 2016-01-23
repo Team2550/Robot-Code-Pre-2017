@@ -9,7 +9,7 @@ private:
     VictorSP right;
     DigitalInput topSwitch;
     DigitalInput bottomSwitch;
-    Relay(0); // set 0 to be the correct  channel for rotating launcher.
+    Relay relay(0); // set 0 to be the correct  channel for rotating launcher.
 public:
     Launch(int leftPort, int rightPort, int topPort, int bottomPort);
     ~Launch();
