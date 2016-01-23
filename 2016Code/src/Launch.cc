@@ -43,14 +43,16 @@ void Launch::remoteLaunch(bool launch, bool intake, bool stop)
     else if(intake)
         feedIntake();
 }
-<<<<<<< HEAD
-void Launch::rotateTheLauncherUp(){ // note to self: rotating might be backwards.
+
+void Launch::rotateTheLauncherUp()
+{ // note to self: rotating might be backwards.
     relay.set(relay::value::kReverse);
 }
-void Launch::rotateTheLauncherDown(){
+void Launch::rotateTheLauncherDown()
+{
     relay.set(relay::value::kForward);
 }
-void Launch::stopRotate(){
+void Launch::stopRotate()
+{
     relay.set(relay::value::kOff);
-=======
->>>>>>> 442a3bca4f438649f4467f8c6cfc41b297d1dd04
+}
