@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2016 "jadon belezos" "lance booth" "kira corbet" "caleb reister"
+    Copyright (C) 2016 "jadon belezos" "lance booth" "kira corbet" "caleb reister" "Nathan Walker"
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,14 +23,9 @@ class Drive {
 private:
 	Talon left;
 	Talon right;
-	float currentSpeedR;
-	float currentSpeedL;
-    float currentGoalR;
-    float currentGoalL;
-	bool brakeOn;
 public:
-	Drive(int leftPort, int rightPort/*, float defaultSpeed*/);
-	void remoteDrive(float leftStick, float rightStick, bool boost, bool brake, bool quick, float accel = 0.2);
+	Drive(int leftPort, int rightPort);
+	void remoteDrive(float leftStick, float rightStick, bool boost);
 	void stop();
 };
 
