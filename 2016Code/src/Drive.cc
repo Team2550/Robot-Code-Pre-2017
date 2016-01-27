@@ -18,7 +18,7 @@
 */
 #include "Drive.hh"
 
-Drive::Drive(int leftPort, int rightPort/*, float defaultSpeed = .5*/) :
+Drive::Drive(int leftPort, int rightPort) :
     left(leftPort), right(rightPort)
 {
 	left.SetInverted(true);

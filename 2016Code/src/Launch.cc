@@ -19,7 +19,7 @@
 #include "Launch.hh"
 
 Launch::Launch(int leftPort, int rightPort, int topPort, int bottomPort) :
-    left(leftPort), right(rightPort), topSwitch(topPort), bottomSwitch(bottomPort)
+    left(leftPort), right(rightPort), topSwitch(topPort), bottomSwitch(bottomPort), tilt(0)
 {
     // One of the motors will have to be inverted;
     // I'm totally guessing as to which one.
@@ -77,7 +77,7 @@ void Launch::rotateTheLauncherUp()
     if (topSwitch.Get())
     	stopRotate();
     else
-    	relay.set(relay::value::kReverse);
+    	tilt.Set(Relay::Value::kReverse);
 
 }
 void Launch::rotateTheLauncherDown()
@@ -85,11 +85,10 @@ void Launch::rotateTheLauncherDown()
     if (bottomSwitch.Get())
     	stopRotate();
     else
-    	relay.set(relay::value::kReverse);
+    	tilt.Set(Relay::Value::kForward);
 
-	relay.set(relay::value::kForward);
 }
 void Launch::stopRotate()
 {
-    relay.set(relay::value::kOff);
+    tilt.Set(Relay::Value::kOff);
 }
