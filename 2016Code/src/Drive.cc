@@ -37,7 +37,6 @@ void Drive::remoteDrive(float leftStick, float rightStick, bool boost) {
 		speedMult = .75;
 	}
 
-	//fabs(float) is the float version of fabs()
 	if (fabs(leftStick * speedMult) > 0.2) //number accounts for dead zone
 		left.Set(leftStick * speedMult);
 	else
