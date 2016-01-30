@@ -22,7 +22,7 @@
 #include <iostream>
 #include "WPILib.h"
 #include "Drive.hh"
-#include "Launch.hh"
+//#include "Launch.hh"
 #include "xBox.hh"
 
 class Robot : public IterativeRobot {
@@ -30,13 +30,13 @@ private:
 	//Drive setup
 	Joystick driver;
 	Drive drive;
-	Joystick launcher;
-	Launch launch;
+	//Joystick launcher;
+	//Launch launch;
 
 	// Image code
-	IMAQdxSession session;
+	/*IMAQdxSession session;
 	Image *frame;
-	IMAQdxError imaqError;
+	IMAQdxError imaqError;*/
 
 public:
 	Robot();

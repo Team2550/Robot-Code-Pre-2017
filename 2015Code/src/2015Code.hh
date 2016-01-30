@@ -19,12 +19,9 @@ private:
 	//Solenoid *WhiteLED;
 	//Solenoid *RedLED;
 
-	//AxisCamera setup
-	/*IMAQdxSession session;
+	IMAQdxSession session;
 	Image *frame;
 	IMAQdxError imaqError;
-	AxisCamera *camera;
-	Timer cameraTime; */
 
 public:
 	Robot();
