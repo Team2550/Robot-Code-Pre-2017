@@ -33,6 +33,11 @@ private:
 	Joystick launcher;
 	Launch launch;
 
+	// Image code
+	IMAQdxSession session;
+	Image *frame;
+	IMAQdxError imaqError;
+
 public:
 	Robot();
 	~Robot();

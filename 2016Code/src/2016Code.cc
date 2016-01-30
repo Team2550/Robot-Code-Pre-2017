@@ -28,6 +28,17 @@ Robot::~Robot() {
 
 void Robot::RobotInit() {
 
+	// create an image
+	frame = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
+	//the camera name (ex "cam0") can be found through the roborio web interface
+	imaqError = IMAQdxOpenCamera("cam0", IMAQdxCameraControlModeController, &session);
+	if(imaqError != IMAQdxErrorSuccess) {
+		DriverStation::ReportError("IMAQdxOpenCamera error: " + std::to_string((long)imaqError) + "\n");
+	}
+	imaqError = IMAQdxConfigureGrab(session);
+	if(imaqError != IMAQdxErrorSuccess) {
+		DriverStation::ReportError("IMAQdxConfigureGrab error: " + std::to_string((long)imaqError) + "\n");
+	}
 }
 
 void Robot::AutonomousInit() {
@@ -39,7 +50,7 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
-
+	IMAQdxStartAcquisition(session);
 }
 
 void Robot::TeleopPeriodic() {
@@ -51,10 +62,23 @@ void Robot::TeleopPeriodic() {
                         launcher.GetRawButton(xbox::btn::b),
 						launcher.GetRawButton(xbox::btn::lb),
 						launcher.GetRawButton(xbox::btn::rb));
+
+    // Image code
+    // grab an image, draw the circle, and provide it for the camera server which will
+    // in turn send it to the dashboard.
+	IMAQdxGrab(session, frame, true, NULL);
+	if(imaqError != IMAQdxErrorSuccess) {
+		DriverStation::ReportError("IMAQdxGrab error: " + std::to_string((long)imaqError) + "\n");
+	}
+	else
+	{
+		imaqDrawShapeOnImage(frame, frame, { 10, 10, 100, 100 }, DrawMode::IMAQ_DRAW_VALUE, ShapeMode::IMAQ_SHAPE_OVAL, 0.0f);
+		CameraServer::GetInstance()->SetImage(frame);
+	}
 }
 
 void Robot::DisabledInit() {
-
+	IMAQdxStopAcquisition(session);
 }
 
 void Robot::DisabledPeriodic() {
