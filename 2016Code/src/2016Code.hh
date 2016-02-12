@@ -19,17 +19,18 @@
 #ifndef SRC_2016CODE_HH_
 #define SRC_2016CODE_HH_
 
-#include <iostream>
 #include "WPILib.h"
 #include "Drive.hh"
 //#include "Launch.hh"
 #include "xBox.hh"
+#include "Ultrasonic.h"
 
 class Robot : public IterativeRobot {
 private:
 	//Drive setup
 	Joystick driver;
 	Drive drive;
+	Ultrasonic ultra; //currently being used as place holders for the ports
 	//Joystick launcher;
 	//Launch launch;
 
@@ -37,6 +38,7 @@ private:
 	/*IMAQdxSession session;
 	Image *frame;
 	IMAQdxError imaqError;*/
+
 
 public:
 	Robot();

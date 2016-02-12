@@ -57,6 +57,7 @@ void Robot::TeleopPeriodic() {
 	drive.remoteDrive(driver.GetRawAxis(xbox::axis::leftY),
 						  driver.GetRawAxis(xbox::axis::rightY),
 						  driver.GetRawButton(xbox::btn::rb));
+	SmartDashboard::PutNumber(llvm::StringRef("ultrasonc_label"),(double)this->ultra.GetRangeInches());
     /*launch.remoteLaunch(launcher.GetRawButton(xbox::btn::y),
                         launcher.GetRawButton(xbox::btn::x),
                         launcher.GetRawButton(xbox::btn::b),
