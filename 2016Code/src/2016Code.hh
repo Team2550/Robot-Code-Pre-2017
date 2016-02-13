@@ -21,7 +21,7 @@
 
 #include "WPILib.h"
 #include "Drive.hh"
-//#include "Launch.hh"
+#include "Launch.hh"
 #include "xBox.hh"
 #include "Ultrasonic.h"
 
@@ -30,16 +30,8 @@ private:
 	//Drive setup
 	Joystick driver;
 	Drive drive;
-	Ultrasonic ultra(0,0); //currently being used as place holders for the ports
-	//Joystick launcher;
-	//Launch launch;
-
-	// Image code
-	/*IMAQdxSession session;
-	Image *frame;
-	IMAQdxError imaqError;*/
-
-
+	Joystick launcher;
+	Launch launch;
 public:
 	Robot();
 	~Robot();

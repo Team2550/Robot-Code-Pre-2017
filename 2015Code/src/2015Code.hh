@@ -18,11 +18,6 @@ private:
 	//LED setup
 	//Solenoid *WhiteLED;
 	//Solenoid *RedLED;
-
-	IMAQdxSession session;
-	Image *frame;
-	IMAQdxError imaqError;
-
 public:
 	Robot();
 	~Robot();

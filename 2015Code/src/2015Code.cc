@@ -4,9 +4,6 @@ Robot::Robot() : driver(0), liftControl(1), drive(0, 1, 0.5), lift() {
 	//creates solenoid objects for the LEDs
 	//WhiteLED = new Solenoid(0);
 	//RedLED = new Solenoid(1);
-
-	// create an image
-	frame = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
 }
 
 Robot::~Robot() {
@@ -76,19 +73,7 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
-    // create an image
-	frame = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
-	//the camera name (ex "cam0") can be found through the roborio web interface
-	imaqError = IMAQdxOpenCamera("cam0", IMAQdxCameraControlModeController, &session);
-	if(imaqError != IMAQdxErrorSuccess) {
-		DriverStation::ReportError("IMAQdxOpenCamera error: " + std::to_string((long)imaqError) + "\n");
-	}
-	imaqError = IMAQdxConfigureGrab(session);
-	if(imaqError != IMAQdxErrorSuccess) {
-		DriverStation::ReportError("IMAQdxConfigureGrab error: " + std::to_string((long)imaqError) + "\n");
-	}
-    // acquire images
-	IMAQdxStartAcquisition(session);
+
 }
 
 void Robot::TeleopPeriodic() {
@@ -104,23 +89,12 @@ void Robot::TeleopPeriodic() {
 					liftControl.GetRawButton(xbox::btn::y));
 	//Lift motor ~4-6A when on stall, ~23-28A when running.
 
-    // grab an image, draw the circle, and provide it for the camera server which will
-    // in turn send it to the dashboard.
-	IMAQdxGrab(session, frame, true, NULL);
-	if(imaqError != IMAQdxErrorSuccess)
-	{
-		DriverStation::ReportError("IMAQdxGrab error (haha, fail): " + std::to_string((long)imaqError) + "\n");
-	}
-	else
-	{
-		imaqDrawShapeOnImage(frame, frame, { 10, 10, 100, 100 }, DrawMode::IMAQ_DRAW_VALUE, ShapeMode::IMAQ_SHAPE_OVAL, 0.0f);
-		CameraServer::GetInstance()->SetImage(frame);
-	}
+
+	SmartDashboard::PutString("DB/String 1", "The goal is 200 meters ahead.");
 }
 
 void Robot::DisabledInit() {
-    // stop image acquisition
-	IMAQdxStopAcquisition(session);
+
 }
 
 void Robot::DisabledPeriodic() {
