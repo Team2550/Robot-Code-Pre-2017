@@ -34,3 +34,7 @@ Debug
 # Debug folder
 /2015Code/Debug/
 /tmp/*
+
+# Java source files
+# To stop certain people from using java (or at least annoy them for a while)
+*.java
