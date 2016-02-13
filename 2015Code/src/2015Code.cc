@@ -107,9 +107,12 @@ void Robot::TeleopPeriodic() {
     // grab an image, draw the circle, and provide it for the camera server which will
     // in turn send it to the dashboard.
 	IMAQdxGrab(session, frame, true, NULL);
-	if(imaqError != IMAQdxErrorSuccess) {
+	if(imaqError != IMAQdxErrorSuccess)
+	{
 		DriverStation::ReportError("IMAQdxGrab error (haha, fail): " + std::to_string((long)imaqError) + "\n");
-	} else {
+	}
+	else
+	{
 		imaqDrawShapeOnImage(frame, frame, { 10, 10, 100, 100 }, DrawMode::IMAQ_DRAW_VALUE, ShapeMode::IMAQ_SHAPE_OVAL, 0.0f);
 		CameraServer::GetInstance()->SetImage(frame);
 	}
