@@ -30,7 +30,7 @@ private:
 	//Drive setup
 	Joystick driver;
 	Drive drive;
-	Ultrasonic ultra; //currently being used as place holders for the ports
+	Ultrasonic ultra(0,0); //currently being used as place holders for the ports
 	//Joystick launcher;
 	//Launch launch;
 

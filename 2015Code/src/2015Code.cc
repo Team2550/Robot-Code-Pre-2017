@@ -4,6 +4,9 @@ Robot::Robot() : driver(0), liftControl(1), drive(0, 1, 0.5), lift() {
 	//creates solenoid objects for the LEDs
 	//WhiteLED = new Solenoid(0);
 	//RedLED = new Solenoid(1);
+
+	// create an image
+	frame = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
 }
 
 Robot::~Robot() {
@@ -11,12 +14,7 @@ Robot::~Robot() {
 
 void Robot::RobotInit() {
 
-	// create an image
-	//frame = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
 
-	// open the camera at the IP address assigned. This is the IP address that the camera
-	// can be accessed through the web interface.
-	//camera = new AxisCamera("10.25.50.20");
 }
 
 void Robot::AutonomousInit() {
@@ -94,15 +92,6 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
-	// grab an image, draw the circle, and provide it for the camera server which will
-	// in turn send it to the dashboard.
-	/*if(cameraTime.Get() > .05)
-	{
-	camera->GetImage(frame);
-	imaqDrawShapeOnImage(frame, frame, { 10, 10, 100, 100 }, DrawMode::IMAQ_DRAW_VALUE, ShapeMode::IMAQ_SHAPE_OVAL, 0.0f);
-	CameraServer::GetInstance()->SetImage(frame);
-	cameraTime.Reset();
-	}*/
 	//calls drive & lift functions
 	drive.remoteDrive(driver.GetRawAxis(xbox::axis::leftY),
 					  driver.GetRawAxis(xbox::axis::rightY),
