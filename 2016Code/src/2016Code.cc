@@ -19,7 +19,7 @@
 #include "2016Code.hh"
 
 Robot::Robot()
-    : driver(0), drive(0, 1), launcher(1), launch(2, 3, 0, 1) /*launching ports need revisions*/ {
+    : driver(0), drive(0, 1), launcher(1), launch(2, 3, 4, 5, 0, 1, 2, 3) /*launching ports need revisions*/ {
 
 }
 
@@ -51,7 +51,8 @@ void Robot::TeleopPeriodic() {
                         launcher.GetRawButton(xbox::btn::x),
                         launcher.GetRawButton(xbox::btn::b),
 						launcher.GetRawButton(xbox::btn::lb),
-						launcher.GetRawButton(xbox::btn::rb));
+						launcher.GetRawButton(xbox::btn::rb)),
+						launcher.GetRawAxis(xbox::axis::leftY);
 }
 
 void Robot::DisabledInit() {
