@@ -25,19 +25,24 @@ class Launch
 private:
     VictorSP left;
     VictorSP right;
-    DigitalInput topSwitch;
-    DigitalInput bottomSwitch;
+    VictorSP lift; // I have no idea about what kind of motor we'll use. This needs to be changed.
+    DigitalInput topLaunchSwitch;
+    DigitalInput bottomLaunchSwitch;
+    DigitalInput topLiftSwitch;
+    DigitalInput bottomLiftSwitch;
     Relay tilt;
 public:
-    Launch(int leftPort, int rightPort, int topPort, int bottomPort);
+    Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort, int liftPort, int topLauncherSwitchPort, int bottomLauncherSwitchPort, int topLiftSwitchPort, int bottomLiftSwitchPort);
     ~Launch();
     void feedIntake();
     void feedStop();
     void feedLaunch();
-    void remoteLaunch(bool launch, bool intake, bool stop, bool upButton, bool downButton);
+    void remoteLaunch(bool launch, bool intake, bool stop, bool upButton, bool downButton, float liftAxis);
     void rotateTheLauncherUp();
     void rotateTheLauncherDown();
     void stopRotate();
+    void liftUp();
+    void liftDown();
 };
 
 #endif

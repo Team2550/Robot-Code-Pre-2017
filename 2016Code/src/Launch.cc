@@ -18,8 +18,8 @@
 */
 #include "Launch.hh"
 
-Launch::Launch(int leftPort, int rightPort, int topPort, int bottomPort) :
-    left(leftPort), right(rightPort), topSwitch(topPort), bottomSwitch(bottomPort), tilt(0)
+Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort, int liftPort, int topLauncherSwitchPort, int bottomLauncherSwitchPort, int topLiftSwitchPort, int bottomLiftSwitchPort) :
+    left(leftLauncherPort), right(rightLauncherPort), tilt(rotatePort), lift(liftPort), topLauncherSwitch(topLauncherSwitchPort), bottomLauncherSwitch(bottomLauncherSwitchPort), topLiftSwitch(topLiftSwitchPort), bottomLiftSwitch(bottomLiftSwitchPort)
 {
     // One of the motors will have to be inverted;
     // I'm totally guessing as to which one.
@@ -52,7 +52,7 @@ void Launch::feedLaunch()
     // period of time
 }
 
-void Launch::remoteLaunch(bool launch, bool intake, bool stop, bool upButton, bool downButton)
+void Launch::remoteLaunch(bool launch, bool intake, bool stop, bool upButton, bool downButton, liftAxis)
 {
 	// feed control
     if(stop)
@@ -62,19 +62,27 @@ void Launch::remoteLaunch(bool launch, bool intake, bool stop, bool upButton, bo
     else if(intake)
         feedIntake();
 
-    // motor control
+    // rotation control
     if(upButton)
     	rotateTheLauncherUp();
     else if(downButton)
     	rotateTheLauncherDown();
     else
     	stopRotate();
+
+	// lift control
+	if(liftAxis > .2)
+		liftUp();
+	else if(liftAxis < .2)
+		liftDown();
+	else
+		stopLift();
 }
 
 void Launch::rotateTheLauncherUp()
 { // note to self: rotating might be backwards.
 
-    if (topSwitch.Get())
+    if (topLauncherSwitch.Get())
     	stopRotate();
     else
     	tilt.Set(Relay::Value::kReverse);
@@ -82,7 +90,7 @@ void Launch::rotateTheLauncherUp()
 }
 void Launch::rotateTheLauncherDown()
 {
-    if (bottomSwitch.Get())
+    if (bottomLauncherSwitch.Get())
     	stopRotate();
     else
     	tilt.Set(Relay::Value::kForward);
@@ -91,4 +99,25 @@ void Launch::rotateTheLauncherDown()
 void Launch::stopRotate()
 {
     tilt.Set(Relay::Value::kOff);
+}
+
+void Launch::liftUp()
+{
+    if (topLiftSwitch.Get())
+    	stopLift();
+    else
+    	lift.Set(0.75);
+}
+
+void Launch::liftDown()
+{
+    if (bottomLiftSwitch.Get())
+    	stopLift();
+    else
+    	lift.Set(-0.75);
+}
+
+void Launch::stopLift()
+{
+	lift.Set(0);
 }
