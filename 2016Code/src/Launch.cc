@@ -19,7 +19,7 @@
 #include "Launch.hh"
 
 Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort, int liftPort, int topLauncherSwitchPort, int bottomLauncherSwitchPort, int topLiftSwitchPort, int bottomLiftSwitchPort) :
-    left(leftLauncherPort), right(rightLauncherPort), tilt(rotatePort), lift(liftPort), topLauncherSwitch(topLauncherSwitchPort), bottomLauncherSwitch(bottomLauncherSwitchPort), topLiftSwitch(topLiftSwitchPort), bottomLiftSwitch(bottomLiftSwitchPort)
+    left(leftLauncherPort), right(rightLauncherPort), tilt(rotatePort), lift(liftPort), topLaunchSwitch(topLauncherSwitchPort), bottomLaunchSwitch(bottomLauncherSwitchPort), topLiftSwitch(topLiftSwitchPort), bottomLiftSwitch(bottomLiftSwitchPort)
 {
     // One of the motors will have to be inverted;
     // I'm totally guessing as to which one.
@@ -52,7 +52,7 @@ void Launch::feedLaunch()
     // period of time
 }
 
-void Launch::remoteLaunch(bool launch, bool intake, bool stop, bool upButton, bool downButton, liftAxis)
+void Launch::remoteLaunch(bool launch, bool intake, bool stop, bool upButton, bool downButton, float liftAxis)
 {
 	// feed control
     if(stop)
@@ -82,7 +82,7 @@ void Launch::remoteLaunch(bool launch, bool intake, bool stop, bool upButton, bo
 void Launch::rotateTheLauncherUp()
 { // note to self: rotating might be backwards.
 
-    if (topLauncherSwitch.Get())
+    if (topLaunchSwitch.Get())
     	stopRotate();
     else
     	tilt.Set(Relay::Value::kReverse);
@@ -90,7 +90,7 @@ void Launch::rotateTheLauncherUp()
 }
 void Launch::rotateTheLauncherDown()
 {
-    if (bottomLauncherSwitch.Get())
+    if (bottomLaunchSwitch.Get())
     	stopRotate();
     else
     	tilt.Set(Relay::Value::kForward);

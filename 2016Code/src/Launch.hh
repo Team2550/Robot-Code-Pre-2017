@@ -43,6 +43,7 @@ public:
     void stopRotate();
     void liftUp();
     void liftDown();
+    void stopLift();
 };
 
 #endif
