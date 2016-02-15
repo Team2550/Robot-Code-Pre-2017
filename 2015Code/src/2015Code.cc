@@ -10,6 +10,7 @@ Robot::Robot() : driver(0), liftControl(1), drive(0, 1, 0.5), lift() {
 }
 
 Robot::~Robot() {
+
 }
 
 void Robot::RobotInit() {
@@ -18,7 +19,7 @@ void Robot::RobotInit() {
 }
 
 void Robot::AutonomousInit() {
-	//LED code that blinks the LEDs at higher frequencies as autonamous time runs out. May or may not be used.
+	//LED code that blinks the LEDs at higher frequencies as autonomous time runs out. May or may not be used.
 	/*for(int x = 0; x < 3; x++)
 		{
 			RedLED->Set(true);
