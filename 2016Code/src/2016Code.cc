@@ -52,6 +52,7 @@ void Robot::TeleopPeriodic() {
                         launcher.GetRawButton(xbox::btn::b),
 						launcher.GetRawButton(xbox::btn::lb),
 						launcher.GetRawButton(xbox::btn::rb),
+						launcher.GetRawButton(xbox::btn::a),
 						launcher.GetRawAxis(xbox::axis::leftY));
 }
 

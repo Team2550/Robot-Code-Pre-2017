@@ -32,13 +32,15 @@ private:
     //DigitalInput bottomLiftSwitch;
     Encoder liftEncoder;
     Relay tilt;
+    bool turtleOverride;
 public:
     Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort, int liftPort, int topLauncherSwitchPort, int bottomLauncherSwitchPort, /*int topLiftSwitchPort, int bottomLiftSwitchPort*/ int liftEncoderPortA, int liftEncoderPortB);
     ~Launch(); // Lift does not use limit switches! Encoder
     void feedIntake();
     void feedStop();
     void feedLaunch();
-    void remoteLaunch(bool launch, bool intake, bool stop, bool upButton, bool downButton, float liftAxis);
+    void remoteLaunch(bool launch, bool intake, bool stop, bool upButton, bool downButton, bool turtleButton, float liftAxis);
+    void turtle();
     void rotateTheLauncherUp();
     void rotateTheLauncherDown();
     void stopRotate();
