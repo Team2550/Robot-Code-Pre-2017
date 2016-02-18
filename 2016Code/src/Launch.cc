@@ -24,7 +24,7 @@ Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort, int 
     // One of the motors will have to be inverted;
     // I'm totally guessing as to which one.
     left.SetInverted(true);
-
+    turtleOverride = false;
     // Put encoder setup here
 }
 
@@ -54,7 +54,7 @@ void Launch::feedLaunch()
     // period of time
 }
 
-void Launch::remoteLaunch(bool launch, bool intake, bool stop, bool upButton, bool downButton, float liftAxis)
+void Launch::remoteLaunch(bool launch, bool intake, bool stop, bool upButton, bool downButton, float liftAxis, bool turtleButton)
 {
 	// feed control
     if(stop)
@@ -64,21 +64,43 @@ void Launch::remoteLaunch(bool launch, bool intake, bool stop, bool upButton, bo
     else if(intake)
         feedIntake();
 
-    // rotation control
-    if(upButton)
-    	rotateTheLauncherUp();
-    else if(downButton)
-    	rotateTheLauncherDown();
-    else
-    	stopRotate();
+    if (turtleOverride) {
+    	turtle();
+    } else {
+		// rotation control
+		if(upButton)
+			rotateTheLauncherUp();
+		else if(downButton)
+			rotateTheLauncherDown();
+		else
+			stopRotate();
 
-	// lift control
-	if(liftAxis > .2)
-		liftUp();
-	else if(liftAxis < .2)
-		liftDown();
-	else
-		stopLift();
+		// lift control
+		if(liftAxis > .2)
+			liftUp();
+		else if(liftAxis < .2)
+			liftDown();
+		else
+			stopLift();
+
+		if(turtleButton)
+			turtleOverride = true;
+    }
+}
+
+void Launch::turtle()
+{
+	if (topLaunchSwitch.Get())
+    	stopRotate();
+    else
+    	tilt.Set(Relay::Value::kReverse);
+
+    if (liftEncoder->GetDirection() < 45.0) { // Lift does not use limit switches! Encoder
+    	stopLift();
+		if (topLaunchSwitch.Get())
+			turtleOverride = false;
+	} else
+    	lift.Set(0.75);
 }
 
 void Launch::rotateTheLauncherUp()
