@@ -30,7 +30,7 @@ private:
     DigitalInput bottomLaunchSwitch;
     //DigitalInput topLiftSwitch;
     //DigitalInput bottomLiftSwitch;
-    Encoder *liftEncoder;
+    Encoder liftEncoder;
     Relay tilt;
 public:
     Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort, int liftPort, int topLauncherSwitchPort, int bottomLauncherSwitchPort, /*int topLiftSwitchPort, int bottomLiftSwitchPort*/ int liftEncoderPortA, int liftEncoderPortB);

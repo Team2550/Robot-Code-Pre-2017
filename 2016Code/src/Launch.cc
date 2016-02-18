@@ -18,8 +18,15 @@
 */
 #include "Launch.hh"
 
-Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort, int liftPort, int topLauncherSwitchPort, int bottomLauncherSwitchPort, /*int topLiftSwitchPort, int bottomLiftSwitchPort*/ int liftEncoderPortA, int liftEncoderPortB) :
-    left(leftLauncherPort), right(rightLauncherPort), tilt(rotatePort), lift(liftPort), topLaunchSwitch(topLauncherSwitchPort), bottomLaunchSwitch(bottomLauncherSwitchPort), /*topLiftSwitch(topLiftSwitchPort), bottomLiftSwitch(bottomLiftSwitchPort)*/ liftEncoder(liftEncoderPortA, liftEncoderPortB, false, Encoder::EncodingType::k4X)
+Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort, int liftPort,
+		       int topLauncherSwitchPort, int bottomLauncherSwitchPort,
+			   int liftEncoderPortA, int liftEncoderPortB) :
+               left(leftLauncherPort), right(rightLauncherPort),
+			   tilt(rotatePort), lift(liftPort),
+	           topLaunchSwitch(topLauncherSwitchPort),
+			   bottomLaunchSwitch(bottomLauncherSwitchPort),
+	           liftEncoder(liftEncoderPortA, liftEncoderPortB, false,
+	        		       Encoder::EncodingType::k4X)
 {
     // One of the motors will have to be inverted;
     // I'm totally guessing as to which one.
@@ -105,7 +112,7 @@ void Launch::stopRotate()
 
 void Launch::liftUp()
 {
-    if (liftEncoder->GetDirection() < 45.0) // Lift does not use limit switches! Encoder
+    if (liftEncoder.GetDirection() < 45.0) // Lift does not use limit switches! Encoder
     	stopLift();
     else
     	lift.Set(0.75);
@@ -113,7 +120,7 @@ void Launch::liftUp()
 
 void Launch::liftDown()
 {
-    if (liftEncoder->GetDirection() > -45.0) // Lift does not use limit switches! Encoder
+    if (liftEncoder.GetDirection() > -45.0) // Lift does not use limit switches! Encoder
     	stopLift();
     else
     	lift.Set(-0.75);
