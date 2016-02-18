@@ -47,3 +47,9 @@ void Drive::remoteDrive(float leftStick, float rightStick, bool boost) {
 	else
 		right.Set(0);
 }
+
+void Drive::DriveForRev(float speed) { //sets motors to certain drive speed
+    float speedMult = .5;
+    left.Set(speed * speedMul);
+    right.Set(speed * speedMult);
+} 

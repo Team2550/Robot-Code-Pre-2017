@@ -25,16 +25,20 @@ Robot::Robot()
 
 Robot::~Robot() {
 }
-
 void Robot::RobotInit() {
-
 }
 
 void Robot::AutonomousInit() {
+    autoTime.start();
+    drive.DriveForRev(.25)
+//nothing to initalize
 
 }
 
 void Robot::AutonomousPeriodic() {
+    if(autoTime.hasPeriodPassed(2.0)); //in seconds
+	drive.DriveForRev(0.0);
+    //
 
 }
 

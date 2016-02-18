@@ -32,6 +32,7 @@ private:
 	Drive drive;
 	Joystick launcher;
 	Launch launch;
+	Timer automTimer;
 public:
 	Robot();
 	~Robot();
