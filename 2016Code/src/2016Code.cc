@@ -31,10 +31,16 @@ void Robot::RobotInit() {
 }
 
 void Robot::AutonomousInit() {
+    autoTime.Start();
+    drive.driveForward(.25);
+//nothing to initialize
 
 }
 
 void Robot::AutonomousPeriodic() {
+    if(autoTime.HasPeriodPassed(2.0)); //in seconds
+		drive.driveForward(0.0);
+    //
 
 }
 
