@@ -28,6 +28,7 @@ private:
 public:
 	Drive(int leftPort, int rightPort/*, float defaultSpeed*/);
 	void remoteDrive(float leftStick, float rightStick, bool boost);
+	void driveForward(float amount);
 	void stop();
 };
 

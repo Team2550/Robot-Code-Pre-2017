@@ -24,6 +24,7 @@
 #include "Launch.hh"
 #include "xBox.hh"
 #include "Ultrasonic.h"
+#include "Timer.h"
 
 class Robot : public IterativeRobot {
 private:
@@ -32,6 +33,7 @@ private:
 	Drive drive;
 	Joystick launcher;
 	Launch launch;
+	Timer autoTime;
 public:
 	Robot();
 	~Robot();

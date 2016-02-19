@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2015, 2016 "Jadon Belezos" "Lance Booth" "Kira Corbet" "Caleb Reister" "Nathan Walker"
+    Copyright (C) 2015, 2016 "Jadon Belezos" "Lance Booth" "Kira Corbett" "Caleb Reister" "Nathan Walker"
 
     This file is a part of the Team 2500 Robot Code.
 
@@ -19,7 +19,7 @@
 #include "2016Code.hh"
 
 Robot::Robot()
-    : driver(0), drive(0, 1), launcher(1), launch(2, 3, 4, 5, 0, 1, 2, 3) /*launching ports need revisions*/ {
+    : driver(0), drive(0, 1), launcher(1), launch(2, 3, 4, 5, 0, 1, 2, 5) /*launching ports need revisions*/ {
 
 }
 
@@ -31,10 +31,16 @@ void Robot::RobotInit() {
 }
 
 void Robot::AutonomousInit() {
+    autoTime.Start();
+    drive.driveForward(.25);
+//nothing to initialize
 
 }
 
 void Robot::AutonomousPeriodic() {
+    if(autoTime.HasPeriodPassed(2.0)); //in seconds
+		drive.driveForward(0.0);
+    //
 
 }
 
@@ -51,8 +57,9 @@ void Robot::TeleopPeriodic() {
                         launcher.GetRawButton(xbox::btn::x),
                         launcher.GetRawButton(xbox::btn::b),
 						launcher.GetRawButton(xbox::btn::lb),
-						launcher.GetRawButton(xbox::btn::rb)),
-						launcher.GetRawAxis(xbox::axis::leftY);
+						launcher.GetRawButton(xbox::btn::rb),
+						launcher.GetRawButton(xbox::btn::a),
+						launcher.GetRawAxis(xbox::axis::leftY));
 }
 
 void Robot::DisabledInit() {
