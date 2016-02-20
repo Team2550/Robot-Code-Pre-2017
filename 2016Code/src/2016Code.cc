@@ -18,9 +18,13 @@
 */
 #include "2016Code.hh"
 
-Robot::Robot()
-    : driver(0), drive(0, 1), launcher(1), launch(2, 3, 4, 5, 0, 1, 2, 5) /*launching ports need revisions*/ {
-
+Robot::Robot() : driver(0), drive(0, 1), launcher(1),
+                 launch(3, 4, 5, 2, 2, 3, 0, 1)
+{
+	/*Launch(int leftLauncherPort, int rightLauncherPort,
+	    	   int rotatePort, int liftPort, int topLauncherSwitchPort,
+			   int bottomLauncherSwitchPort, int liftEncoderPortA,
+			   int liftEncoderPortB);*/
 }
 
 Robot::~Robot() {
@@ -38,7 +42,7 @@ void Robot::AutonomousInit() {
 }
 
 void Robot::AutonomousPeriodic() {
-    if(autoTime.HasPeriodPassed(2.0)); //in seconds
+    if(autoTime.HasPeriodPassed(2.0)) //in seconds
 		drive.driveForward(0.0);
     //
 

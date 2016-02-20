@@ -20,7 +20,8 @@
 
 Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort, int liftPort,
 		       int topLauncherSwitchPort, int bottomLauncherSwitchPort,
-			   int liftEncoderPortA, int liftEncoderPortB) :
+			   int liftEncoderPortA, int liftEncoderPortB)
+			   :
                left(leftLauncherPort), right(rightLauncherPort),
 			   tilt(rotatePort), lift(liftPort),
 	           topLaunchSwitch(topLauncherSwitchPort),
@@ -32,6 +33,8 @@ Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort, int 
     // I'm totally guessing as to which one.
     left.SetInverted(true);
     turtleOverride = false;
+
+    liftEncoder.SetDistancePerPulse(1);
     // Put encoder setup here
 }
 
@@ -63,6 +66,8 @@ void Launch::feedLaunch()
 
 void Launch::remoteLaunch(bool launch, bool intake, bool stop, bool upButton, bool downButton, bool turtleButton, float liftAxis)
 {
+	SmartDashboard::PutString("Encoder", std::to_string(liftEncoder.GetDistance()));
+	SmartDashboard::PutString("LifterJoystick", std::to_string(liftAxis));
 	// feed control
     if(stop)
         feedStop();
@@ -137,7 +142,7 @@ void Launch::liftUp()
     if (liftEncoder.GetDirection() < 45.0) // Change angle
     	stopLift();
     else
-    	lift.Set(0.75);
+    	lift.Set(0.25);
 }
 
 void Launch::liftDown()
@@ -145,7 +150,7 @@ void Launch::liftDown()
     if (liftEncoder.GetDirection() > -45.0) // Change angle
     	stopLift();
     else
-    	lift.Set(-0.75);
+    	lift.Set(-0.25);
 }
 
 void Launch::stopLift()
