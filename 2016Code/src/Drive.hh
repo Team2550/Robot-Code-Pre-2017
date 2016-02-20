@@ -27,7 +27,7 @@ private:
 	Talon right;
 public:
 	Drive(int leftPort, int rightPort/*, float defaultSpeed*/);
-	void remoteDrive(float leftStick, float rightStick, bool boost);
+	void remoteDrive(float leftStick, float rightStick, bool boost, bool autoPortcullis);
 	void driveForward(float amount);
 	void stop();
 };

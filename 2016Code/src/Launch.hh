@@ -25,14 +25,15 @@ class Launch
 private:
     VictorSP left;
     VictorSP right;
+    Relay tilt;
     VictorSP lift; // I have no idea about what kind of motor we'll use. This needs to be changed.
     DigitalInput topLaunchSwitch;
     DigitalInput bottomLaunchSwitch;
     //DigitalInput topLiftSwitch;
     //DigitalInput bottomLiftSwitch;
     Encoder liftEncoder;
-    Relay tilt;
     bool turtleOverride;
+
 public:
     Launch(int leftLauncherPort, int rightLauncherPort,
     	   int rotatePort, int liftPort, int topLauncherSwitchPort,
@@ -44,13 +45,13 @@ public:
     void feedLaunch();
     void remoteLaunch(bool launch, bool intake, bool stop,
     		          bool upButton, bool downButton,
-					  bool turtleButton, float liftAxis);
+					  bool turtleButton, bool autoPortcullis, float liftAxis);
     void turtle();
     void rotateTheLauncherUp();
     void rotateTheLauncherDown();
     void stopRotate();
-    void liftUp();
-    void liftDown();
+    void liftUp(double speed);
+    void liftDown(double speed);
     void stopLift();
 };
 

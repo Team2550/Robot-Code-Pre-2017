@@ -34,7 +34,12 @@ Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort, int 
     left.SetInverted(true);
     turtleOverride = false;
 
+    //liftEncoder.SetMaxPeriod(50);
+    liftEncoder.SetMinRate(0);
     liftEncoder.SetDistancePerPulse(1);
+    liftEncoder.SetReverseDirection(false);
+    liftEncoder.SetSamplesToAverage(7);
+    liftEncoder.Reset();
     // Put encoder setup here
 }
 
@@ -64,10 +69,11 @@ void Launch::feedLaunch()
     // period of time
 }
 
-void Launch::remoteLaunch(bool launch, bool intake, bool stop, bool upButton, bool downButton, bool turtleButton, float liftAxis)
+void Launch::remoteLaunch(bool launch, bool intake, bool stop,
+						  bool upButton, bool downButton, bool turtleButton,
+						  bool autoPortcullis, float liftAxis)
 {
-	SmartDashboard::PutString("Encoder", std::to_string(liftEncoder.GetDistance()));
-	SmartDashboard::PutString("LifterJoystick", std::to_string(liftAxis));
+	std::cout << /*liftEncoder.GetDistance() << ' ' <<*/ liftEncoder.Get() << '\n';
 	// feed control
     if(stop)
         feedStop();
@@ -88,16 +94,22 @@ void Launch::remoteLaunch(bool launch, bool intake, bool stop, bool upButton, bo
 			stopRotate();
 
 		// lift control
-		if(liftAxis > .2)
-			liftUp();
-		else if(liftAxis < .2)
-			liftDown();
-		else
-			stopLift();
+		if (autoPortcullis) {
+			liftUp(0.15);
+		} else {
+			if(liftAxis > .2)
+				liftUp(0.25);
+			else if(liftAxis < .2)
+				liftDown(0.25);
+			else
+				stopLift();
+		}
 
 		if (turtleButton)
 			turtleOverride = true;
     }
+
+    SmartDashboard::PutNumber("Encoder", liftEncoder.GetDistance());
 }
 
 void Launch::turtle()
@@ -137,20 +149,20 @@ void Launch::stopRotate()
     tilt.Set(Relay::Value::kOff);
 }
 
-void Launch::liftUp()
+void Launch::liftUp(double speed)
 {
     if (liftEncoder.GetDirection() < 45.0) // Change angle
     	stopLift();
     else
-    	lift.Set(0.25);
+    	lift.Set(speed);
 }
 
-void Launch::liftDown()
+void Launch::liftDown(double speed)
 {
     if (liftEncoder.GetDirection() > -45.0) // Change angle
     	stopLift();
     else
-    	lift.Set(-0.25);
+    	lift.Set(-speed);
 }
 
 void Launch::stopLift()

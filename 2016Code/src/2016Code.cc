@@ -19,7 +19,7 @@
 #include "2016Code.hh"
 
 Robot::Robot() : driver(0), drive(0, 1), launcher(1),
-                 launch(3, 4, 5, 2, 2, 3, 0, 1)
+                 launch(3, 4, 5, 3, 2, 3, 0, 1)
 {
 	/*Launch(int leftLauncherPort, int rightLauncherPort,
 	    	   int rotatePort, int liftPort, int topLauncherSwitchPort,
@@ -30,8 +30,8 @@ Robot::Robot() : driver(0), drive(0, 1), launcher(1),
 Robot::~Robot() {
 }
 
-void Robot::RobotInit() {
 
+void Robot::RobotInit() {
 }
 
 void Robot::AutonomousInit() {
@@ -55,7 +55,8 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
 	drive.remoteDrive(driver.GetRawAxis(xbox::axis::leftY),
 						  driver.GetRawAxis(xbox::axis::rightY),
-						  driver.GetRawButton(xbox::btn::rb));
+						  driver.GetRawButton(xbox::btn::rb),
+						  driver.GetRawButton(xbox::btn::leftPush));
 	SmartDashboard::PutNumber(llvm::StringRef("ultrasonic_label"),(double)123.00);
     launch.remoteLaunch(launcher.GetRawButton(xbox::btn::y),
                         launcher.GetRawButton(xbox::btn::x),
@@ -63,6 +64,7 @@ void Robot::TeleopPeriodic() {
 						launcher.GetRawButton(xbox::btn::lb),
 						launcher.GetRawButton(xbox::btn::rb),
 						launcher.GetRawButton(xbox::btn::a),
+						driver.GetRawButton(xbox::btn::leftPush),
 						launcher.GetRawAxis(xbox::axis::leftY));
 }
 

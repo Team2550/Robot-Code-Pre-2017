@@ -29,23 +29,26 @@ void Drive::stop() {
 	right.Set(0);
 }
 
-void Drive::remoteDrive(float leftStick, float rightStick, bool boost) {
+void Drive::remoteDrive(float leftStick, float rightStick, bool boost, bool autoPortcullis) {
+	if (autoPortcullis) {
+		driveForward(0.3);
+	} else {
+		float speedMult = .4;
 
-	float speedMult = .5;
+		if (boost) {
+			speedMult = .65;
+		}
 
-	if (boost) {
-		speedMult = .75;
+		if (fabs(leftStick * speedMult) > 0.2) //number accounts for dead zone
+			left.Set(leftStick * speedMult);
+		else
+			left.Set(0);
+
+		if (fabs(rightStick * speedMult) > 0.2) //number accounts for dead zone
+			right.Set(rightStick * speedMult);
+		else
+			right.Set(0);
 	}
-
-	if (fabs(leftStick * speedMult) > 0.2) //number accounts for dead zone
-		left.Set(leftStick * speedMult);
-	else
-		left.Set(0);
-
-	if (fabs(rightStick * speedMult) > 0.2) //number accounts for dead zone
-		right.Set(rightStick * speedMult);
-	else
-		right.Set(0);
 }
 
 void Drive::driveForward(float speed) { //sets motors to certain drive speed
