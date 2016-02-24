@@ -19,7 +19,7 @@
 #include "2016Code.hh"
 
 Robot::Robot() : driver(0), drive(0, 1), launcher(1),
-				 launch(3, 4, 5, 2, 3, 6, 7), lift(2, 0, 1)
+				 launch(3, 4, 5, 2, 3, 6, 7), lift(2)
 {
 	/*Launch(int leftLauncherPort, int rightLauncherPort,
 	    	   int rotatePort, int topLauncherSwitchPort,

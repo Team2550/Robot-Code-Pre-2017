@@ -30,14 +30,14 @@ void Drive::stop() {
 }
 
 void Drive::remoteDrive(float leftStick, float rightStick, bool boost, bool autoPortcullis) {
-	if (autoPortcullis) {
-		driveForward(0.6);
-	} else {
+	if (autoPortcullis)
+		driveForward(0.5);
+	else
+	{
 		float speedMult = .4;
 
-		if (boost) {
+		if (boost)
 			speedMult = .65;
-		}
 
 		if (fabs(leftStick * speedMult) > 0.2) //number accounts for dead zone
 			left.Set(leftStick * speedMult);

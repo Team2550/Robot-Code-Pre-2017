@@ -123,15 +123,15 @@ void Launch::remoteLaunch(bool launch, bool intake,
 void Launch::rotateTheLauncherUp()
 { // note to self: rotating might be backwards.
 
-    if (topLaunchSwitch.Get())
+    if (!topLaunchSwitch.Get())
     	stopRotate();
     else
-    	tilt.Set(0.6);
+    	tilt.Set(0.65);
 
 }
 void Launch::rotateTheLauncherDown()
 {
-    if (bottomLaunchSwitch.Get())
+    if (!bottomLaunchSwitch.Get())
     	stopRotate();
     else
     	tilt.Set(-0.45);

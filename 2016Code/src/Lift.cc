@@ -18,16 +18,10 @@
 */
 #include "Lift.hh"
 
-Lift::Lift(int liftPort, int liftEncoderPortA, int liftEncoderPortB) :
-           lift(liftPort), liftEncoder(liftEncoderPortA, liftEncoderPortB, false,
-	        		       	   	   	   Encoder::EncodingType::k4X)
+Lift::Lift(int liftPort) :
+           lift(liftPort)
 {
-    //liftEncoder.SetMaxPeriod(50);
-    liftEncoder.SetMinRate(0);
-    liftEncoder.SetDistancePerPulse(1);
-    liftEncoder.SetSamplesToAverage(7);
-    liftEncoder.Reset();
-    // Put encoder setup here
+
 }
 
 Lift::~Lift()
@@ -37,7 +31,6 @@ Lift::~Lift()
 
 void Lift::remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis)
 {
-	std::cout << liftEncoder.Get() << '\n';
 	// feed control
 
     if (turtleButton)
@@ -46,7 +39,7 @@ void Lift::remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis)
     {
 		// lift control
 		if (autoPortcullis)
-			liftUp(0.15);
+			liftUp(0.25);
 		else
 		{
 			if(liftAxis > .2)
@@ -57,22 +50,15 @@ void Lift::remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis)
 				stopLift();
 		}
     }
-    SmartDashboard::PutNumber("Encoder", liftEncoder.Get());
 }
 
 void Lift::liftDown(double speed)
 {
-    if (liftEncoder.Get() < -90.0) // Change angle
-    	stopLift();
-    else
     	lift.Set(-speed);
 }
 
 void Lift::liftUp(double speed)
 {
-    if (liftEncoder.Get() > 0.0) // Change angle
-    	stopLift();
-    else
     	lift.Set(speed);
 }
 
