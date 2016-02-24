@@ -47,7 +47,7 @@ void Lift::remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis)
 			else if(liftAxis < -0.2)
 				liftUp(0.15);
 			else
-				stopLift();
+				stopThisLift_IOrderYou_STOOOOOOOOOP();
 		}
     }
 }
@@ -62,7 +62,7 @@ void Lift::liftUp(double speed)
     	lift.Set(speed);
 }
 
-void Lift::stopLift()
+void Lift::stopThisLift_IOrderYou_STOOOOOOOOOP()
 {
 	lift.Set(0);
 }

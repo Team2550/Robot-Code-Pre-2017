@@ -75,9 +75,6 @@ void Launch::feedLaunch()
         pushA.Set(0.95);
         pushB.Set(0.08);
     }
-    // Add more things here e.g. something to push
-    // the lauched item into the wheels after a
-    // period of time
 }
 
 void Launch::remoteLaunch(bool launch, bool intake,
@@ -120,18 +117,21 @@ void Launch::remoteLaunch(bool launch, bool intake,
     }
 }
 
+//Rotate THE launcher up. Not just any launcher. THE LAUNCHER.
 void Launch::rotateTheLauncherUp()
 { // note to self: rotating might be backwards.
 
-    if (!topLaunchSwitch.Get())
+    if (topLaunchSwitch.Get())
     	stopRotate();
     else
     	tilt.Set(0.65);
 
 }
+
+//Rotate THE launcher down. Not just any launcher. THE LAUNCHER.
 void Launch::rotateTheLauncherDown()
 {
-    if (!bottomLaunchSwitch.Get())
+    if (bottomLaunchSwitch.Get())
     	stopRotate();
     else
     	tilt.Set(-0.45);
