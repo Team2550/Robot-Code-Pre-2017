@@ -46,7 +46,7 @@ void Robot::AutonomousInit()
 void Robot::AutonomousPeriodic()
 {
     if(autoTime.HasPeriodPassed(2.0)) //in seconds
-		drive.driveForward(0.0);
+		drive.stop();
     //
 
 }
@@ -66,7 +66,8 @@ void Robot::TeleopPeriodic() {
                         launcher.GetRawButton(xbox::btn::x), // Intake
 						launcher.GetRawButton(xbox::btn::lb),// Launcher Up
 						launcher.GetRawButton(xbox::btn::rb),// Launcher Down
-						driver.GetRawButton(xbox::btn::a));  // Turtle
+						driver.GetRawButton(xbox::btn::a),	 // Turtle
+						driver.GetRawButton(xbox::btn::lb)); // Auto Portcullis
 
     lift.remoteLift(driver.GetRawButton(xbox::btn::a),		 // Turtle
 					driver.GetRawButton(xbox::btn::lb),      // Auto Portcullis

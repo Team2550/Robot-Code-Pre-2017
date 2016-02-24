@@ -42,10 +42,10 @@ Launch::~Launch()
 
 void Launch::feedIntake()
 {
-    left.Set(-.25);
-    right.Set(-.25);
+    left.Set(-.5);
+    right.Set(-.5);
     pushA.Set(0.95); // Value needs to be changed
-    pushB.Set(0.0526);
+    pushB.Set(0.08);
 }
 
 void Launch::feedStop()
@@ -53,23 +53,27 @@ void Launch::feedStop()
     left.Set(0);
     right.Set(0);
     pushA.Set(0.95);
-    pushB.Set(0.0526);
+    pushB.Set(0.08);
 }
 
 void Launch::feedLaunch()
 {
-	if (!launching) {
+	if (!launching)
+	{
 		launchPause.Reset();
 		launchPause.Start();
 	}
     left.Set(1.0);
     right.Set(1.0);
-    if (launchPause.Get() > 0.3) {
+    if (launchPause.Get() > 0.3)
+    {
     	pushA.Set(0.65);
-    	pushB.Set(0.3527);
-    } else {
+    	pushB.Set(0.38);
+    }
+    else
+    {
         pushA.Set(0.95);
-        pushB.Set(0.0527);
+        pushB.Set(0.08);
     }
     // Add more things here e.g. something to push
     // the lauched item into the wheels after a
@@ -77,40 +81,43 @@ void Launch::feedLaunch()
 }
 
 void Launch::remoteLaunch(bool launch, bool intake,
-						  bool upButton, bool downButton, bool turtleButton)
+						  bool upButton, bool downButton, bool turtleButton, bool autoPortcullis)
 {
-    if(launch) {
+    if(launch)
+    {
         feedLaunch();
     	launching = true;
-    } else if(intake) {
+    }
+    else if(intake)
+    {
         feedIntake();
     	launching = false;
 		launchPause.Stop();
-    } else {
+    }
+    else
+    {
         feedStop();
         launching = false;
 		launchPause.Stop();
     }
 
-    if (turtleButton) {
-    	turtle();
-    } else {
-		// rotation control
-		if(upButton)
-			rotateTheLauncherUp();
-		else if(downButton)
-			rotateTheLauncherDown();
-		else
-			stopRotate();
+    if (turtleButton)
+    	rotateTheLauncherUp();
+    else
+    {
+    	if (autoPortcullis)\
+    		rotateTheLauncherDown();\
+    	else
+    	{
+			// rotation control
+			if(upButton)
+				rotateTheLauncherUp();
+			else if(downButton)
+				rotateTheLauncherDown();
+			else
+				stopRotate();
+    	}
     }
-}
-
-void Launch::turtle()
-{
-    if (topLaunchSwitch.Get()) {
-    	stopRotate();
-    } else
-    	tilt.Set(0.5);
 }
 
 void Launch::rotateTheLauncherUp()
@@ -119,7 +126,7 @@ void Launch::rotateTheLauncherUp()
     if (topLaunchSwitch.Get())
     	stopRotate();
     else
-    	tilt.Set(0.5);
+    	tilt.Set(0.6);
 
 }
 void Launch::rotateTheLauncherDown()
@@ -127,7 +134,7 @@ void Launch::rotateTheLauncherDown()
     if (bottomLaunchSwitch.Get())
     	stopRotate();
     else
-    	tilt.Set(-0.5);
+    	tilt.Set(-0.45);
 
 }
 void Launch::stopRotate()

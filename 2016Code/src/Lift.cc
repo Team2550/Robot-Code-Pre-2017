@@ -41,7 +41,7 @@ void Lift::remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis)
 	// feed control
 
     if (turtleButton)
-    	turtle();
+    	liftUp(0.75);
     else
     {
 		// lift control
@@ -50,9 +50,9 @@ void Lift::remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis)
 		else
 		{
 			if(liftAxis > .2)
-				liftUp(0.15);
-			else if(liftAxis < -0.2)
 				liftDown(0.15);
+			else if(liftAxis < -0.2)
+				liftUp(0.15);
 			else
 				stopLift();
 		}
@@ -60,15 +60,7 @@ void Lift::remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis)
     SmartDashboard::PutNumber("Encoder", liftEncoder.Get());
 }
 
-void Lift::turtle()
-{
-    if (liftEncoder.Get() > 45.0) // Change angle
-    	stopLift();
-    else
-    	lift.Set(0.75);
-}
-
-void Lift::liftUp(double speed)
+void Lift::liftDown(double speed)
 {
     if (liftEncoder.Get() < -90.0) // Change angle
     	stopLift();
@@ -76,7 +68,7 @@ void Lift::liftUp(double speed)
     	lift.Set(-speed);
 }
 
-void Lift::liftDown(double speed)
+void Lift::liftUp(double speed)
 {
     if (liftEncoder.Get() > 0.0) // Change angle
     	stopLift();

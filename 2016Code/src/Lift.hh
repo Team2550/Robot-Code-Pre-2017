@@ -30,7 +30,6 @@ public:
     Lift(int liftPort, int liftEncoderPortA, int liftEncoderPortB);
     ~Lift(); // Lift does not use limit switches! Encoder
     void remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis);
-    void turtle();
     void liftUp(double speed);
     void liftDown(double speed);
     void stopLift();
