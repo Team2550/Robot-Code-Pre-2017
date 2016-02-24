@@ -31,7 +31,7 @@ void Drive::stop() {
 
 void Drive::remoteDrive(float leftStick, float rightStick, bool boost, bool autoPortcullis) {
 	if (autoPortcullis) {
-		driveForward(0.3);
+		driveForward(0.6);
 	} else {
 		float speedMult = .4;
 

@@ -25,34 +25,26 @@ class Launch
 private:
     VictorSP left;
     VictorSP right;
-    Relay tilt;
-    VictorSP lift; // I have no idea about what kind of motor we'll use. This needs to be changed.
+    TalonSRX tilt;
     DigitalInput topLaunchSwitch;
     DigitalInput bottomLaunchSwitch;
-    //DigitalInput topLiftSwitch;
-    //DigitalInput bottomLiftSwitch;
-    Encoder liftEncoder;
-    bool turtleOverride;
+    Servo push;
 
 public:
     Launch(int leftLauncherPort, int rightLauncherPort,
-    	   int rotatePort, int liftPort, int topLauncherSwitchPort,
-		   int bottomLauncherSwitchPort, int liftEncoderPortA,
-		   int liftEncoderPortB);
+    	   int rotatePort, int topLauncherSwitchPort,
+		   int bottomLauncherSwitchPort, int pushPort);
     ~Launch(); // Lift does not use limit switches! Encoder
     void feedIntake();
     void feedStop();
     void feedLaunch();
-    void remoteLaunch(bool launch, bool intake, bool stop,
+    void remoteLaunch(bool launch, bool intake,
     		          bool upButton, bool downButton,
-					  bool turtleButton, bool autoPortcullis, float liftAxis);
+					  bool turtleButton);
     void turtle();
     void rotateTheLauncherUp();
     void rotateTheLauncherDown();
     void stopRotate();
-    void liftUp(double speed);
-    void liftDown(double speed);
-    void stopLift();
 };
 
 #endif

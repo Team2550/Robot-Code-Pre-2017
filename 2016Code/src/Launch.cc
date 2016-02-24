@@ -18,30 +18,15 @@
 */
 #include "Launch.hh"
 
-Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort, int liftPort,
-		       int topLauncherSwitchPort, int bottomLauncherSwitchPort,
-			   int liftEncoderPortA, int liftEncoderPortB)
+Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort,
+		       int topLauncherSwitchPort, int bottomLauncherSwitchPort, int pushPort)
 			   :
                left(leftLauncherPort), right(rightLauncherPort),
-			   tilt(rotatePort), lift(liftPort),
+			   tilt(rotatePort),
 	           topLaunchSwitch(topLauncherSwitchPort),
 			   bottomLaunchSwitch(bottomLauncherSwitchPort),
-	           liftEncoder(liftEncoderPortA, liftEncoderPortB, false,
-	        		       Encoder::EncodingType::k4X)
-{
-    // One of the motors will have to be inverted;
-    // I'm totally guessing as to which one.
-    left.SetInverted(true);
-    turtleOverride = false;
-
-    //liftEncoder.SetMaxPeriod(50);
-    liftEncoder.SetMinRate(0);
-    liftEncoder.SetDistancePerPulse(1);
-    liftEncoder.SetReverseDirection(false);
-    liftEncoder.SetSamplesToAverage(7);
-    liftEncoder.Reset();
-    // Put encoder setup here
-}
+			   push(pushPort)
+{}
 
 Launch::~Launch()
 {
@@ -52,37 +37,37 @@ void Launch::feedIntake()
 {
     left.Set(-.25);
     right.Set(-.25);
+    push.Set(0.95); // Value needs to be changed
 }
 
 void Launch::feedStop()
 {
     left.Set(0);
     right.Set(0);
+    push.Set(0.95);
 }
 
 void Launch::feedLaunch()
 {
     left.Set(1.0);
     right.Set(1.0);
+    push.Set(0.6); // Value needs to be changed
     // Add more things here e.g. something to push
     // the lauched item into the wheels after a
     // period of time
 }
 
-void Launch::remoteLaunch(bool launch, bool intake, bool stop,
-						  bool upButton, bool downButton, bool turtleButton,
-						  bool autoPortcullis, float liftAxis)
+void Launch::remoteLaunch(bool launch, bool intake,
+						  bool upButton, bool downButton, bool turtleButton)
 {
-	std::cout << /*liftEncoder.GetDistance() << ' ' <<*/ liftEncoder.Get() << '\n';
-	// feed control
-    if(stop)
-        feedStop();
-    else if(launch)
+    if(launch)
         feedLaunch();
     else if(intake)
         feedIntake();
+    else
+        feedStop();
 
-    if (turtleOverride) {
+    if (turtleButton) {
     	turtle();
     } else {
 		// rotation control
@@ -92,39 +77,15 @@ void Launch::remoteLaunch(bool launch, bool intake, bool stop,
 			rotateTheLauncherDown();
 		else
 			stopRotate();
-
-		// lift control
-		if (autoPortcullis) {
-			liftUp(0.15);
-		} else {
-			if(liftAxis > .2)
-				liftUp(0.25);
-			else if(liftAxis < .2)
-				liftDown(0.25);
-			else
-				stopLift();
-		}
-
-		if (turtleButton)
-			turtleOverride = true;
     }
-
-    SmartDashboard::PutNumber("Encoder", liftEncoder.GetDistance());
 }
 
 void Launch::turtle()
 {
-    if (liftEncoder.GetDirection() < 45.0) // Change angle
-    	stopLift();
-    else
-    	lift.Set(0.75);
-
-    if (topLaunchSwitch.Get())
+    if (topLaunchSwitch.Get()) {
     	stopRotate();
-    	if (liftEncoder.GetDirection() < 45.0)
-    		turtleOverride = false;
-    else
-    	tilt.Set(Relay::Value::kReverse);
+    } else
+    	tilt.Set(0.5);
 }
 
 void Launch::rotateTheLauncherUp()
@@ -133,7 +94,7 @@ void Launch::rotateTheLauncherUp()
     if (topLaunchSwitch.Get())
     	stopRotate();
     else
-    	tilt.Set(Relay::Value::kReverse);
+    	tilt.Set(0.5);
 
 }
 void Launch::rotateTheLauncherDown()
@@ -141,31 +102,10 @@ void Launch::rotateTheLauncherDown()
     if (bottomLaunchSwitch.Get())
     	stopRotate();
     else
-    	tilt.Set(Relay::Value::kForward);
+    	tilt.Set(-0.5);
 
 }
 void Launch::stopRotate()
 {
-    tilt.Set(Relay::Value::kOff);
-}
-
-void Launch::liftUp(double speed)
-{
-    if (liftEncoder.GetDirection() < 45.0) // Change angle
-    	stopLift();
-    else
-    	lift.Set(speed);
-}
-
-void Launch::liftDown(double speed)
-{
-    if (liftEncoder.GetDirection() > -45.0) // Change angle
-    	stopLift();
-    else
-    	lift.Set(-speed);
-}
-
-void Launch::stopLift()
-{
-	lift.Set(0);
+    tilt.Set(0);
 }

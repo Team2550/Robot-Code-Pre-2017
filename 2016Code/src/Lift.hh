@@ -16,36 +16,24 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef SRC_2016CODE_HH_
-#define SRC_2016CODE_HH_
-
+#ifndef LIFT_H_INCLUDED
+#define LIFT_H_INCLUDED
 #include "WPILib.h"
-#include "Drive.hh"
-#include "Launch.hh"
-#include "Lift.hh"
-#include "xBox.hh"
-#include "Ultrasonic.h"
-#include "Timer.h"
 
-class Robot : public IterativeRobot {
+class Lift
+{
 private:
-	//Drive setup
-	Joystick driver;
-	Drive drive;
-	Joystick launcher;
-	Launch launch;
-	Lift lift;
-	Timer autoTime;
+    Victor lift; // I have no idea about what kind of motor we'll use. This needs to be changed.
+    Encoder liftEncoder;
+
 public:
-	Robot();
-	~Robot();
-	void RobotInit();
-	void AutonomousInit();
-	void AutonomousPeriodic();
-	void TeleopInit();
-	void TeleopPeriodic();
-	void DisabledInit();
-	void DisabledPeriodic();
+    Lift(int liftPort, int liftEncoderPortA, int liftEncoderPortB);
+    ~Lift(); // Lift does not use limit switches! Encoder
+    void remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis);
+    void turtle();
+    void liftUp(double speed);
+    void liftDown(double speed);
+    void stopLift();
 };
 
-#endif /* SRC_2016CODE_HH_ */
+#endif
