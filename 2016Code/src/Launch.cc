@@ -19,14 +19,16 @@
 #include "Launch.hh"
 
 Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort,
-		       int topLauncherSwitchPort, int bottomLauncherSwitchPort, int pushPort)
+		       int topLauncherSwitchPort, int bottomLauncherSwitchPort, int pushPortA, int pushPortB)
 			   :
                left(leftLauncherPort), right(rightLauncherPort),
 			   tilt(rotatePort),
 	           topLaunchSwitch(topLauncherSwitchPort),
 			   bottomLaunchSwitch(bottomLauncherSwitchPort),
-			   push(pushPort)
-{}
+			   pushA(pushPortA), pushB(pushPortB)
+{
+	launchPause.Reset();
+}
 
 Launch::~Launch()
 {
@@ -37,21 +39,32 @@ void Launch::feedIntake()
 {
     left.Set(-.25);
     right.Set(-.25);
-    push.Set(0.95); // Value needs to be changed
+    pushA.Set(0.95); // Value needs to be changed
+    pushB.Set(0.05);
 }
 
 void Launch::feedStop()
 {
     left.Set(0);
     right.Set(0);
-    push.Set(0.95);
+    pushA.Set(0.95);
+    pushB.Set(0.05);
 }
 
 void Launch::feedLaunch()
 {
+	if (!launching)
+		launchPause.Reset();
+		launchPause.Start();
     left.Set(1.0);
     right.Set(1.0);
-    push.Set(0.6); // Value needs to be changed
+    if (launchPause.Get() > 0.3) {
+    	pushA.Set(0.6);
+    	pushB.Set(0.4);
+    } else {
+        pushA.Set(0.95);
+        pushB.Set(0.05);
+    }
     // Add more things here e.g. something to push
     // the lauched item into the wheels after a
     // period of time
@@ -60,12 +73,18 @@ void Launch::feedLaunch()
 void Launch::remoteLaunch(bool launch, bool intake,
 						  bool upButton, bool downButton, bool turtleButton)
 {
-    if(launch)
+    if(launch) {
         feedLaunch();
-    else if(intake)
+    	launching = true;
+    } else if(intake) {
         feedIntake();
-    else
+    	launching = false;
+		launchPause.Stop();
+    } else {
         feedStop();
+        launching = false;
+		launchPause.Stop();
+    }
 
     if (turtleButton) {
     	turtle();
@@ -91,17 +110,17 @@ void Launch::turtle()
 void Launch::rotateTheLauncherUp()
 { // note to self: rotating might be backwards.
 
-    if (topLaunchSwitch.Get())
-    	stopRotate();
-    else
+    //if (topLaunchSwitch.Get())
+  //  	stopRotate();
+//    else
     	tilt.Set(0.5);
 
 }
 void Launch::rotateTheLauncherDown()
 {
-    if (bottomLaunchSwitch.Get())
-    	stopRotate();
-    else
+//    if (bottomLaunchSwitch.Get())
+  //  	stopRotate();
+    //else
     	tilt.Set(-0.5);
 
 }

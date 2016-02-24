@@ -24,8 +24,7 @@ Lift::Lift(int liftPort, int liftEncoderPortA, int liftEncoderPortB) :
 {
     //liftEncoder.SetMaxPeriod(50);
     liftEncoder.SetMinRate(0);
-    liftEncoder.SetDistancePerPulse(1);
-    liftEncoder.SetReverseDirection(false);
+    liftEncoder.SetDistancePerPulse(360/7.0);
     liftEncoder.SetSamplesToAverage(7);
     liftEncoder.Reset();
     // Put encoder setup here
@@ -38,31 +37,32 @@ Lift::~Lift()
 
 void Lift::remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis)
 {
-	std::cout << liftEncoder.Get() << '\n';
+	std::cout << liftEncoder.GetDistance() << '\n';
 	// feed control
 
-    if (turtleButton) {
+    if (turtleButton)
     	turtle();
-    } else {
+    else
+    {
 		// lift control
-		if (autoPortcullis) {
+		if (autoPortcullis)
 			liftUp(0.15);
-		} else {
+		else
+		{
 			if(liftAxis > .2)
-				liftUp(0.25);
-			else if(liftAxis < .2)
-				liftDown(0.25);
+				liftUp(0.15);
+			else if(liftAxis < -0.2)
+				liftDown(0.15);
 			else
 				stopLift();
 		}
     }
-
     SmartDashboard::PutNumber("Encoder", liftEncoder.GetDistance());
 }
 
 void Lift::turtle()
 {
-    if (liftEncoder.GetDirection() < 45.0) { // Change angle
+    if (liftEncoder.GetDistance() > 45.0) { // Change angle
     	stopLift();
     } else
     	lift.Set(0.75);
@@ -70,7 +70,7 @@ void Lift::turtle()
 
 void Lift::liftUp(double speed)
 {
-    if (liftEncoder.Get() > 45.0) // Change angle
+    if (liftEncoder.GetDistance() > 45.0) // Change angle
     	stopLift();
     else
     	lift.Set(speed);
@@ -78,7 +78,7 @@ void Lift::liftUp(double speed)
 
 void Lift::liftDown(double speed)
 {
-    if (liftEncoder.Get() < 0) // Change angle
+    if (liftEncoder.GetDistance() < 0) // Change angle
     	stopLift();
     else
     	lift.Set(-speed);

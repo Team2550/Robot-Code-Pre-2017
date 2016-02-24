@@ -28,12 +28,15 @@ private:
     TalonSRX tilt;
     DigitalInput topLaunchSwitch;
     DigitalInput bottomLaunchSwitch;
-    Servo push;
+    Servo pushA;
+    Servo pushB;
+    bool launching;
+    Timer launchPause;
 
 public:
     Launch(int leftLauncherPort, int rightLauncherPort,
     	   int rotatePort, int topLauncherSwitchPort,
-		   int bottomLauncherSwitchPort, int pushPort);
+		   int bottomLauncherSwitchPort, int pushPortA, int pushPortB);
     ~Launch(); // Lift does not use limit switches! Encoder
     void feedIntake();
     void feedStop();
