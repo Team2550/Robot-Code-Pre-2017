@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2015, 2016 "Jadon Belezos" "Lance Booth" "Kira Corbet" "Caleb Reister" "Nathan Walker"
+    Copyright (C) 2015, 2016 "Jadon Belezos" "Lance Booth" "Kira Corbett" "Caleb Reister" "Nathan Walker"
 
     This file is a part of the Team 2500 Robot Code.
 
@@ -26,8 +26,13 @@ Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort,
 	           topLaunchSwitch(topLauncherSwitchPort),
 			   bottomLaunchSwitch(bottomLauncherSwitchPort),
 			   pushA(pushPortA), pushB(pushPortB)
+
+			   // pushA = port #6
+			   // pushB = port #7
+
 {
 	launchPause.Reset();
+	launching = false;
 }
 
 Launch::~Launch()
@@ -40,7 +45,7 @@ void Launch::feedIntake()
     left.Set(-.25);
     right.Set(-.25);
     pushA.Set(0.95); // Value needs to be changed
-    pushB.Set(0.05);
+    pushB.Set(0.0526);
 }
 
 void Launch::feedStop()
@@ -48,22 +53,23 @@ void Launch::feedStop()
     left.Set(0);
     right.Set(0);
     pushA.Set(0.95);
-    pushB.Set(0.05);
+    pushB.Set(0.0526);
 }
 
 void Launch::feedLaunch()
 {
-	if (!launching)
+	if (!launching) {
 		launchPause.Reset();
 		launchPause.Start();
+	}
     left.Set(1.0);
     right.Set(1.0);
     if (launchPause.Get() > 0.3) {
-    	pushA.Set(0.6);
-    	pushB.Set(0.4);
+    	pushA.Set(0.65);
+    	pushB.Set(0.3527);
     } else {
         pushA.Set(0.95);
-        pushB.Set(0.05);
+        pushB.Set(0.0527);
     }
     // Add more things here e.g. something to push
     // the lauched item into the wheels after a
@@ -110,17 +116,17 @@ void Launch::turtle()
 void Launch::rotateTheLauncherUp()
 { // note to self: rotating might be backwards.
 
-    //if (topLaunchSwitch.Get())
-  //  	stopRotate();
-//    else
+    if (topLaunchSwitch.Get())
+    	stopRotate();
+    else
     	tilt.Set(0.5);
 
 }
 void Launch::rotateTheLauncherDown()
 {
-//    if (bottomLaunchSwitch.Get())
-  //  	stopRotate();
-    //else
+    if (bottomLaunchSwitch.Get())
+    	stopRotate();
+    else
     	tilt.Set(-0.5);
 
 }

@@ -19,35 +19,40 @@
 #include "2016Code.hh"
 
 Robot::Robot() : driver(0), drive(0, 1), launcher(1),
-				 launch(3, 4, 5, 3, 2, 6, 7), lift(2, 0, 1)
+				 launch(3, 4, 5, 2, 3, 6, 7), lift(2, 0, 1)
 {
 	/*Launch(int leftLauncherPort, int rightLauncherPort,
 	    	   int rotatePort, int topLauncherSwitchPort,
 			   int bottomLauncherSwitchPort, int pushPortA, int pushPortB);*/
 }
 
-Robot::~Robot() {
+Robot::~Robot()
+{
 }
 
 
-void Robot::RobotInit() {
+void Robot::RobotInit()
+{
 }
 
-void Robot::AutonomousInit() {
+void Robot::AutonomousInit()
+{
     autoTime.Start();
     drive.driveForward(.25);
 //nothing to initialize
 
 }
 
-void Robot::AutonomousPeriodic() {
+void Robot::AutonomousPeriodic()
+{
     if(autoTime.HasPeriodPassed(2.0)) //in seconds
 		drive.driveForward(0.0);
     //
 
 }
 
-void Robot::TeleopInit() {
+void Robot::TeleopInit()
+{
 
 }
 
@@ -68,11 +73,13 @@ void Robot::TeleopPeriodic() {
 					launcher.GetRawAxis(xbox::axis::leftY)); // Lifter
 }
 
-void Robot::DisabledInit() {
+void Robot::DisabledInit()
+{
 
 }
 
-void Robot::DisabledPeriodic() {
+void Robot::DisabledPeriodic()
+{
 
 }
 

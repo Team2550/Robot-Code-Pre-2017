@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2015, 2016 "Jadon Belezos" "Lance Booth" "Kira Corbet" "Caleb Reister" "Nathan Walker"
+    Copyright (C) 2015, 2016 "Jadon Belezos" "Lance Booth" "Kira Corbett" "Caleb Reister" "Nathan Walker"
 
     This file is a part of the Team 2500 Robot Code.
 
@@ -24,7 +24,7 @@ Lift::Lift(int liftPort, int liftEncoderPortA, int liftEncoderPortB) :
 {
     //liftEncoder.SetMaxPeriod(50);
     liftEncoder.SetMinRate(0);
-    liftEncoder.SetDistancePerPulse(360/7.0);
+    liftEncoder.SetDistancePerPulse(1);
     liftEncoder.SetSamplesToAverage(7);
     liftEncoder.Reset();
     // Put encoder setup here
@@ -37,7 +37,7 @@ Lift::~Lift()
 
 void Lift::remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis)
 {
-	std::cout << liftEncoder.GetDistance() << '\n';
+	std::cout << liftEncoder.Get() << '\n';
 	// feed control
 
     if (turtleButton)
@@ -57,31 +57,31 @@ void Lift::remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis)
 				stopLift();
 		}
     }
-    SmartDashboard::PutNumber("Encoder", liftEncoder.GetDistance());
+    SmartDashboard::PutNumber("Encoder", liftEncoder.Get());
 }
 
 void Lift::turtle()
 {
-    if (liftEncoder.GetDistance() > 45.0) { // Change angle
+    if (liftEncoder.Get() > 45.0) // Change angle
     	stopLift();
-    } else
+    else
     	lift.Set(0.75);
 }
 
 void Lift::liftUp(double speed)
 {
-    if (liftEncoder.GetDistance() > 45.0) // Change angle
+    if (liftEncoder.Get() < -90.0) // Change angle
     	stopLift();
     else
-    	lift.Set(speed);
+    	lift.Set(-speed);
 }
 
 void Lift::liftDown(double speed)
 {
-    if (liftEncoder.GetDistance() < 0) // Change angle
+    if (liftEncoder.Get() > 0.0) // Change angle
     	stopLift();
     else
-    	lift.Set(-speed);
+    	lift.Set(speed);
 }
 
 void Lift::stopLift()
