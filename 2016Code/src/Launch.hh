@@ -33,20 +33,21 @@ private:
     bool launching;
     Timer launchPause;
 
+    void feedIntake();
+    void feedStop();
+    void feedLaunch();
+    void rotateTheLauncherUp();
+    void rotateTheLauncherDown();
+    void stopRotate();
 public:
     Launch(int leftLauncherPort, int rightLauncherPort,
     	   int rotatePort, int topLauncherSwitchPort,
 		   int bottomLauncherSwitchPort, int pushPortA, int pushPortB);
     ~Launch(); // Lift does not use limit switches! Encoder
-    void feedIntake();
-    void feedStop();
-    void feedLaunch();
     void remoteLaunch(bool launch, bool intake,
     		          bool upButton, bool downButton,
 					  bool turtleButton, bool autoPortcullis);
-    void rotateTheLauncherUp();
-    void rotateTheLauncherDown();
-    void stopRotate();
+
 };
 
 #endif
