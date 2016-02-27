@@ -1,0 +1,265 @@
+<head><version>2.79.21</version></head>
+<Axis_Internet_Camera>
+  <auto_back_light>TRUE</auto_back_light>
+  <auto_exposure>FALSE</auto_exposure>
+  <auto_white_balance>TRUE</auto_white_balance>
+  <brightness_value>50</brightness_value>
+  <color_level_value>50</color_level_value>
+  <compression_index>5</compression_index>
+  <contrast_value>50</contrast_value>
+  <exposure_value>50</exposure_value>
+  <ip_address>10.25.50.10</ip_address>
+  <is_active>TRUE</is_active>
+  <mirrot>FALSE</mirrot>
+  <password>FRC</password>
+  <port>80</port>
+  <resolution>320x240</resolution>
+  <sharpness_value>50</sharpness_value>
+  <username>FRC</username>
+</Axis_Internet_Camera>
+<Adaptive_Threshold>
+  <channel_type>1</channel_type>
+  <filter_size>25</filter_size>
+  <max_threshold>255</max_threshold>
+  <mean_offset>-30</mean_offset>
+  <min_threshold>160</min_threshold>
+</Adaptive_Threshold>
+<Marker>
+  <include_graphics>0</include_graphics>
+  <name>Threshold</name>
+  <revert_to>Current</revert_to>
+</Marker>
+<Convex_Hull/>
+<Math>
+  <all_channels>TRUE</all_channels>
+  <bias>0</bias>
+  <divisor>1</divisor>
+  <function>2</function>
+  <image1>Current</image1>
+  <image2>Threshold</image2>
+</Math>
+<Blob_Filter>
+  <create_blob_array_variable>FALSE</create_blob_array_variable>
+  <filters>
+    <tab>
+      <filter>
+        <count_threshold>0</count_threshold>
+        <create_array>0</create_array>
+        <filter_id>8</filter_id>
+        <invert_count>0</invert_count>
+        <invert_threshold>0</invert_threshold>
+        <minimum_size>100</minimum_size>
+        <weight_threshold>1.0</weight_threshold>
+      </filter>
+      <filter:2>
+        <count_threshold>0</count_threshold>
+        <create_array>0</create_array>
+        <filter_id>66</filter_id>
+        <invert_count>0</invert_count>
+        <invert_threshold>0</invert_threshold>
+        <weight_threshold>0.5</weight_threshold>
+      </filter:2>
+      <filter:3>
+        <count_threshold>0</count_threshold>
+        <create_array>0</create_array>
+        <filter_id>67</filter_id>
+        <invert_count>0</invert_count>
+        <invert_threshold>0</invert_threshold>
+        <weight_threshold>0.45</weight_threshold>
+      </filter:3>
+      <filter:4>
+        <count_threshold>1</count_threshold>
+        <create_array>0</create_array>
+        <filter_id>21</filter_id>
+        <invert_count>0</invert_count>
+        <invert_threshold>0</invert_threshold>
+        <weight_threshold>1</weight_threshold>
+      </filter:4>
+    </tab>
+    <tab:2/>
+    <tab:3/>
+    <tab:4/>
+    <tab:5/>
+    <tab:6/>
+  </filters>
+  <font_size>Tiny (6pt)</font_size>
+  <largest_is_background>FALSE</largest_is_background>
+  <show_weights>FALSE</show_weights>
+  <sort_array_on_x>FALSE</sort_array_on_x>
+  <sort_array_on_y>FALSE</sort_array_on_y>
+</Blob_Filter>
+<Fill>
+  <check_border>FALSE</check_border>
+  <fill_with_average_color>FALSE</fill_with_average_color>
+  <four_pixel_connectivity>FALSE</four_pixel_connectivity>
+</Fill>
+<Blob_Replace>
+  <color_index>6</color_index>
+  <fill_shape>TRUE</fill_shape>
+  <order_array_on_x>FALSE</order_array_on_x>
+  <order_array_on_y>FALSE</order_array_on_y>
+  <shape_index>15</shape_index>
+  <thickness>1</thickness>
+</Blob_Replace>
+<VBScript_Program>
+  <auto_reload>FALSE</auto_reload>
+  <continue_on_errors>FALSE</continue_on_errors>
+  <script>list = GetArrayVariable("BFR_COORDINATES")
+if isArray(list) then
+  if ubound(list) &gt; 0 then
+
+		targetPixelHeight = 0
+    targetSamples = 0
+
+    ' calibrated for an Axis camera
+    imageHeight = GetVariable("IMAGE_HEIGHT")
+  	cameraFieldOfView = 55
+	  targetHeight = 12
+
+    for i = 0 to ubound(list) step 8
+      ' grab list of coordinates from blob_replace
+	  	' note the array is sorted by previous module in a specific order
+      righty = list(i+1)
+      rightyy = list(i+7)
+      lefty = list(i+3)
+      leftyy = list(i+5)
+
+			' based on these two side lines get the center line height
+		  ' the center line is used since we want to aim to the center
+  		' of the target. This also removes any perspective distortion
+	  	' where the right or left size may be a couple inches closer
+		  ' or futher away from the camera
+  		targetPixelHeight = targetPixelHeight + ((lefty - leftyy) + (righty - rightyy)) / 2
+
+			targetSamples = targetSamples + 1
+
+    next
+
+		targetPixelHeight = targetPixelHeight / targetSamples
+
+    ' we can use a known distance to determine FOV if we don't know it
+	  ' measuredDistance = 10.0*12.0
+ 	  ' write "Calculated FOV " &amp; (((atan((((targetHeight*imageHeight)/targetPixelHeight)/2)/measuredDistance)*2.0)*180.0)/3.14159) &amp; vbCRLF
+
+    ' determine distance in inches
+    totalDistance = (((targetHeight*imageHeight)/targetPixelHeight)/2)/tan(((cameraFieldOfView*3.14159)/180.0)/2.0)
+	
+		SetVariable "Distance", CInt((totalDistance*10)/12)/10
+
+	end if
+end if
+</script>
+  <source_mode>gui</source_mode>
+  <tab_size_index>1</tab_size_index>
+</VBScript_Program>
+<Math>
+  <all_channels>TRUE</all_channels>
+  <bias>0</bias>
+  <divisor>1</divisor>
+  <function>1</function>
+  <image1>Source</image1>
+  <image2>Current</image2>
+</Math>
+<Display_Variables>
+  <border_color>purple</border_color>
+  <border_color_index>5</border_color_index>
+  <dim_background>TRUE</dim_background>
+  <display_as_annotation>FALSE</display_as_annotation>
+  <display_value_only>FALSE</display_value_only>
+  <font_size>Normal (10pt)</font_size>
+  <font_size_index>2</font_size_index>
+  <northwest>Distance
+</northwest>
+</Display_Variables>
+<function>
+<function_name>Robot</function_name>
+<function_always_run>0</function_always_run>
+<Adaptive_Threshold>
+  <channel_type>1</channel_type>
+  <filter_size>10</filter_size>
+  <max_threshold>255</max_threshold>
+  <mean_offset>-30</mean_offset>
+  <min_threshold>0</min_threshold>
+</Adaptive_Threshold>
+<Marker>
+  <include_graphics>0</include_graphics>
+  <name>Threshold</name>
+  <revert_to>Current</revert_to>
+</Marker>
+<Convex_Hull/>
+<Math>
+  <all_channels>TRUE</all_channels>
+  <bias>0</bias>
+  <divisor>1</divisor>
+  <function>2</function>
+  <image1>Current</image1>
+  <image2>Threshold</image2>
+</Math>
+<Blob_Filter>
+  <create_blob_array_variable>FALSE</create_blob_array_variable>
+  <filters>
+    <tab>
+      <filter>
+        <count_threshold>0</count_threshold>
+        <create_array>0</create_array>
+        <filter_id>8</filter_id>
+        <invert_count>0</invert_count>
+        <invert_threshold>0</invert_threshold>
+        <minimum_size>100</minimum_size>
+        <weight_threshold>0.5</weight_threshold>
+      </filter>
+      <filter:2>
+        <count_threshold>1</count_threshold>
+        <create_array>0</create_array>
+        <filter_id>21</filter_id>
+        <invert_count>0</invert_count>
+        <invert_threshold>0</invert_threshold>
+        <weight_threshold>0.5</weight_threshold>
+      </filter:2>
+      <filter:3>
+        <count_threshold>0</count_threshold>
+        <create_array>0</create_array>
+        <filter_id>66</filter_id>
+        <invert_count>0</invert_count>
+        <invert_threshold>0</invert_threshold>
+        <weight_threshold>0.65</weight_threshold>
+      </filter:3>
+    </tab>
+    <tab:2/>
+    <tab:3/>
+    <tab:4/>
+    <tab:5/>
+    <tab:6/>
+  </filters>
+  <font_size>Normal (10pt)</font_size>
+  <largest_is_background>FALSE</largest_is_background>
+  <show_weights>FALSE</show_weights>
+  <sort_array_on_x>FALSE</sort_array_on_x>
+  <sort_array_on_y>FALSE</sort_array_on_y>
+</Blob_Filter>
+<Blob_Replace>
+  <color_index>6</color_index>
+  <fill_shape>TRUE</fill_shape>
+  <order_array_on_x>FALSE</order_array_on_x>
+  <order_array_on_y>FALSE</order_array_on_y>
+  <shape_index>15</shape_index>
+  <thickness>1</thickness>
+</Blob_Replace>
+<NetworkTables>
+  <delay>100</delay>
+  <filter_type_index>0</filter_type_index>
+  <hostname>10.0.0.2</hostname>
+  <port>1735</port>
+  <prefix>/SmartDashboard/</prefix>
+  <variables_to_send>BFR_COORDINATES</variables_to_send>
+  <variable_type_index>0</variable_type_index>
+</NetworkTables>
+<Math>
+  <all_channels>TRUE</all_channels>
+  <bias>0</bias>
+  <divisor>1</divisor>
+  <function>1</function>
+  <image1>Source</image1>
+  <image2>Current</image2>
+</Math>
+</function>
