@@ -18,8 +18,8 @@
 */
 #include "Lift.hh"
 
-Lift::Lift(int liftPort) :
-           lift(liftPort)
+Lift::Lift(int liftPort, int bottomSwitchPort, int topSwitchPort) :
+           lift(liftPort), bottomSwitch(bottomSwitchPort), topSwitch(topSwitchPort)
 {
 
 }
@@ -47,22 +47,28 @@ void Lift::remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis)
 			else if(liftAxis < -0.2)
 				liftUp(0.15);
 			else
-				stopThisLift_IOrderYou_STOOOOOOOOOP();
+				stopLift();
 		}
     }
 }
 
 void Lift::liftDown(double speed)
 {
-    	lift.Set(-speed);
+	if(bottomSwitch.Get())
+		stopLift();
+	else
+		lift.Set(-speed);
 }
 
 void Lift::liftUp(double speed)
 {
+	if(topSwitch.Get())
+		stopLift();
+	else
     	lift.Set(speed);
 }
 
-void Lift::stopThisLift_IOrderYou_STOOOOOOOOOP()
+void Lift::stopLift()
 {
 	lift.Set(0);
 }

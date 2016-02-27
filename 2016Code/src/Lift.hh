@@ -24,11 +24,13 @@ class Lift
 {
 private:
     Victor lift; // I have no idea about what kind of motor we'll use. This needs to be changed.
+    DigitalInput bottomSwitch;
+    DigitalInput topSwitch;
     void liftUp(double speed);
     void liftDown(double speed);
-    void stopThisLift_IOrderYou_STOOOOOOOOOP();
+    void stopLift();
 public:
-    Lift(int liftPort);
+    Lift(int liftPort, int bottomSwitchPort, int topSwitchPort);
     ~Lift(); // Lift does not use limit switches! Encoder
     void remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis);
 
