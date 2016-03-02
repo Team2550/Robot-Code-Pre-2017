@@ -18,14 +18,12 @@
 */
 #include "Lift.hh"
 
-Lift::Lift(int liftPort, int liftEncoderPortA, int liftEncoderPortB) :
+Lift::Lift(int liftPort, int liftEncoderPortA, int liftEncoderPortB, int topLimitSwitchPort) :
            lift(liftPort), liftEncoder(liftEncoderPortA, liftEncoderPortB, false,
-	        		       	   	   	   Encoder::EncodingType::k4X)
+	        		       	   	   	   Encoder::EncodingType::k4X),
+		   topLimitSwitch(topLimitSwitchPort)
 {
     //liftEncoder.SetMaxPeriod(50);
-    liftEncoder.SetMinRate(0);
-    liftEncoder.SetDistancePerPulse(1);
-    liftEncoder.SetSamplesToAverage(7);
     liftEncoder.Reset();
     // Put encoder setup here
 }
@@ -57,12 +55,15 @@ void Lift::remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis)
 				stopLift();
 		}
     }
-    SmartDashboard::PutNumber("Encoder", liftEncoder.Get());
+
+    if (topLimitSwitch.Get()) {
+    	liftEncoder.Reset();
+    }
 }
 
 void Lift::liftDown(double speed)
 {
-    if (liftEncoder.Get() < -90.0) // Change angle
+    if (liftEncoder.Get() < -140.0) // Change angle // 360 degrees = 500 pulses
     	stopLift();
     else
     	lift.Set(-speed);
