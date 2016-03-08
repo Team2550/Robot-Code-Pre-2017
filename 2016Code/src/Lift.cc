@@ -18,14 +18,15 @@
 */
 #include "Lift.hh"
 
-Lift::Lift(int liftPort, int liftEncoderPortA, int liftEncoderPortB, int topLimitSwitchPort) :
+Lift::Lift(int liftPort, int liftEncoderPortA, int liftEncoderPortB,
+		   int topLimitSwitchPort, int bottomLimitSwitchPort, float liftSpeed) :
            lift(liftPort), liftEncoder(liftEncoderPortA, liftEncoderPortB, false,
 	        		       	   	   	   Encoder::EncodingType::k4X),
-		   topLimitSwitch(topLimitSwitchPort)
+		   topLimitSwitch(topLimitSwitchPort), bottomLimitSwitch(bottomLimitSwitchPort)
 {
     //liftEncoder.SetMaxPeriod(50);
     liftEncoder.Reset();
-    // Put encoder setup here
+    lSpeed = liftSpeed;
 }
 
 Lift::~Lift()
@@ -48,9 +49,9 @@ void Lift::remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis)
 		else
 		{
 			if(liftAxis > .2)
-				liftDown(0.15);
+				liftDown(liftAxis * lSpeed);
 			else if(liftAxis < -0.2)
-				liftUp(0.15);
+				liftUp(-liftAxis * lSpeed);
 			else
 				stopLift();
 		}
@@ -59,11 +60,12 @@ void Lift::remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis)
     if (topLimitSwitch.Get()) {
     	liftEncoder.Reset();
     }
+	SmartDashboard::PutBoolean("Lift Arm", topLimitSwitch.Get());
 }
 
 void Lift::liftDown(double speed)
 {
-    if (liftEncoder.Get() < -140.0) // Change angle // 360 degrees = 500 pulses
+    if (liftEncoder.Get() < -140.0 || bottomLimitSwitch.Get()) // Change angle // 360 degrees = 500 pulses
     	stopLift();
     else
     	lift.Set(-speed);
@@ -71,7 +73,7 @@ void Lift::liftDown(double speed)
 
 void Lift::liftUp(double speed)
 {
-    if (liftEncoder.Get() > 0.0) // Change angle
+    if (liftEncoder.Get() > 0.0 || topLimitSwitch.Get()) // Change angle
     	stopLift();
     else
     	lift.Set(speed);

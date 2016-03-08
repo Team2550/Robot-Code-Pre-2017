@@ -18,6 +18,7 @@
 */
 #ifndef LAUNCH_H_INCLUDED
 #define LAUNCH_H_INCLUDED
+#include <math.h>
 #include "WPILib.h"
 
 class Launch
@@ -30,23 +31,33 @@ private:
     DigitalInput bottomLaunchSwitch;
     Servo pushA;
     Servo pushB;
+    Servo cameraMountYaw;
+    Servo cameraMountPitch;
+    float camYaw;
+    float camPitch;
+    float camSpeed;
     bool launching;
     Timer launchPause;
 
 public:
     Launch(int leftLauncherPort, int rightLauncherPort,
     	   int rotatePort, int topLauncherSwitchPort,
-		   int bottomLauncherSwitchPort, int pushPortA, int pushPortB);
+		   int bottomLauncherSwitchPort,
+		   int pushPortA, int pushPortB, int cameraMountYawPort, int cameraMountPitchPort,
+		   float cameraStartYaw, float cameraStartPitch, float cameraSpeed);
     ~Launch(); // Lift does not use limit switches! Encoder
     void feedIntake();
     void feedStop();
     void feedLaunch();
     void remoteLaunch(bool launch, bool intake,
     		          bool upButton, bool downButton,
-					  bool turtleButton, bool autoPortcullis);
-    void rotateTheLauncherUp();
-    void rotateTheLauncherDown();
+					  bool turtleButton, bool autoPortcullis,
+					  float cameraYaw, float cameraPitch);
+    void rotateLauncherUp();
+    void rotateLauncherDown();
     void stopRotate();
+    void rotCamera(float speed);
+    void tiltCamera(float speed);
 };
 
 #endif

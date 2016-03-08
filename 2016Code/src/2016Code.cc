@@ -18,12 +18,9 @@
 */
 #include "2016Code.hh"
 
-Robot::Robot() : driver(0), drive(0, 2 /* 1 */), launcher(1),
-				 launch(3, 4, 5, 2, 3, 6, 7), lift(1 /* Change back to 2 */, 0, 1)
+Robot::Robot() : driver(0), drive(0, 1, 0.4, 0.65), launcher(1),
+				 launch(3, 4, 5, 2, 3, 6, 7, 8, 9, 90.0, 90.0, 2.0), lift(2, 0, 1, 8, 9, 0.15)
 {
-	/*Launch(int leftLauncherPort, int rightLauncherPort,
-	    	   int rotatePort, int topLauncherSwitchPort,
-			   int bottomLauncherSwitchPort, int pushPortA, int pushPortB);*/
 }
 
 Robot::~Robot()
@@ -39,7 +36,6 @@ void Robot::AutonomousInit()
 {
     autoTime.Start();
     drive.driveForward(.25);
-//nothing to initialize
 
 }
 
@@ -47,8 +43,6 @@ void Robot::AutonomousPeriodic()
 {
     if(autoTime.HasPeriodPassed(2.0)) //in seconds
 		drive.stop();
-    //
-
 }
 
 void Robot::TeleopInit()
@@ -57,21 +51,23 @@ void Robot::TeleopInit()
 }
 
 void Robot::TeleopPeriodic() {
-	drive.remoteDrive(driver.GetRawAxis(xbox::axis::leftY),  // Left Tank
-					  driver.GetRawAxis(xbox::axis::rightY), // Right Tank
-					  driver.GetRawButton(xbox::btn::rb),    // Boost
-					  driver.GetRawButton(xbox::btn::lb));   // Auto Portcullis
+	drive.remoteDrive(driver.GetRawAxis(xbox::axis::leftY),      // Left Tank
+					  driver.GetRawAxis(xbox::axis::rightY),     // Right Tank
+					  driver.GetRawButton(xbox::btn::rb),        // Boost
+					  driver.GetRawButton(xbox::btn::lb));       // Auto Portcullis
 
-    launch.remoteLaunch(launcher.GetRawButton(xbox::btn::y), // Launch
-                        launcher.GetRawButton(xbox::btn::x), // Intake
-						launcher.GetRawButton(xbox::btn::lb),// Launcher Up
-						launcher.GetRawButton(xbox::btn::rb),// Launcher Down
-						driver.GetRawButton(xbox::btn::a),	 // Turtle
-						driver.GetRawButton(xbox::btn::lb)); // Auto Portcullis
+    launch.remoteLaunch(launcher.GetRawButton(xbox::btn::y),     // Launch
+                        launcher.GetRawButton(xbox::btn::x),     // Intake
+						launcher.GetRawButton(xbox::btn::rb),    // Launcher Up
+						launcher.GetRawButton(xbox::btn::lb),    // Launcher Down
+						driver.GetRawButton(xbox::btn::a),	     // Turtle
+						driver.GetRawButton(xbox::btn::lb),      // Auto Portcullis
+						launcher.GetRawAxis(xbox::axis::rightX), // Camera Gimble Yaw
+						launcher.GetRawAxis(xbox::axis::rightY));// Camera Gimble Pitch
 
-    lift.remoteLift(driver.GetRawButton(xbox::btn::a),		 // Turtle
-					driver.GetRawButton(xbox::btn::lb),      // Auto Portcullis
-					launcher.GetRawAxis(xbox::axis::leftY)); // Lifter
+    lift.remoteLift(driver.GetRawButton(xbox::btn::a),		     // Turtle
+					driver.GetRawButton(xbox::btn::lb),          // Auto Portcullis
+					launcher.GetRawAxis(xbox::axis::leftY));     // Lifter
 }
 
 void Robot::DisabledInit()
