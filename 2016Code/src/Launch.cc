@@ -19,13 +19,16 @@
 #include "Launch.hh"
 
 Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort,
-		       int topLauncherSwitchPort, int bottomLauncherSwitchPort, int pushPortA, int pushPortB)
+		       int topLauncherSwitchPort, int bottomLauncherSwitchPort,
+			   int pushPortA, int pushPortB, int cameraMountYawPort, int cameraMountPitchPort,
+			   float cameraStartYaw, float cameraStartPitch, float cameraSpeed)
 			   :
                left(leftLauncherPort), right(rightLauncherPort),
 			   tilt(rotatePort),
 	           topLaunchSwitch(topLauncherSwitchPort),
 			   bottomLaunchSwitch(bottomLauncherSwitchPort),
-			   pushA(pushPortA), pushB(pushPortB)
+			   pushA(pushPortA), pushB(pushPortB),
+			   cameraMountYaw(cameraMountYawPort), cameraMountPitch(cameraMountPitchPort)
 
 			   // pushA = port #6
 			   // pushB = port #7
@@ -33,6 +36,9 @@ Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort,
 {
 	launchPause.Reset();
 	launching = false;
+	camYaw = cameraStartYaw;
+	camPitch = cameraStartPitch;
+	camSpeed = cameraSpeed;
 }
 
 Launch::~Launch()
@@ -80,8 +86,8 @@ void Launch::feedLaunch()
     // period of time
 }
 
-void Launch::remoteLaunch(bool launch, bool intake,
-						  bool upButton, bool downButton, bool turtleButton, bool autoPortcullis)
+void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButton,
+						  bool turtleButton, bool autoPortcullis, float cameraYaw, float cameraPitch)
 {
     if(launch)
     {
@@ -102,25 +108,35 @@ void Launch::remoteLaunch(bool launch, bool intake,
     }
 
     if (turtleButton)
-    	rotateTheLauncherUp();
+    	rotateLauncherUp();
     else
     {
-    	if (autoPortcullis)\
-    		rotateTheLauncherDown();\
+    	if (autoPortcullis)
+    		rotateLauncherDown();
     	else
     	{
 			// rotation control
 			if(upButton)
-				rotateTheLauncherUp();
+				rotateLauncherUp();
 			else if(downButton)
-				rotateTheLauncherDown();
+				rotateLauncherDown();
 			else
 				stopRotate();
     	}
     }
+
+    if (fabs(cameraYaw) > 0.2) {
+    	rotCamera(cameraYaw * camSpeed);
+    }
+    if (fabs(cameraPitch) > 0.2) {
+    	tiltCamera(cameraPitch * camSpeed);
+    }
+
+    cameraMountYaw.SetAngle(camYaw);
+    cameraMountPitch.SetAngle(camPitch);
 }
 
-void Launch::rotateTheLauncherUp()
+void Launch::rotateLauncherUp()
 { // note to self: rotating might be backwards.
 
     if (topLaunchSwitch.Get())
@@ -129,7 +145,7 @@ void Launch::rotateTheLauncherUp()
     	tilt.Set(0.6);
 
 }
-void Launch::rotateTheLauncherDown()
+void Launch::rotateLauncherDown()
 {
     if (bottomLaunchSwitch.Get())
     	stopRotate();
@@ -140,4 +156,26 @@ void Launch::rotateTheLauncherDown()
 void Launch::stopRotate()
 {
     tilt.Set(0);
+}
+
+void Launch::rotCamera(float speed) {
+	camYaw += speed;
+
+	if (camYaw > 180.0) {
+		camYaw = 180.0;
+	}
+	if (camYaw < 0.0) {
+		camYaw = 0.0;
+	}
+}
+
+void Launch::tiltCamera(float speed) {
+	camPitch += speed;
+
+	if (camPitch > 160.0) {
+		camPitch = 160.0;
+	}
+	if (camPitch < 75.0) {
+		camPitch = 75.0;
+	}
 }
