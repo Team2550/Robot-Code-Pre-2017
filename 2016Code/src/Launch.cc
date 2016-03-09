@@ -134,6 +134,8 @@ void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButt
 
     cameraMountYaw.SetAngle(camYaw);
     cameraMountPitch.SetAngle(camPitch);
+    SmartDashboard::PutNumber("Camera Yaw", camYaw);
+    SmartDashboard::PutNumber("Camera Pitch", camPitch);
 }
 
 void Launch::rotateLauncherUp()
