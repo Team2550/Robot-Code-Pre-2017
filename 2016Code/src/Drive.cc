@@ -41,12 +41,12 @@ void Drive::remoteDrive(float leftStick, float rightStick, bool boost, bool auto
 			speedMult = bSpeed;
 		}
 
-		if (fabs(leftStick * speedMult) > 0.2) //number accounts for dead zone
+		if (fabs(leftStick) > 0.2) //number accounts for dead zone
 			left.Set(leftStick * speedMult);
 		else
 			left.Set(0);
 
-		if (fabs(rightStick * speedMult) > 0.2) //number accounts for dead zone
+		if (fabs(rightStick) > 0.2) //number accounts for dead zone
 			right.Set(rightStick * speedMult);
 		else
 			right.Set(0);
