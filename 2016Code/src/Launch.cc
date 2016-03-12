@@ -21,7 +21,7 @@
 Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort,
 		       int topLauncherSwitchPort, int bottomLauncherSwitchPort,
 			   int pushPortA, int pushPortB, int cameraMountYawPort, int cameraMountPitchPort,
-			   float cameraStartYaw, float cameraStartPitch, float cameraSpeed)
+			   float cameraStartPitch, float cameraSpeed)
 			   :
                left(leftLauncherPort), right(rightLauncherPort),
 			   tilt(rotatePort),
@@ -36,7 +36,6 @@ Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort,
 {
 	launchPause.Reset();
 	launching = false;
-	camYaw = cameraStartYaw;
 	camPitch = cameraStartPitch;
 	camSpeed = cameraSpeed;
 }
@@ -87,7 +86,7 @@ void Launch::feedLaunch()
 }
 
 void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButton,
-						  bool turtleButton, bool autoPortcullis, float cameraYaw, float cameraPitch)
+						  bool turtleButton, bool autoPortcullis, float cameraPitch)
 {
     if(launch)
     {
@@ -125,16 +124,12 @@ void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButt
     	}
     }
 
-    if (fabs(cameraYaw) > 0.2) {
-    	rotCamera(cameraYaw * camSpeed);
-    }
     if (fabs(cameraPitch) > 0.2) {
     	tiltCamera(cameraPitch * camSpeed);
     }
 
-    cameraMountYaw.SetAngle(camYaw);
+    cameraMountYaw.SetAngle(105.0); // Remove before competition
     cameraMountPitch.SetAngle(camPitch);
-    SmartDashboard::PutNumber("Camera Yaw", camYaw);
     SmartDashboard::PutNumber("Camera Pitch", camPitch);
 }
 
@@ -158,17 +153,6 @@ void Launch::rotateLauncherDown()
 void Launch::stopRotate()
 {
     tilt.Set(0);
-}
-
-void Launch::rotCamera(float speed) {
-	camYaw += speed;
-
-	if (camYaw > 180.0) {
-		camYaw = 180.0;
-	}
-	if (camYaw < 0.0) {
-		camYaw = 0.0;
-	}
 }
 
 void Launch::tiltCamera(float speed) {

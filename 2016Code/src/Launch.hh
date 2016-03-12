@@ -31,9 +31,8 @@ private:
     DigitalInput bottomLaunchSwitch;
     Servo pushA;
     Servo pushB;
-    Servo cameraMountYaw;
+    Servo cameraMountYaw; // Remove before competition
     Servo cameraMountPitch;
-    float camYaw;
     float camPitch;
     float camSpeed;
     bool launching;
@@ -43,8 +42,8 @@ public:
     Launch(int leftLauncherPort, int rightLauncherPort,
     	   int rotatePort, int topLauncherSwitchPort,
 		   int bottomLauncherSwitchPort,
-		   int pushPortA, int pushPortB, int cameraMountYawPort, int cameraMountPitchPort,
-		   float cameraStartYaw, float cameraStartPitch, float cameraSpeed);
+		   int pushPortA, int pushPortB, int cameraMountYawPort /* Remove before competition */, int cameraMountPitchPort,
+		   float cameraStartPitch, float cameraSpeed);
     ~Launch(); // Lift does not use limit switches! Encoder
     void feedIntake();
     void feedStop();
@@ -52,11 +51,10 @@ public:
     void remoteLaunch(bool launch, bool intake,
     		          bool upButton, bool downButton,
 					  bool turtleButton, bool autoPortcullis,
-					  float cameraYaw, float cameraPitch);
+					  float cameraTilt);
     void rotateLauncherUp();
     void rotateLauncherDown();
     void stopRotate();
-    void rotCamera(float speed);
     void tiltCamera(float speed);
 };
 
