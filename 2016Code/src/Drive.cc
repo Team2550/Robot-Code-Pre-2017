@@ -18,12 +18,14 @@
 */
 #include "Drive.hh"
 
-Drive::Drive(int leftPort, int rightPort, float initialNormalSpeed, float initialBoostSpeed) :
+Drive::Drive(int leftPort, int rightPort, float normalSpeed, float boostSpeed, float slowSpeed) :
     left(leftPort), right(rightPort)
 {
 	left.SetInverted(true);
-	normalSpeed = initialNormalSpeed;
-	boostSpeed = initialBoostSpeed;
+	this->normalSpeed = normalSpeed;
+	this->boostSpeed = boostSpeed;
+	this->slowSpeed = slowSpeed;
+	speedMult = normalSpeed;
 }
 
 void Drive::stop() {
@@ -31,7 +33,7 @@ void Drive::stop() {
 	right.Set(0);
 }
 
-void Drive::remoteDrive(float leftStick, float rightStick, bool boost, bool autoPortcullis) {
+void Drive::remoteDrive(float leftStick, float rightStick, bool boost, bool autoPortcullis, float slowTurn) {
 	if (autoPortcullis) {
 		driveForward(0.6);
 	} else {
@@ -41,15 +43,19 @@ void Drive::remoteDrive(float leftStick, float rightStick, bool boost, bool auto
 			speedMult = boostSpeed;
 		}
 
+		float power = 0;
 		if (fabs(leftStick) > 0.2) //number accounts for dead zone
-			left.Set(leftStick * speedMult);
-		else
-			left.Set(0);
+			power += leftStick * speedMult;
+		power -= slowTurn * slowSpeed;
 
+		left.Set(power);
+
+		power = 0;
 		if (fabs(rightStick) > 0.2) //number accounts for dead zone
-			right.Set(rightStick * speedMult);
-		else
-			right.Set(0);
+			power += rightStick * speedMult;
+		power += slowTurn * slowSpeed;
+
+		right.Set(power);
 	}
 }
 

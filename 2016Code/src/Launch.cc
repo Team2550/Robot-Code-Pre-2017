@@ -128,7 +128,7 @@ void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButt
     	tiltCamera(cameraPitch * camSpeed);
     }
 
-    cameraMountYaw.SetAngle(105.0); // Remove before competition
+    cameraMountYaw.SetAngle(2.0); // Remove before competition
     cameraMountPitch.SetAngle(camPitch);
     SmartDashboard::PutNumber("Camera Pitch", camPitch);
 }
@@ -158,10 +158,10 @@ void Launch::stopRotate()
 void Launch::tiltCamera(float speed) {
 	camPitch += speed;
 
-	if (camPitch > 160.0) {
-		camPitch = 160.0;
+	if (camPitch > 145.0) {
+		camPitch = 145.0;
 	}
-	if (camPitch < 75.0) {
-		camPitch = 75.0;
+	if (camPitch < 60.0) {
+		camPitch = 60.0;
 	}
 }

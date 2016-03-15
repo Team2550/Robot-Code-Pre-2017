@@ -27,6 +27,8 @@ Lift::Lift(int liftPort, int liftEncoderPortA, int liftEncoderPortB,
     //liftEncoder.SetMaxPeriod(50);
     liftEncoder.Reset();
     lSpeed = liftSpeed;
+    limitTop = false;
+    limitBottom = false;
 }
 
 Lift::~Lift()
@@ -37,6 +39,16 @@ Lift::~Lift()
 void Lift::remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis)
 {
 	// feed control
+	if (SmartDashboard::GetBoolean("Lift Limit Switches", true) == true) {
+		limitTop    = topLimitSwitch.Get();
+		limitBottom = bottomLimitSwitch.Get();
+		std::cout<<"Use\n";
+	} else {
+		limitTop    = false;
+		limitBottom = false;
+		std::cout<<"Don't\n";
+	}
+
 
     if (turtleButton)
     	liftUp(0.75);
@@ -64,7 +76,7 @@ void Lift::remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis)
 
 void Lift::liftDown(double speed)
 {
-    if (liftEncoder.Get() < -140.0 || bottomLimitSwitch.Get()) // Change angle // 360 degrees = 500 pulses
+    if (liftEncoder.Get() < -140.0 || limitBottom) // Change angle // 360 degrees = 500 pulses
     	stopLift();
     else
     	lift.Set(-speed);
@@ -72,7 +84,7 @@ void Lift::liftDown(double speed)
 
 void Lift::liftUp(double speed)
 {
-    if (liftEncoder.Get() > 0.0 || topLimitSwitch.Get()) // Change angle
+    if (liftEncoder.Get() > 0.0 || limitTop) // Change angle
     	stopLift();
     else
     	lift.Set(speed);

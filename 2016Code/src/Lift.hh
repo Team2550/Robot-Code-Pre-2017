@@ -27,7 +27,9 @@ private:
     Victor lift; // I have no idea about what kind of motor we'll use. This needs to be changed.
     Encoder liftEncoder;
     DigitalInput topLimitSwitch;
+    bool limitTop;
     DigitalInput bottomLimitSwitch;
+    bool limitBottom;
     float lSpeed;
 
 public:
