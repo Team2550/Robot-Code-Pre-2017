@@ -6,7 +6,7 @@
   <auto_white_balance>TRUE</auto_white_balance>
   <brightness_value>50</brightness_value>
   <color_level_value>50</color_level_value>
-  <compression_index>5</compression_index>
+  <compression_index>2</compression_index>
   <contrast_value>50</contrast_value>
   <exposure_value>50</exposure_value>
   <ip_address>10.25.50.10</ip_address>
@@ -20,10 +20,10 @@
 </Axis_Internet_Camera>
 <Adaptive_Threshold>
   <channel_type>2</channel_type>
-  <filter_size>12</filter_size>
+  <filter_size>20</filter_size>
   <max_threshold>255</max_threshold>
-  <mean_offset>-30</mean_offset>
-  <min_threshold>80</min_threshold>
+  <mean_offset>3</mean_offset>
+  <min_threshold>220</min_threshold>
 </Adaptive_Threshold>
 <Marker>
   <include_graphics>0</include_graphics>
@@ -83,7 +83,7 @@
         <filter_id>70</filter_id>
         <invert_count>0</invert_count>
         <invert_threshold>1</invert_threshold>
-        <weight_threshold>0.21</weight_threshold>
+        <weight_threshold>0.2</weight_threshold>
       </filter>
       <filter:2>
         <count_threshold>0</count_threshold>
@@ -91,7 +91,7 @@
         <filter_id>66</filter_id>
         <invert_count>0</invert_count>
         <invert_threshold>0</invert_threshold>
-        <weight_threshold>0.5</weight_threshold>
+        <weight_threshold>0.3</weight_threshold>
       </filter:2>
       <filter:3>
         <count_threshold>0</count_threshold>
@@ -99,16 +99,25 @@
         <filter_id>67</filter_id>
         <invert_count>0</invert_count>
         <invert_threshold>0</invert_threshold>
-        <weight_threshold>0.6</weight_threshold>
+        <weight_threshold>0.63</weight_threshold>
       </filter:3>
       <filter:4>
+        <count_threshold>0</count_threshold>
+        <create_array>0</create_array>
+        <filter_id>33</filter_id>
+        <invert_count>0</invert_count>
+        <invert_threshold>0</invert_threshold>
+        <maximum_size>6000</maximum_size>
+        <weight_threshold>0.5</weight_threshold>
+      </filter:4>
+      <filter:5>
         <count_threshold>0</count_threshold>
         <create_array>0</create_array>
         <filter_id>21</filter_id>
         <invert_count>0</invert_count>
         <invert_threshold>0</invert_threshold>
         <weight_threshold>0.5</weight_threshold>
-      </filter:4>
+      </filter:5>
     </tab>
     <tab:2/>
     <tab:3/>
@@ -147,7 +156,7 @@ if isArray(list) then
 
     ' calibrated for an Axis camera
     imageHeight = GetVariable("IMAGE_HEIGHT")
-  	cameraFieldOfView = 55
+  	cameraFieldOfView = 50
 	  targetHeight = 12
 
     for i = 0 to ubound(list) step 8
@@ -224,7 +233,7 @@ end if
   <dim_background>TRUE</dim_background>
   <display_as_annotation>FALSE</display_as_annotation>
   <display_value_only>FALSE</display_value_only>
-  <font_size>Normal (10pt)</font_size>
+  <font_size>Small (8pt)</font_size>
   <font_size_index>2</font_size_index>
   <northwest>Distance
 </northwest>
@@ -232,6 +241,102 @@ end if
 <end_if>
   <pipe_color>16777215</pipe_color>
 </end_if>
+<Display_Line>
+  <clear_image>0</clear_image>
+  <color_index>green</color_index>
+  <display_as_annotation>0</display_as_annotation>
+  <display_mode_index>1</display_mode_index>
+  <thickness>1</thickness>
+  <xy_list_map/>
+  <x_end>200</x_end>
+  <x_end_map>IMAGE_WIDTH/3</x_end_map>
+  <x_start>100</x_start>
+  <x_start_map>IMAGE_WIDTH/3</x_start_map>
+  <y_end>100</y_end>
+  <y_end_map>(IMAGE_HEIGHT/3)*2-1</y_end_map>
+  <y_start>100</y_start>
+  <y_start_map>IMAGE_HEIGHT/3</y_start_map>
+</Display_Line>
+<Display_Line>
+  <clear_image>0</clear_image>
+  <color_index>green</color_index>
+  <display_as_annotation>0</display_as_annotation>
+  <display_mode_index>1</display_mode_index>
+  <thickness>1</thickness>
+  <xy_list_map/>
+  <x_end>200</x_end>
+  <x_end_map>(IMAGE_WIDTH/3)*2</x_end_map>
+  <x_start>100</x_start>
+  <x_start_map>(IMAGE_WIDTH/3)*2</x_start_map>
+  <y_end>100</y_end>
+  <y_end_map>(IMAGE_HEIGHT/3)*2-1</y_end_map>
+  <y_start>100</y_start>
+  <y_start_map>IMAGE_HEIGHT/3</y_start_map>
+</Display_Line>
+<Display_Line>
+  <clear_image>0</clear_image>
+  <color_index>green</color_index>
+  <display_as_annotation>0</display_as_annotation>
+  <display_mode_index>1</display_mode_index>
+  <thickness>1</thickness>
+  <xy_list_map/>
+  <x_end>200</x_end>
+  <x_end_map>(IMAGE_WIDTH/3)*2</x_end_map>
+  <x_start>100</x_start>
+  <x_start_map>IMAGE_WIDTH/3</x_start_map>
+  <y_end>100</y_end>
+  <y_end_map>IMAGE_HEIGHT/3</y_end_map>
+  <y_start>100</y_start>
+  <y_start_map>IMAGE_HEIGHT/3</y_start_map>
+</Display_Line>
+<Display_Line>
+  <clear_image>0</clear_image>
+  <color_index>green</color_index>
+  <display_as_annotation>0</display_as_annotation>
+  <display_mode_index>1</display_mode_index>
+  <thickness>1</thickness>
+  <xy_list_map/>
+  <x_end>200</x_end>
+  <x_end_map>(IMAGE_WIDTH/3)*2</x_end_map>
+  <x_start>100</x_start>
+  <x_start_map>IMAGE_WIDTH/3</x_start_map>
+  <y_end>100</y_end>
+  <y_end_map>(IMAGE_HEIGHT/3)*2</y_end_map>
+  <y_start>100</y_start>
+  <y_start_map>(IMAGE_HEIGHT/3)*2</y_start_map>
+</Display_Line>
+<Display_Line>
+  <clear_image>0</clear_image>
+  <color_index>green</color_index>
+  <display_as_annotation>1</display_as_annotation>
+  <display_mode_index>1</display_mode_index>
+  <thickness>1</thickness>
+  <xy_list_map/>
+  <x_end>200</x_end>
+  <x_end_map>IMAGE_WIDTH/2</x_end_map>
+  <x_start>100</x_start>
+  <x_start_map>IMAGE_WIDTH/2</x_start_map>
+  <y_end>100</y_end>
+  <y_end_map>IMAGE_HEIGHT/2+10</y_end_map>
+  <y_start>100</y_start>
+  <y_start_map>IMAGE_HEIGHT/2-10</y_start_map>
+</Display_Line>
+<Display_Line>
+  <clear_image>0</clear_image>
+  <color_index>green</color_index>
+  <display_as_annotation>1</display_as_annotation>
+  <display_mode_index>1</display_mode_index>
+  <thickness>1</thickness>
+  <xy_list_map/>
+  <x_end>200</x_end>
+  <x_end_map>IMAGE_WIDTH/2+10</x_end_map>
+  <x_start>100</x_start>
+  <x_start_map>IMAGE_WIDTH/2-10</x_start_map>
+  <y_end>100</y_end>
+  <y_end_map>IMAGE_HEIGHT/2</y_end_map>
+  <y_start>100</y_start>
+  <y_start_map>IMAGE_HEIGHT/2</y_start_map>
+</Display_Line>
 <function>
 <function_name>Robot</function_name>
 <function_always_run>0</function_always_run>
