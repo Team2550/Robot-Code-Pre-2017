@@ -19,7 +19,7 @@
 #include "2016Code.hh"
 
 Robot::Robot() : driver(0), drive(0, 1, 0.4, 0.65, 0.3), launcher(1),
-				 launch(3, 4, 5, 2, 3, 6, 7, 8, 9, 90.0, 1.25), lift(2, 0, 1, 8, 9, 0.15)
+				 launch(3, 4, 5, 2, 3, 6, 7, 8, 90.0, 1.25), lift(2, 0, 1, 8, 9, 0.15)
 {
 }
 
@@ -56,7 +56,7 @@ void Robot::TeleopPeriodic() {
 					  driver.GetRawAxis(xbox::axis::rightY),     // Right Tank
 					  driver.GetRawButton(xbox::btn::rb),        // Boost
 					  driver.GetRawButton(xbox::btn::lb),		 // Auto Portcullis
-					  driver.GetRawAxis(xbox::axis::RT)-
+					  driver.GetRawAxis(xbox::axis::RT)-		 // Slow Turn
 					  driver.GetRawAxis(xbox::axis::LT));
 
     launch.remoteLaunch(launcher.GetRawButton(xbox::btn::y),     // Launch
@@ -65,7 +65,7 @@ void Robot::TeleopPeriodic() {
 						launcher.GetRawButton(xbox::btn::lb),    // Launcher Down
 						driver.GetRawButton(xbox::btn::a),	     // Turtle
 						driver.GetRawButton(xbox::btn::lb),      // Auto Portcullis
-					   -launcher.GetRawAxis(xbox::axis::rightY));// Camera Gimble Pitch
+					   -launcher.GetRawAxis(xbox::axis::rightY));// Camera Gimble
 
     lift.remoteLift(driver.GetRawButton(xbox::btn::a),		     // Turtle
 					driver.GetRawButton(xbox::btn::lb),          // Auto Portcullis

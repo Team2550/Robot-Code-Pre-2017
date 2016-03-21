@@ -33,7 +33,8 @@ void Drive::stop() {
 	right.Set(0);
 }
 
-void Drive::remoteDrive(float leftStick, float rightStick, bool boost, bool autoPortcullis, float slowTurn) {
+void Drive::remoteDrive(float leftStick, float rightStick, bool boost, bool autoPortcullis,
+						float slowTurn) {
 	if (autoPortcullis) {
 		driveForward(0.6);
 	} else {

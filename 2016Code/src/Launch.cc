@@ -20,15 +20,15 @@
 
 Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort,
 		       int topLauncherSwitchPort, int bottomLauncherSwitchPort,
-			   int pushPortA, int pushPortB, int cameraMountYawPort, int cameraMountPitchPort,
-			   float cameraStartPitch, float cameraSpeed)
+			   int pushPortA, int pushPortB, int cameraMountPort,
+			   float cameraStart, float cameraSpeed)
 			   :
                left(leftLauncherPort), right(rightLauncherPort),
 			   tilt(rotatePort),
 	           topLaunchSwitch(topLauncherSwitchPort),
 			   bottomLaunchSwitch(bottomLauncherSwitchPort),
 			   pushA(pushPortA), pushB(pushPortB),
-			   cameraMountYaw(cameraMountYawPort), cameraMountPitch(cameraMountPitchPort)
+			   cameraMount(cameraMountPort)
 
 			   // pushA = port #6
 			   // pushB = port #7
@@ -36,7 +36,7 @@ Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort,
 {
 	launchPause.Reset();
 	launching = false;
-	camPitch = cameraStartPitch;
+	camPitch = cameraStart;
 	camSpeed = cameraSpeed;
 }
 
@@ -128,8 +128,7 @@ void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButt
     	tiltCamera(cameraPitch * camSpeed);
     }
 
-    cameraMountYaw.SetAngle(2.0); // Remove before competition
-    cameraMountPitch.SetAngle(camPitch);
+    cameraMount.SetAngle(camPitch);
     SmartDashboard::PutNumber("Camera Pitch", camPitch);
 }
 
