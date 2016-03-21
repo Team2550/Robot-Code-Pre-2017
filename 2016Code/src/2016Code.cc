@@ -19,7 +19,7 @@
 #include "2016Code.hh"
 
 Robot::Robot() : driver(0), drive(0, 1, 0.4, 0.65, 0.3), launcher(1),
-				 launch(3, 4, 5, 2, 3, 6, 7, 8, 90.0, 1.25), lift(2, 0, 1, 8, 9, 0.15)
+				 launch(3, 4, 5, 2, 3, 6, 7, 8, 0.0, 1.25), lift(2, 0, 1, 8, 9, 0.2)
 {
 }
 
@@ -30,14 +30,14 @@ Robot::~Robot()
 
 void Robot::RobotInit()
 {
-    SmartDashboard::PutBoolean("Lift Limit Switches", true);
+    SmartDashboard::PutBoolean("Use Limit Switches?", true);
+    SmartDashboard::PutNumber("Lift Position", 0);
 }
 
 void Robot::AutonomousInit()
 {
     autoTime.Start();
     drive.driveForward(.25);
-
 }
 
 void Robot::AutonomousPeriodic()

@@ -21,10 +21,12 @@
 Lift::Lift(int liftPort, int liftEncoderPortA, int liftEncoderPortB,
 		   int topLimitSwitchPort, int bottomLimitSwitchPort, float liftSpeed) :
            lift(liftPort), liftEncoder(liftEncoderPortA, liftEncoderPortB, false,
-	        		       	   	   	   Encoder::EncodingType::k4X),
+	        		       	   	   	   Encoder::EncodingType::k1X),
 		   topLimitSwitch(topLimitSwitchPort), bottomLimitSwitch(bottomLimitSwitchPort)
 {
-    //liftEncoder.SetMaxPeriod(50);
+    liftEncoder.SetMinRate(0);
+    liftEncoder.SetDistancePerPulse(1);
+    liftEncoder.SetSamplesToAverage(5);
     liftEncoder.Reset();
     lSpeed = liftSpeed;
     limitTop = false;
@@ -39,14 +41,12 @@ Lift::~Lift()
 void Lift::remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis)
 {
 	// feed control
-	if (SmartDashboard::GetBoolean("Lift Limit Switches", true) == true) {
+	if (SmartDashboard::GetBoolean("Use Lift Limit Switches?", false)) {
 		limitTop    = topLimitSwitch.Get();
 		limitBottom = bottomLimitSwitch.Get();
-		std::cout<<"Use\n";
 	} else {
 		limitTop    = false;
 		limitBottom = false;
-		std::cout<<"Don't\n";
 	}
 
 
@@ -68,10 +68,12 @@ void Lift::remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis)
 		}
     }
 
-    if (topLimitSwitch.Get()) {
+    if (limitTop) {
     	liftEncoder.Reset();
     }
-	SmartDashboard::PutBoolean("Lift Arm", topLimitSwitch.Get());
+	SmartDashboard::PutBoolean("Lift Arm Safe?", liftEncoder.Get() > -10.0 || limitTop);
+	SmartDashboard::PutNumber("Lift Position", liftEncoder.Get());
+	std::cout << liftEncoder.GetDistance() << '\n';
 }
 
 void Lift::liftDown(double speed)

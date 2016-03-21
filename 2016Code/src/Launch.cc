@@ -157,10 +157,10 @@ void Launch::stopRotate()
 void Launch::tiltCamera(float speed) {
 	camPitch += speed;
 
-	if (camPitch > 145.0) {
-		camPitch = 145.0;
+	if (camPitch > 90.0) {
+		camPitch = 90.0;
 	}
-	if (camPitch < 60.0) {
-		camPitch = 60.0;
+	if (camPitch < 0.0) {
+		camPitch = 0.0;
 	}
 }
