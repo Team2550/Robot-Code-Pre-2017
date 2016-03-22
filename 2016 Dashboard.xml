@@ -1,13 +1,20 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Safe to rotate?" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="983" y="65"/>
+		<width>188</width>
+		<height>108</height>
+	</widget>
+	<widget field="Ultrasonic Ready?" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="222" y="105"/>
+		<width>101</width>
+		<height>15</height>
+	</widget>
 	<widget field="Arm Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.SimpleDial">
 		<location x="108" y="291"/>
 		<width>240</width>
 		<property name="Upper Limit" value="140.0"/>
 		<property name="Lower Limit" value="-140.0"/>
-	</widget>
-	<widget field="Arm Safe?" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
-		<location x="351" y="42"/>
 	</widget>
 	<widget field="Target Distance (Ultrasonic)" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
 		<location x="87" y="154"/>
@@ -17,16 +24,13 @@
 	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
 		<location x="1063" y="440"/>
-		<property name="Text" value="Camera Gimble"/>
+		<property name="Text" value="Camera Gimbal"/>
 	</static-widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
 		<location x="197" y="440"/>
 		<width>63</width>
 		<property name="Text" value="Lift Arm"/>
 	</static-widget>
-	<widget field="Use Limit Switches?" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.CheckBox">
-		<location x="351" y="444"/>
-	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.VideoStreamViewerExtension">
 		<location x="350" y="64"/>
 		<width>625</width>
@@ -45,7 +49,8 @@
 </dashboard>
 <live-window>
 </live-window>
-	<hidden field="Lift Position"/>
-	<hidden field="Arm Arm Safe?"/>
-	<hidden field="Lift Arm Safe?"/>
+	<hidden field="Use Limit Switches?"/>
+	<hidden field="Arm Safe test?"/>
+	<hidden field="Arm Safe really?"/>
+	<hidden field="Arm Safe?"/>
 </xml>
