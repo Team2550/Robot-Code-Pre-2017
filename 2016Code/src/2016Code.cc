@@ -31,6 +31,7 @@ Robot::~Robot()
 
 void Robot::RobotInit()
 {
+    SmartDashboard::PutBoolean("Ignore Limit Switches?", false);
     SmartDashboard::PutBoolean("Ultrasonic Ready?", false);
     SmartDashboard::PutNumber("Arm Position", 0);
 }

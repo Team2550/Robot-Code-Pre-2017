@@ -151,17 +151,17 @@ void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButt
 void Launch::rotateLauncherUp()
 { // note to self: rotating might be backwards.
 
-    if (topLaunchSwitch.Get())
+    /*if (topLaunchSwitch.Get() && !SmartDashboard::GetBoolean("Ignore Limit Switches?", true))
     	stopRotate();
-    else
+    else*/
     	tilt.Set(0.6);
 
 }
 void Launch::rotateLauncherDown()
 {
-    if (bottomLaunchSwitch.Get())
+    /*if (bottomLaunchSwitch.Get() && !SmartDashboard::GetBoolean("Ignore Limit Switches?", true))
     	stopRotate();
-    else
+    else*/
     	tilt.Set(-0.45);
 
 }
