@@ -26,11 +26,12 @@ class Arm
 private:
     Talon arm;
     Encoder armEncoder;
-    float lSpeed;
+    float upSpeed;
+    float downSpeed;
     Timer blink;
 
 public:
-    Arm(int armPort, int armEncoderPortA, int armEncoderPortB, float armSpeed);
+    Arm(int armPort, int armEncoderPortA, int armEncoderPortB, float armUpSpeed, float armDownSpeed);
     ~Arm(); // Arm does not use limit switches! Encoder
     void remoteArm(bool turtleButton, bool autoPortcullis, float armAxis);
     void armUp(double speed);

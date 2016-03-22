@@ -19,7 +19,7 @@
 #include "2016Code.hh"
 
 Robot::Robot() : driver(0), drive(0, 1, 0.4, 0.65, 0.3), launcher(1),
-				 launch(3, 4, 5, 2, 3, 6, 7, 8, 0.0, 1.25), arm(2, 0, 1, 0.2),
+				 launch(3, 4, 5, 2, 3, 6, 7, 8, 0.0, 1.25), arm(2, 0, 1, 1.0, 0.8),
 				 lift(9, 1.0)
 {
 }

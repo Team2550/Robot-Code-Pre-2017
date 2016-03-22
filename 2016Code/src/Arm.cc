@@ -18,7 +18,7 @@
 */
 #include <Arm.hh>
 
-Arm::Arm(int armPort, int armEncoderPortA, int armEncoderPortB, float armSpeed) :
+Arm::Arm(int armPort, int armEncoderPortA, int armEncoderPortB, float armUpSpeed, float armDownSpeed) :
            arm(armPort), armEncoder(armEncoderPortA, armEncoderPortB, false,
 	        		       	   	   	   Encoder::EncodingType::k1X)
 {
@@ -26,7 +26,8 @@ Arm::Arm(int armPort, int armEncoderPortA, int armEncoderPortB, float armSpeed) 
     armEncoder.SetDistancePerPulse(1);
     armEncoder.SetSamplesToAverage(5);
     armEncoder.Reset();
-    lSpeed = armSpeed;
+    upSpeed = armUpSpeed;
+    downSpeed = armDownSpeed;
     blink.Start();
 }
 
@@ -47,9 +48,9 @@ void Arm::remoteArm(bool turtleButton, bool autoPortcullis, float armAxis)
 		else
 		{
 			if(armAxis > .2)
-				armDown(armAxis * lSpeed);
+				armDown(armAxis * downSpeed);
 			else if(armAxis < -0.2)
-				armUp(-armAxis * lSpeed);
+				armUp(-armAxis * upSpeed);
 			else
 				stopArm();
 		}
