@@ -1,0 +1,51 @@
+<xml version="1.0">
+<dashboard>
+	<widget field="Arm Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.SimpleDial">
+		<location x="108" y="291"/>
+		<width>240</width>
+		<property name="Upper Limit" value="140.0"/>
+		<property name="Lower Limit" value="-140.0"/>
+	</widget>
+	<widget field="Arm Safe?" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="351" y="42"/>
+	</widget>
+	<widget field="Target Distance (Ultrasonic)" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="87" y="154"/>
+	</widget>
+	<widget field="Horizontal Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="130" y="125"/>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="1063" y="440"/>
+		<property name="Text" value="Camera Gimble"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="197" y="440"/>
+		<width>63</width>
+		<property name="Text" value="Lift Arm"/>
+	</static-widget>
+	<widget field="Use Limit Switches?" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.CheckBox">
+		<location x="351" y="444"/>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.VideoStreamViewerExtension">
+		<location x="350" y="64"/>
+		<width>625</width>
+		<height>378</height>
+		<property name="Camera IP Address or mDNS name" value="10.25.50.10"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.ConnectionIndicator">
+		<location x="3" y="1"/>
+	</static-widget>
+	<widget field="Camera Pitch" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.SimpleDial">
+		<location x="977" y="291"/>
+		<width>239</width>
+		<property name="Upper Limit" value="220.0"/>
+		<property name="Lower Limit" value="-40.0"/>
+	</widget>
+</dashboard>
+<live-window>
+</live-window>
+	<hidden field="Lift Position"/>
+	<hidden field="Arm Arm Safe?"/>
+	<hidden field="Lift Arm Safe?"/>
+</xml>
