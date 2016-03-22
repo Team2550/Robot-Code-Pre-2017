@@ -38,6 +38,9 @@ Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort,
 	launching = false;
 	camPitch = cameraStart;
 	camSpeed = cameraSpeed;
+	targetHeight = 85;
+	targetHeight *= targetHeight;
+	distance = 0;
 }
 
 Launch::~Launch()
@@ -130,6 +133,12 @@ void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButt
 
     cameraMount.SetAngle(camPitch);
     SmartDashboard::PutNumber("Camera Pitch", camPitch);
+
+    distance = ultra.getRange();
+    SmartDashboard::PutNumber("Horizontal Distance", distance);
+
+    distance = sqrt(distance * distance + targetHeight); // Needs to take into account height of sensor and distance between target and wall
+    SmartDashboard::PutNumber("Target Distance (Ultrasonic)", distance);
 }
 
 void Launch::rotateLauncherUp()

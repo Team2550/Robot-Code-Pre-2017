@@ -20,6 +20,7 @@
 #define LAUNCH_H_INCLUDED
 #include <math.h>
 #include "WPILib.h"
+#include "MaxSonarI2C.hh"
 
 class Launch
 {
@@ -34,6 +35,9 @@ private:
     Servo cameraMount;
     float camPitch;
     float camSpeed;
+    MaxSonarI2C ultra;
+    float distance;
+    float targetHeight;
     bool launching;
     Timer launchPause;
 
