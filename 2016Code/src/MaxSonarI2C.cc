@@ -1,33 +1,43 @@
 #include "MaxSonarI2C.hh"
 
-MaxSonarI2C::MaxSonarI2C() : I2C(kOnboard, 0xe0)
+MaxSonarI2C::MaxSonarI2C() : write(I2C::kOnboard, 0xE0), read(I2C::kOnboard, 0xE1)
 {
-
+	range = -1;
+	timer.Start();
 }
 
 bool MaxSonarI2C::ping()
 {
 	unsigned char code = 0x51;
-	bool error;
-	error = WriteBulk(&code, 1);
-	timer.Reset();
-	timer.Start();
+	bool error = false;
+
+	if (timer.HasPeriodPassed(0.2)) {
+		error = write.WriteBulk(&code, 1);
+		setRange();
+		std::cout << "Ping: " << !error << '\n';
+	}
+
 	return !error;
+}
+
+void MaxSonarI2C::setRange()
+{
+	unsigned char range_byte[2];
+	bool error;
+
+	error = read.ReadOnly(2, range_byte);
+
+	std::cout << "Initialized\n";
+	if (!error) {
+		range = (range_byte[0] * 256) + range_byte[1];
+		std::cout << "Got range\n";
+		range /= 2.54;
+	}
+
+	range = -1;
 }
 
 float MaxSonarI2C::getRange()
 {
-	static int range = -1;
-	unsigned char range_byte[2];
-	bool error;
-
-	if (timer.Get() > 0.08) {
-		error = ReadOnly(2, range_byte);
-
-		if (!error) {
-			range = (range_byte[0] * 256) + range_byte[1];
-		}
-	}
-
-	return range / 2.54;
+	return range;
 }

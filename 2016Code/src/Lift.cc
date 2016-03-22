@@ -18,9 +18,10 @@
 */
 #include <Lift.hh>
 
-Lift::Lift(int liftPort) :
+Lift::Lift(int liftPort, float liftSpeed) :
            lift(liftPort)
 {
+	speed = liftSpeed;
 }
 
 Lift::~Lift()
@@ -30,24 +31,24 @@ Lift::~Lift()
 void Lift::remoteLift(bool in, bool out)
 {
 	if (in)
-		liftIn();
+		liftIn(speed);
 	else if (out)
-		liftOut();
+		liftOut(speed);
 	else
 		stopLift();
 }
 
-void Lift::liftOut()
+void Lift::liftOut(float speed)
 {
-	lift.Set(Relay::Value::kForward);
+	lift.Set(speed);
 }
 
-void Lift::liftIn()
+void Lift::liftIn(float speed)
 {
-	lift.Set(Relay::Value::kReverse);
+	lift.Set(-speed);
 }
 
 void Lift::stopLift()
 {
-	lift.Set(Relay::Value::kOff);
+	lift.Set(0);
 }

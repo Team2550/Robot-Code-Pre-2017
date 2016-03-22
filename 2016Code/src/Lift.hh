@@ -23,14 +23,15 @@
 class Lift
 {
 private:
-	Relay lift;
+	VictorSP lift;
+	float speed;
 
 public:
-    Lift(int liftPort);
+    Lift(int liftPort, float liftSpeed);
     ~Lift(); // Arm does not use limit switches! Encoder
     void remoteLift(bool in, bool out);
-    void liftOut();
-    void liftIn();
+    void liftOut(float speed);
+    void liftIn(float speed);
     void stopLift();
 };
 

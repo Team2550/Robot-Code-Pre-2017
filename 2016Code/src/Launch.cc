@@ -91,6 +91,8 @@ void Launch::feedLaunch()
 void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButton,
 						  bool turtleButton, bool autoPortcullis, float cameraPitch)
 {
+	ultra.ping();
+
     if(launch)
     {
         feedLaunch();
@@ -135,10 +137,15 @@ void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButt
     SmartDashboard::PutNumber("Camera Pitch", camPitch);
 
     distance = ultra.getRange();
-    SmartDashboard::PutNumber("Horizontal Distance", distance);
+	SmartDashboard::PutNumber("Horizontal Distance", distance);
 
-    distance = sqrt(distance * distance + targetHeight); // Needs to take into account height of sensor and distance between target and wall
-    SmartDashboard::PutNumber("Target Distance (Ultrasonic)", distance);
+	if (distance > 0) {
+		distance = sqrt(distance * distance + targetHeight); // Needs to take into account height of sensor and distance between target and wall
+		SmartDashboard::PutNumber("Target Distance (Ultrasonic)", distance);
+        SmartDashboard::PutBoolean("Ultrasonic Ready?", true);
+    } else {
+        SmartDashboard::PutBoolean("Ultrasonic Ready?", false);
+    }
 }
 
 void Launch::rotateLauncherUp()

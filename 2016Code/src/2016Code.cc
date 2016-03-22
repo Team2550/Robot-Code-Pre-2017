@@ -19,8 +19,8 @@
 #include "2016Code.hh"
 
 Robot::Robot() : driver(0), drive(0, 1, 0.4, 0.65, 0.3), launcher(1),
-				 launch(3, 4, 5, 2, 3, 6, 7, 8, 0.0, 1.25), arm(2, 0, 1, 8, 9, 0.2),
-				 lift(8)
+				 launch(3, 4, 5, 2, 3, 6, 7, 8, 0.0, 1.25), arm(2, 0, 1, 0.2),
+				 lift(9, 1.0)
 {
 }
 
@@ -31,7 +31,7 @@ Robot::~Robot()
 
 void Robot::RobotInit()
 {
-    SmartDashboard::PutBoolean("Use Limit Switches?", true);
+    SmartDashboard::PutBoolean("Ultrasonic Ready?", false);
     SmartDashboard::PutNumber("Arm Position", 0);
 }
 

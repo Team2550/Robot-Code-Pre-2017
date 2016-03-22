@@ -18,19 +18,16 @@
 */
 #include <Arm.hh>
 
-Arm::Arm(int armPort, int armEncoderPortA, int armEncoderPortB,
-		   int topLimitSwitchPort, int bottomLimitSwitchPort, float armSpeed) :
+Arm::Arm(int armPort, int armEncoderPortA, int armEncoderPortB, float armSpeed) :
            arm(armPort), armEncoder(armEncoderPortA, armEncoderPortB, false,
-	        		       	   	   	   Encoder::EncodingType::k1X),
-		   topLimitSwitch(topLimitSwitchPort), bottomLimitSwitch(bottomLimitSwitchPort)
+	        		       	   	   	   Encoder::EncodingType::k1X)
 {
     armEncoder.SetMinRate(0);
     armEncoder.SetDistancePerPulse(1);
     armEncoder.SetSamplesToAverage(5);
     armEncoder.Reset();
     lSpeed = armSpeed;
-    limitTop = false;
-    limitBottom = false;
+    blink.Start();
 }
 
 Arm::~Arm()
@@ -40,16 +37,6 @@ Arm::~Arm()
 
 void Arm::remoteArm(bool turtleButton, bool autoPortcullis, float armAxis)
 {
-	// feed control
-	if (SmartDashboard::GetBoolean("Use Arm Limit Switches?", false)) {
-		limitTop    = topLimitSwitch.Get();
-		limitBottom = bottomLimitSwitch.Get();
-	} else {
-		limitTop    = false;
-		limitBottom = false;
-	}
-
-
     if (turtleButton)
     	armUp(0.75);
     else
@@ -68,17 +55,19 @@ void Arm::remoteArm(bool turtleButton, bool autoPortcullis, float armAxis)
 		}
     }
 
-    if (limitTop) {
-    	armEncoder.Reset();
+    if (!(armEncoder.Get() > -10.0)) {
+    	SmartDashboard::PutBoolean("Arm Safe?", true);
+    } else {
+    	bool doBlink = round(blink.Get()) - floor(blink.Get()) < 0.5;
+    	SmartDashboard::PutBoolean("Safe to rotate?", doBlink);
     }
-	SmartDashboard::PutBoolean("Arm Arm Safe?", armEncoder.Get() > -10.0 || limitTop);
+	SmartDashboard::PutBoolean("Arm Safe?", armEncoder.Get() > -10.0);
 	SmartDashboard::PutNumber("Arm Position", armEncoder.Get());
-	std::cout << armEncoder.GetDistance() << '\n';
 }
 
 void Arm::armDown(double speed)
 {
-    if (armEncoder.Get() < -140.0 || limitBottom) // Change angle // 360 degrees = 500 pulses
+    if (armEncoder.Get() < -140.0) // Change angle // 360 degrees = 500 pulses
     	stopArm();
     else
     	arm.Set(-speed);
@@ -86,7 +75,7 @@ void Arm::armDown(double speed)
 
 void Arm::armUp(double speed)
 {
-    if (armEncoder.Get() > 0.0 || limitTop) // Change angle
+    if (armEncoder.Get() > 0.0) // Change angle
     	stopArm();
     else
     	arm.Set(speed);
