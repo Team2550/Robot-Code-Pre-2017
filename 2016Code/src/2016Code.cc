@@ -19,7 +19,8 @@
 #include "2016Code.hh"
 
 Robot::Robot() : driver(0), drive(0, 1, 0.4, 0.65, 0.3), launcher(1),
-				 launch(3, 4, 5, 2, 3, 6, 7, 8, 0.0, 1.25), lift(2, 0, 1, 8, 9, 0.2)
+				 launch(3, 4, 5, 2, 3, 6, 7, 8, 0.0, 1.25), arm(2, 0, 1, 8, 9, 0.2),
+				 lift(8)
 {
 }
 
@@ -31,7 +32,7 @@ Robot::~Robot()
 void Robot::RobotInit()
 {
     SmartDashboard::PutBoolean("Use Limit Switches?", true);
-    SmartDashboard::PutNumber("Lift Position", 0);
+    SmartDashboard::PutNumber("Arm Position", 0);
 }
 
 void Robot::AutonomousInit()
@@ -67,9 +68,12 @@ void Robot::TeleopPeriodic() {
 						driver.GetRawButton(xbox::btn::lb),      // Auto Portcullis
 					   -launcher.GetRawAxis(xbox::axis::rightY));// Camera Gimble
 
-    lift.remoteLift(driver.GetRawButton(xbox::btn::a),		     // Turtle
+    arm.remoteArm(driver.GetRawButton(xbox::btn::a),		     // Turtle
 					driver.GetRawButton(xbox::btn::lb),          // Auto Portcullis
-					launcher.GetRawAxis(xbox::axis::leftY));     // Lifter
+					launcher.GetRawAxis(xbox::axis::leftY));     // Armer
+
+    lift.remoteLift(driver.GetRawButton(xbox::btn::x),
+    				driver.GetRawButton(xbox::btn::y));
 }
 
 void Robot::DisabledInit()

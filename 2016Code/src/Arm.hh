@@ -16,38 +16,30 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <Lift.hh>
+#ifndef ARM_H_INCLUDED
+#define ARM_H_INCLUDED
+#include <math.h>
+#include "WPILib.h"
 
-Lift::Lift(int liftPort) :
-           lift(liftPort)
+class Arm
 {
-}
+private:
+    Talon arm;
+    Encoder armEncoder;
+    DigitalInput topLimitSwitch;
+    bool limitTop;
+    DigitalInput bottomLimitSwitch;
+    bool limitBottom;
+    float lSpeed;
 
-Lift::~Lift()
-{
-}
+public:
+    Arm(int armPort, int armEncoderPortA, int armEncoderPortB,
+    	 int topLimitSwitchPort, int bottomLimitSwitchPort, float armSpeed);
+    ~Arm(); // Arm does not use limit switches! Encoder
+    void remoteArm(bool turtleButton, bool autoPortcullis, float armAxis);
+    void armUp(double speed);
+    void armDown(double speed);
+    void stopArm();
+};
 
-void Lift::remoteLift(bool in, bool out)
-{
-	if (in)
-		liftIn();
-	else if (out)
-		liftOut();
-	else
-		stopLift();
-}
-
-void Lift::liftOut()
-{
-	lift.Set(Relay::Value::kForward);
-}
-
-void Lift::liftIn()
-{
-	lift.Set(Relay::Value::kReverse);
-}
-
-void Lift::stopLift()
-{
-	lift.Set(Relay::Value::kOff);
-}
+#endif

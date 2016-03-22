@@ -22,6 +22,7 @@
 #include "WPILib.h"
 #include "Drive.hh"
 #include "Launch.hh"
+#include "Arm.hh"
 #include "Lift.hh"
 #include "xBox.hh"
 #include "Ultrasonic.h"
@@ -34,6 +35,7 @@ private:
 	Drive drive;
 	Joystick launcher;
 	Launch launch;
+	Arm arm;
 	Lift lift;
 	Timer autoTime;
 public:

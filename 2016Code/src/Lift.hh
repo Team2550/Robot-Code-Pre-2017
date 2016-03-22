@@ -18,27 +18,19 @@
 */
 #ifndef LIFT_H_INCLUDED
 #define LIFT_H_INCLUDED
-#include <math.h>
 #include "WPILib.h"
 
 class Lift
 {
 private:
-    Talon lift; // I have no idea about what kind of motor we'll use. This needs to be changed.
-    Encoder liftEncoder;
-    DigitalInput topLimitSwitch;
-    bool limitTop;
-    DigitalInput bottomLimitSwitch;
-    bool limitBottom;
-    float lSpeed;
+	Relay lift;
 
 public:
-    Lift(int liftPort, int liftEncoderPortA, int liftEncoderPortB,
-    	 int topLimitSwitchPort, int bottomLimitSwitchPort, float liftSpeed);
-    ~Lift(); // Lift does not use limit switches! Encoder
-    void remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis);
-    void liftUp(double speed);
-    void liftDown(double speed);
+    Lift(int liftPort);
+    ~Lift(); // Arm does not use limit switches! Encoder
+    void remoteLift(bool in, bool out);
+    void liftOut();
+    void liftIn();
     void stopLift();
 };
 
