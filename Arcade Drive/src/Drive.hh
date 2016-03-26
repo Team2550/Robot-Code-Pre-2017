@@ -31,7 +31,7 @@ private:
 	float speedMult;
 public:
 	Drive(int leftPort, int rightPort, float normalSpeed, float boostSpeed, float slowSpeed);
-	void remoteDrive(float leftStick, float rightStick, bool boost, bool autoPortcullis, float slowTurn);
+	void remoteDrive(float leftStick, float rightStick, bool boost, bool brake, float slowTurn);
 	void driveForward(float amount);
 	void stop();
 };

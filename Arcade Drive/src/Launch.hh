@@ -38,6 +38,7 @@ private:
     float targetHeight;
     bool launching;
     Timer launchPause;
+    Timer cameraCalibration;
     float top;
     float bottom;
 
@@ -53,8 +54,7 @@ public:
     void feedLaunch();
     void remoteLaunch(bool launch, bool intake,
     		          bool upButton, bool downButton,
-					  bool turtleButton, bool autoPortcullis,
-					  float cameraTilt);
+					  bool turtleButton, bool autoPortcullis);
     void rotateLauncherUp(float speed);
     void rotateLauncherDown(float speed);
     void stopRotate();

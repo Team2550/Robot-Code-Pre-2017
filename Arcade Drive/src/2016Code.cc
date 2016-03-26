@@ -18,8 +18,8 @@
 */
 #include "2016Code.hh"
 
-Robot::Robot() : driver(0), drive(0, 1, 0.5, 0.75, 0.3), launcher(1),
-				 launch(3, 4, 5, 2, 3, 6, 7, 9, 90.0, 0.0), arm(2, 0, 1, 1.0, 0.5) // , lift(9, 1.0)
+Robot::Robot() : driver(0), drive(0, 1, 0.6, 0.85, 0.3), launcher(1),
+				 launch(3, 4, 5, 2, 3, 6, 7, 9, 96.0, 70.0), arm(2, 0, 1, 1.0, 0.5) // , lift(9, 1.0)
 {
 }
 
@@ -70,8 +70,7 @@ void Robot::TeleopPeriodic() {
 						launcher.GetRawButton(xbox::btn::lb),    // Launcher Up
 						launcher.GetRawButton(xbox::btn::rb),    // Launcher Down
 						driver.GetRawButton(xbox::btn::a),	     // Turtle
-						driver.GetRawButton(xbox::btn::lb),      // Auto Portcullis
-					   -launcher.GetRawAxis(xbox::axis::rightY));// Camera Gimble
+						driver.GetRawButton(xbox::btn::lb));      // Auto Portcullis
 
     arm.remoteArm(driver.GetRawButton(xbox::btn::a),		     // Turtle
 					launcher.GetRawAxis(xbox::axis::leftY));     // Armer

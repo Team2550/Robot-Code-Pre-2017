@@ -89,7 +89,7 @@ void Launch::feedLaunch()
 }
 
 void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButton,
-						  bool turtleButton, bool autoPortcullis, float cameraPitch)
+						  bool turtleButton, bool autoPortcullis)
 {
 	//ultra.ping();
 
@@ -111,6 +111,7 @@ void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButt
 		launchPause.Stop();
     }
 
+
     if (turtleButton)
     	rotateLauncherUp(0.7);
     else
@@ -129,11 +130,12 @@ void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButt
     	}
     }
 
-    if (cameraPitch > 0.2) {
-    	tiltCameraUp();
-    } else if (cameraPitch < -0.2) {
-    	tiltCameraDown();
-    }
+	if (upButton) {
+		tiltCameraUp();
+	} else if (downButton) {
+		tiltCameraDown();
+	}
+	std::cout << cameraMount.GetAngle() << '\n';
     //distance = ultra.getRange();
 	//SmartDashboard::PutNumber("Horizontal Distance", distance);
 
@@ -167,6 +169,7 @@ void Launch::tiltCameraDown()
 		camPitch = 0.0;
 	}
 }*/
+
 
 void Launch::rotateLauncherUp(float speed)
 { // note to self: rotating might be backwards.

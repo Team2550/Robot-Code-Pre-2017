@@ -33,34 +33,32 @@ void Drive::stop() {
 	right.Set(0);
 }
 
-void Drive::remoteDrive(float leftStick, float rightStick, bool boost, bool autoPortcullis,
+void Drive::remoteDrive(float leftStick, float rightStick, bool boost, bool brake,
 						float slowTurn) {
-	if (autoPortcullis) {
-		driveForward(-0.6);
-	} else {
-		speedMult = normalSpeed;
+	speedMult = normalSpeed;
 
-		if (boost) {
-			speedMult = boostSpeed;
-		}
-
-		float power = 0;
-		if (fabs(leftStick) > 0.2) //number accounts for dead zone
-			power += leftStick * speedMult;
-		power -= slowTurn * slowSpeed;
-
-		left.Set(power);
-
-		power = 0;
-		if (fabs(rightStick) > 0.2) //number accounts for dead zone
-			power += rightStick * speedMult;
-		power += slowTurn * slowSpeed;
-
-		right.Set(power);
+	if (boost) {
+		speedMult = boostSpeed;
+	} else if (brake) {
+		speedMult = slowSpeed;
 	}
+
+	float power = 0;
+	if (fabs(leftStick) > 0.2) //number accounts for dead zone
+		power += leftStick * speedMult;
+	power -= slowTurn * slowSpeed;
+
+	left.Set(power);
+
+	power = 0;
+	if (fabs(rightStick) > 0.2) //number accounts for dead zone
+		power += rightStick * speedMult;
+	power += slowTurn * slowSpeed;
+
+	right.Set(power);
 }
 
 void Drive::driveForward(float speed) { //sets motors to certain drive speed
-    left.Set(-speed * normalSpeed * 1.1);
-    right.Set(-speed * normalSpeed);
+    left.Set(-speed * (normalSpeed - 0.1) * 1.1);
+    right.Set(-speed * (normalSpeed - 0.1));
 }
