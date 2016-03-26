@@ -16,27 +16,39 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef ARM_H_INCLUDED
-#define ARM_H_INCLUDED
-#include <math.h>
-#include "WPILib.h"
+#include <Lift.hh>
 
-class Arm
+Lift::Lift(int liftPort, float liftSpeed) :
+           lift(liftPort)
 {
-private:
-    Talon arm;
-    Encoder armEncoder;
-    float upSpeed;
-    float downSpeed;
-    Timer blink;
+	speed = liftSpeed;
+}
 
-public:
-    Arm(int armPort, int armEncoderPortA, int armEncoderPortB, float armUpSpeed, float armDownSpeed);
-    ~Arm(); // Arm does not use limit switches! Encoder
-    void remoteArm(bool turtleButton, float armAxis);
-    void armUp(double speed);
-    void armDown(double speed);
-    void stopArm();
-};
+Lift::~Lift()
+{
+}
 
-#endif
+void Lift::remoteLift(bool in, bool out)
+{
+	if (in)
+		liftIn(speed);
+	else if (out)
+		liftOut(speed);
+	else
+		stopLift();
+}
+
+void Lift::liftOut(float speed)
+{
+	lift.Set(speed);
+}
+
+void Lift::liftIn(float speed)
+{
+	lift.Set(-speed);
+}
+
+void Lift::stopLift()
+{
+	lift.Set(0);
+}

@@ -59,6 +59,7 @@ void Arm::remoteArm(bool turtleButton, float armAxis)
     }
 	SmartDashboard::PutBoolean("Arm Safe?", armEncoder.Get() > -10.0);
 	SmartDashboard::PutNumber("Arm Position", armEncoder.Get());
+	//std::cout << armEncoder.Get() << '\n';
 }
 
 void Arm::armDown(double speed)

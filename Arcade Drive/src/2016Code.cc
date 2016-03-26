@@ -18,9 +18,8 @@
 */
 #include "2016Code.hh"
 
-Robot::Robot() : driver(0), drive(0, 1, 0.4, 0.65, 0.3), launcher(1),
-				 launch(3, 4, 5, 2, 3, 6, 7, 8, 0.0, 1.25), arm(2, 0, 1, 1.0, 0.8),
-				 lift(9, 1.0)
+Robot::Robot() : driver(0), drive(0, 1, 0.5, 0.75, 0.3), launcher(1),
+				 launch(3, 4, 5, 2, 3, 6, 7, 9, 90.0, 0.0), arm(2, 0, 1, 1.0, 0.5) // , lift(9, 1.0)
 {
 }
 
@@ -39,12 +38,17 @@ void Robot::RobotInit()
 void Robot::AutonomousInit()
 {
     autoTime.Start();
-    drive.driveForward(.25);
+    autoTime.Reset();
+    drive.driveForward(0.85);
+    launch.rotateLauncherDown(0.9);
 }
 
 void Robot::AutonomousPeriodic()
 {
-    if(autoTime.HasPeriodPassed(2.0)) //in seconds
+	if(autoTime.Get() > 3.0) {
+		launch.stopRotate();
+	}
+    if(autoTime.Get() > 4.0) //in seconds
 		drive.stop();
 }
 
@@ -63,8 +67,8 @@ void Robot::TeleopPeriodic() {
 
     launch.remoteLaunch(launcher.GetRawButton(xbox::btn::y),     // Launch
                         launcher.GetRawButton(xbox::btn::x),     // Intake
-						launcher.GetRawButton(xbox::btn::rb),    // Launcher Up
-						launcher.GetRawButton(xbox::btn::lb),    // Launcher Down
+						launcher.GetRawButton(xbox::btn::lb),    // Launcher Up
+						launcher.GetRawButton(xbox::btn::rb),    // Launcher Down
 						driver.GetRawButton(xbox::btn::a),	     // Turtle
 						driver.GetRawButton(xbox::btn::lb),      // Auto Portcullis
 					   -launcher.GetRawAxis(xbox::axis::rightY));// Camera Gimble
@@ -72,8 +76,8 @@ void Robot::TeleopPeriodic() {
     arm.remoteArm(driver.GetRawButton(xbox::btn::a),		     // Turtle
 					launcher.GetRawAxis(xbox::axis::leftY));     // Armer
 
-    lift.remoteLift(driver.GetRawButton(xbox::btn::x),
-    				driver.GetRawButton(xbox::btn::y));
+    /*lift.remoteLift(driver.GetRawButton(xbox::btn::x),
+    				driver.GetRawButton(xbox::btn::y));*/
 }
 
 void Robot::DisabledInit()

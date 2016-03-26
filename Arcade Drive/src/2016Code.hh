@@ -16,27 +16,38 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef ARM_H_INCLUDED
-#define ARM_H_INCLUDED
-#include <math.h>
+#ifndef SRC_2016CODE_HH_
+#define SRC_2016CODE_HH_
+
 #include "WPILib.h"
+#include "Drive.hh"
+#include "Launch.hh"
+#include "Arm.hh"
+#include "Lift.hh"
+#include "xBox.hh"
+#include "Ultrasonic.h"
+#include "Timer.h"
 
-class Arm
-{
+class Robot : public IterativeRobot {
 private:
-    Talon arm;
-    Encoder armEncoder;
-    float upSpeed;
-    float downSpeed;
-    Timer blink;
-
+	//Drive setup
+	Joystick driver;
+	Drive drive;
+	Joystick launcher;
+	Launch launch;
+	Arm arm;
+	// Lift lift;
+	Timer autoTime;
 public:
-    Arm(int armPort, int armEncoderPortA, int armEncoderPortB, float armUpSpeed, float armDownSpeed);
-    ~Arm(); // Arm does not use limit switches! Encoder
-    void remoteArm(bool turtleButton, float armAxis);
-    void armUp(double speed);
-    void armDown(double speed);
-    void stopArm();
+	Robot();
+	~Robot();
+	void RobotInit();
+	void AutonomousInit();
+	void AutonomousPeriodic();
+	void TeleopInit();
+	void TeleopPeriodic();
+	void DisabledInit();
+	void DisabledPeriodic();
 };
 
-#endif
+#endif /* SRC_2016CODE_HH_ */

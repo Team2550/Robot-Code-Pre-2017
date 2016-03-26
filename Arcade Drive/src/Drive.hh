@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2015, 2016 "Jadon Belezos" "Lance Booth" "Kira Corbett" "Caleb Reister" "Nathan Walker"
+    Copyright (C) 2015, 2016 "Jadon Belezos" "Lance Booth" "Kira Corbet" "Caleb Reister" "Nathan Walker"
 
     This file is a part of the Team 2500 Robot Code.
 
@@ -16,27 +16,25 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef ARM_H_INCLUDED
-#define ARM_H_INCLUDED
+#ifndef DRIVE_H
+#define DRIVE_H
 #include <math.h>
 #include "WPILib.h"
 
-class Arm
-{
+class Drive {
 private:
-    Talon arm;
-    Encoder armEncoder;
-    float upSpeed;
-    float downSpeed;
-    Timer blink;
-
+	Talon left;
+	Talon right;
+	float normalSpeed;
+	float boostSpeed;
+	float slowSpeed;
+	float speedMult;
 public:
-    Arm(int armPort, int armEncoderPortA, int armEncoderPortB, float armUpSpeed, float armDownSpeed);
-    ~Arm(); // Arm does not use limit switches! Encoder
-    void remoteArm(bool turtleButton, float armAxis);
-    void armUp(double speed);
-    void armDown(double speed);
-    void stopArm();
+	Drive(int leftPort, int rightPort, float normalSpeed, float boostSpeed, float slowSpeed);
+	void remoteDrive(float leftStick, float rightStick, bool boost, bool autoPortcullis, float slowTurn);
+	void driveForward(float amount);
+	void stop();
 };
 
 #endif
+
