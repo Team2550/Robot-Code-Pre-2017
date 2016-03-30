@@ -5,12 +5,12 @@
 class Sequence
 {
 private:
-	double pers[];
-	//int size;
+	double periods[];
+	int size;
 
 public:
-	Sequence(double periods[]);
-	int per(Timer time);
+	Sequence(double periods[], int numberOfPeriods);
+	int getPeriod(Timer time);
 };
 
 #endif

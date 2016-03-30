@@ -6,7 +6,7 @@
 
 class Lift {
 private:
-	Talon liftMotor;
+	VictorSP liftMotor;
 	DigitalInput bottomSwitch;
 	DigitalInput topSwitch;
 	//LiftMode task;

@@ -18,9 +18,10 @@
 */
 #include "2016Code.hh"
 
+double periods[] = {1.9, 1.5, 0.55, 0.55, 0.5, 0.8, 1.5};
 Robot::Robot() : driver(0), drive(0, 1, 0.6, 0.85, 0.3), launcher(1),
-				 launch(3, 4, 5, 2, 3, 6, 7, 9, 96.0, 65.0), arm(2, 0, 1, 1.0, 0.5)//,
-				 //seq({1.7, 1.7, 1.5, 1.5})// , lift(9, 1.0)
+				 launch(3, 4, 5, 2, 3, 6, 7, 9, 96.0, 65.0), arm(2, 0, 1, 1.0, 0.5), lift(9, 1.0),
+				 sequence(periods, 7)
 {
 }
 
@@ -31,7 +32,7 @@ Robot::~Robot()
 
 void Robot::RobotInit()
 {
-    SmartDashboard::PutBoolean("Ignore Limit Switches?", false);
+    //SmartDashboard::PutBoolean("Ignore Limit Switches?", false);
     SmartDashboard::PutBoolean("Ultrasonic Ready?", false);
     SmartDashboard::PutNumber("Arm Position", 0);
 }
@@ -46,21 +47,26 @@ void Robot::AutonomousPeriodic()
 {
 	/*switch ( seq.per(autoTime, periods) )*/
 	if (autoTime.Get() < 1.9) {
-	    drive.driveForward(0.85);
+	    drive.driveForward(0.9);
 
 	    launch.rotateLauncherDown(0.9);
 
 	} else if (autoTime.Get() < 3.4) {
 		launch.rotateLauncherUp(1.0);
+	} else if (autoTime.Get() < 3.95) {
+		drive.stop();
 
-	} else if (autoTime.Get() < 3.8) {
-		drive.turn(0.75);
+	} else if (autoTime.Get() < 4.5) {
+		drive.turn(1);
 		launch.stopRotate();
 
-	} else if(autoTime.Get() < 4.6) {
-		drive.driveForward(0.85);
+	} else if(autoTime.Get() < 5) {
+		drive.stop();
 
-	} else if(autoTime.Get() < 6.1) {
+	} else if(autoTime.Get() < 5.8) {
+		drive.driveForward(0.9);
+
+	} else if(autoTime.Get() < 7.3) {
 		drive.stop();
 
 		launch.feedLaunch();
@@ -94,8 +100,8 @@ void Robot::TeleopPeriodic() {
     arm.remoteArm(driver.GetRawButton(xbox::btn::b),		     // Turtle
 				  launcher.GetRawAxis(xbox::axis::leftY));       // Arm
 
-    /*lift.remoteLift(driver.GetRawButton(xbox::btn::x),
-    				driver.GetRawButton(xbox::btn::y));*/
+    lift.remoteLift(driver.GetRawButton(xbox::btn::x),			 // In
+    				driver.GetRawButton(xbox::btn::y));			 // Out
 }
 
 void Robot::DisabledInit()

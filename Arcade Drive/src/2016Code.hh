@@ -37,9 +37,9 @@ private:
 	Joystick launcher;
 	Launch launch;
 	Arm arm;
-	// Lift lift;
+	Lift lift;
 	Timer autoTime;
-	//Sequence seq;
+	Sequence sequence;
 public:
 	Robot();
 	~Robot();

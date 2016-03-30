@@ -51,7 +51,7 @@ void Arm::remoteArm(bool turtleButton, float armAxis)
 			stopArm();
     }
 
-    if (!(armEncoder.Get() > -10.0)) {
+    if (armEncoder.Get() > -10.0) {
     	SmartDashboard::PutBoolean("Arm Safe?", true);
     } else {
     	bool doBlink = round(blink.Get()) - floor(blink.Get()) < 0.5;

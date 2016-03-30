@@ -1,23 +1,25 @@
 #include "Sequence.hh"
 
-Sequence::Sequence(double periods[])
+Sequence::Sequence(double periods[], int numberOfPeriods)
 {
-	//pers = periods;
-	//size = (sizeof(pers)/sizeof(*pers));
+	size = numberOfPeriods;
+
+	for(int i = 0; i < size; i++) {
+		this-> periods[i] = periods[i];
+	}
 }
 
-int Sequence::per(Timer time)
+int Sequence::getPeriod(Timer time)
 {
 	double cur = time.Get();
 	double prev = 0;
 
-	//for (int i = 0; i < size; i++) {
-		//prev += pers[i];
+	for (int i = 0; i < size; i++) {
+		prev += periods[i];
 
-		//if (cur < prev)
-		//	return i;
-	//}
+		if (cur < prev)
+			return i;
+	}
 
-	//return size;
-	return 0;
+	return size;
 }
