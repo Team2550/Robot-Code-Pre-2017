@@ -19,7 +19,8 @@
 #include "2016Code.hh"
 
 Robot::Robot() : driver(0), drive(0, 1, 0.6, 0.85, 0.3), launcher(1),
-				 launch(3, 4, 5, 2, 3, 6, 7, 9, 96.0, 70.0), arm(2, 0, 1, 1.0, 0.5) // , lift(9, 1.0)
+				 launch(3, 4, 5, 2, 3, 6, 7, 9, 96.0, 65.0), arm(2, 0, 1, 1.0, 0.5)//,
+				 //seq({1.7, 1.7, 1.5, 1.5})// , lift(9, 1.0)
 {
 }
 
@@ -39,17 +40,36 @@ void Robot::AutonomousInit()
 {
     autoTime.Start();
     autoTime.Reset();
-    drive.driveForward(0.85);
-    launch.rotateLauncherDown(0.9);
 }
 
 void Robot::AutonomousPeriodic()
 {
-	if(autoTime.Get() > 3.0) {
+	/*switch ( seq.per(autoTime, periods) )*/
+	if (autoTime.Get() < 1.9) {
+	    drive.driveForward(0.85);
+
+	    launch.rotateLauncherDown(0.9);
+
+	} else if (autoTime.Get() < 3.4) {
+		launch.rotateLauncherUp(1.0);
+
+	} else if (autoTime.Get() < 3.8) {
+		drive.turn(0.75);
 		launch.stopRotate();
-	}
-    if(autoTime.Get() > 4.0) //in seconds
+
+	} else if(autoTime.Get() < 4.6) {
+		drive.driveForward(0.85);
+
+	} else if(autoTime.Get() < 6.1) {
 		drive.stop();
+
+		launch.feedLaunch();
+
+	} else {
+		launch.feedStop();
+
+	}
+
 }
 
 void Robot::TeleopInit()
@@ -61,7 +81,7 @@ void Robot::TeleopPeriodic() {
 	drive.remoteDrive(driver.GetRawAxis(xbox::axis::leftY),      // Left Tank
 					  driver.GetRawAxis(xbox::axis::rightY),     // Right Tank
 					  driver.GetRawButton(xbox::btn::rb),        // Boost
-					  driver.GetRawButton(xbox::btn::lb),		 // Auto Portcullis
+					  driver.GetRawButton(xbox::btn::lb),		 // Brake
 					  driver.GetRawAxis(xbox::axis::RT)-		 // Slow Turn
 					  driver.GetRawAxis(xbox::axis::LT));
 
@@ -69,11 +89,10 @@ void Robot::TeleopPeriodic() {
                         launcher.GetRawButton(xbox::btn::x),     // Intake
 						launcher.GetRawButton(xbox::btn::lb),    // Launcher Up
 						launcher.GetRawButton(xbox::btn::rb),    // Launcher Down
-						driver.GetRawButton(xbox::btn::a),	     // Turtle
-						driver.GetRawButton(xbox::btn::lb));      // Auto Portcullis
+						driver.GetRawButton(xbox::btn::b));	     // Turtle
 
-    arm.remoteArm(driver.GetRawButton(xbox::btn::a),		     // Turtle
-					launcher.GetRawAxis(xbox::axis::leftY));     // Armer
+    arm.remoteArm(driver.GetRawButton(xbox::btn::b),		     // Turtle
+				  launcher.GetRawAxis(xbox::axis::leftY));       // Arm
 
     /*lift.remoteLift(driver.GetRawButton(xbox::btn::x),
     				driver.GetRawButton(xbox::btn::y));*/

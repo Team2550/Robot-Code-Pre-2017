@@ -23,8 +23,8 @@
 
 class Drive {
 private:
-	Talon left;
-	Talon right;
+	Talon leftMotor;
+	Talon rightMotor;
 	float normalSpeed;
 	float boostSpeed;
 	float slowSpeed;
@@ -32,8 +32,11 @@ private:
 public:
 	Drive(int leftPort, int rightPort, float normalSpeed, float boostSpeed, float slowSpeed);
 	void remoteDrive(float leftStick, float rightStick, bool boost, bool brake, float slowTurn);
-	void driveForward(float amount);
+	void driveForward(float speed);
+	void turn(float speed);
 	void stop();
+	void left(float speed);
+	void right(float speed);
 };
 
 #endif

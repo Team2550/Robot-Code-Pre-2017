@@ -54,7 +54,7 @@ public:
     void feedLaunch();
     void remoteLaunch(bool launch, bool intake,
     		          bool upButton, bool downButton,
-					  bool turtleButton, bool autoPortcullis);
+					  bool turtleButton);
     void rotateLauncherUp(float speed);
     void rotateLauncherDown(float speed);
     void stopRotate();

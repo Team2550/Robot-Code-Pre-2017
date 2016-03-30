@@ -19,9 +19,9 @@
 #include "Drive.hh"
 
 Drive::Drive(int leftPort, int rightPort, float normalSpeed, float boostSpeed, float slowSpeed) :
-    left(leftPort), right(rightPort)
+    leftMotor(leftPort), rightMotor(rightPort)
 {
-	left.SetInverted(true);
+	rightMotor.SetInverted(true);
 	this->normalSpeed = normalSpeed;
 	this->boostSpeed = boostSpeed;
 	this->slowSpeed = slowSpeed;
@@ -29,8 +29,8 @@ Drive::Drive(int leftPort, int rightPort, float normalSpeed, float boostSpeed, f
 }
 
 void Drive::stop() {
-	left.Set(0);
-	right.Set(0);
+	left(0);
+	right(0);
 }
 
 void Drive::remoteDrive(float leftStick, float rightStick, bool boost, bool brake,
@@ -45,20 +45,34 @@ void Drive::remoteDrive(float leftStick, float rightStick, bool boost, bool brak
 
 	float power = 0;
 	if (fabs(leftStick) > 0.2) //number accounts for dead zone
-		power += leftStick * speedMult;
+		power += -leftStick * speedMult;
 	power -= slowTurn * slowSpeed;
 
-	left.Set(power);
+	left(power);
+
 
 	power = 0;
 	if (fabs(rightStick) > 0.2) //number accounts for dead zone
-		power += rightStick * speedMult;
+		power += -rightStick * speedMult;
 	power += slowTurn * slowSpeed;
 
-	right.Set(power);
+	right(power);
 }
 
 void Drive::driveForward(float speed) { //sets motors to certain drive speed
-    left.Set(-speed * (normalSpeed - 0.1) * 1.1);
-    right.Set(-speed * (normalSpeed - 0.1));
+    left(speed * (normalSpeed - 0.1));
+    right(speed * (normalSpeed - 0.1));
+}
+
+void Drive::turn(float speed) {
+    left(speed * (normalSpeed - 0.1));
+    right(-speed * (normalSpeed - 0.1));
+}
+
+void Drive::left(float speed) {
+	leftMotor.Set(speed);
+}
+
+void Drive::right(float speed) {
+	rightMotor.Set(speed);
 }

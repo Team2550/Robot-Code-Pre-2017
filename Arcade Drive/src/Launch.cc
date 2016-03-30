@@ -54,6 +54,7 @@ void Launch::feedIntake()
     right.Set(-0.65);
     pushA.Set(1); // Value needs to be changed
     pushB.Set(0.03);
+    launching = false;
 }
 
 void Launch::feedStop()
@@ -62,6 +63,7 @@ void Launch::feedStop()
     right.Set(0);
     pushA.Set(1);
     pushB.Set(0.03);
+    launching = false;
 }
 
 void Launch::feedLaunch()
@@ -70,6 +72,7 @@ void Launch::feedLaunch()
 	{
 		launchPause.Reset();
 		launchPause.Start();
+		launching = true;
 	}
     left.Set(1.0);
     right.Set(1.0);
@@ -88,26 +91,22 @@ void Launch::feedLaunch()
     // period of time
 }
 
-void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButton,
-						  bool turtleButton, bool autoPortcullis)
+void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButton, bool turtleButton)
 {
 	//ultra.ping();
 
     if(launch)
     {
         feedLaunch();
-    	launching = true;
     }
     else if(intake)
     {
         feedIntake();
-    	launching = false;
 		launchPause.Stop();
     }
     else
     {
         feedStop();
-        launching = false;
 		launchPause.Stop();
     }
 
@@ -116,18 +115,13 @@ void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButt
     	rotateLauncherUp(0.7);
     else
     {
-    	if (autoPortcullis)
-    		rotateLauncherDown(0.45);
-    	else
-    	{
-			// rotation control
-			if(upButton)
-				rotateLauncherUp(0.7);
-			else if(downButton)
-				rotateLauncherDown(0.45);
-			else
-				stopRotate();
-    	}
+		// rotation control
+		if(upButton)
+			rotateLauncherUp(0.7);
+		else if(downButton)
+			rotateLauncherDown(0.45);
+		else
+			stopRotate();
     }
 
 	if (upButton) {
