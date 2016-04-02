@@ -50,8 +50,8 @@ Launch::~Launch()
 
 void Launch::feedIntake()
 {
-    left.Set(-0.65);
-    right.Set(-0.65);
+    left.Set(-0.75);
+    right.Set(-0.75);
     pushA.Set(1); // Value needs to be changed
     pushB.Set(0.03);
     launching = false;

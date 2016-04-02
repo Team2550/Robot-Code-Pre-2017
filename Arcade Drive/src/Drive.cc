@@ -60,12 +60,12 @@ void Drive::remoteDrive(float leftStick, float rightStick, bool boost, bool brak
 }
 
 void Drive::driveForward(float speed) { //sets motors to certain drive speed
-    left(speed * (normalSpeed - 0.1)*1.06);
+    left(speed * (normalSpeed - 0.1)*1.03);
     right(speed * (normalSpeed - 0.1));
 }
 
 void Drive::turn(float speed) {
-    left(speed * (normalSpeed - 0.1)*1.06);
+    left(speed * (normalSpeed - 0.1));
     right(-speed * (normalSpeed - 0.1));
 }
 

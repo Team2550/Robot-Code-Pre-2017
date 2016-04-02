@@ -25,7 +25,7 @@
 #include "Arm.hh"
 #include "Lift.hh"
 #include "xBox.hh"
-#include "Sequence.hh"
+//#include "Sequence.hh"
 #include "Ultrasonic.h"
 #include "Timer.h"
 
@@ -39,7 +39,7 @@ private:
 	Arm arm;
 	Lift lift;
 	Timer autoTime;
-	Sequence sequence;
+	//Sequence sequence;
 public:
 	Robot();
 	~Robot();
