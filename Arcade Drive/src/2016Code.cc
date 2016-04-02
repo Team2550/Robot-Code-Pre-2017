@@ -73,10 +73,10 @@ void Robot::AutonomousPeriodic()
 	} else if(autoTime.Get() < 7.67) {
 		drive.stop();
 
-		launch.feedLaunch();
+		// launch.feedLaunch();
 
 	} else {
-		launch.feedStop();
+		// launch.feedStop();
 
 	}
 
