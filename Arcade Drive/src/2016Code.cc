@@ -3,7 +3,7 @@
 
     This file is a part of the Team 2500 Robot Code.
 
-    The Team 2550 Robot Code program is free software: you can redistribute it and/or modify
+    The Team 2500 Robot Code program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
@@ -18,9 +18,9 @@
 */
 #include "2016Code.hh"
 
-Robot::Robot() : driver(0), drive(0, 1, 0.4, 0.65, 0.3), launcher(1),
-				 launch(3, 4, 5, 2, 3, 6, 7, 8, 0.0, 1.25), arm(2, 0, 1, 1.0, 0.8),
-				 lift(9, 1.0)
+//double periods[] = {1.9, 1.5, 0.55, 0.55, 0.5, 0.8, 1.5};
+Robot::Robot() : driver(0), drive(0, 1, 0.6, 0.85, 0.3), launcher(1),
+				 launch(3, 4, 5, 2, 3, 6, 7, 9, 96.0, 65.0), arm(2, 0, 1, 1.0, 0.5), lift(9, 1.0)
 {
 }
 
@@ -39,13 +39,47 @@ void Robot::RobotInit()
 void Robot::AutonomousInit()
 {
     autoTime.Start();
-    drive.driveForward(.25);
+    autoTime.Reset();
 }
 
 void Robot::AutonomousPeriodic()
 {
-    if(autoTime.HasPeriodPassed(2.0)) //in seconds
+	if (autoTime.Get() < 2.0) {
+	    drive.driveForward(0.9);
+
+	    launch.rotateLauncherDown(0.9);
+
+	} else if (autoTime.Get() < 3.5) {
+		launch.rotateLauncherUp(1.0);
+
+	} else if (autoTime.Get() < 4.05) {
 		drive.stop();
+
+	} else if (autoTime.Get() < 4.15) {
+		arm.armUp(1.0);
+
+
+	} else if (autoTime.Get() < 4.67) {
+		drive.turn(1);
+		launch.stopRotate();
+		arm.stopArm();
+
+	} else if(autoTime.Get() < 5.17) {
+		drive.stop();
+
+	} else if(autoTime.Get() < 6.17) {
+		drive.driveForward(0.9);
+
+	} else if(autoTime.Get() < 7.67) {
+		drive.stop();
+
+		// launch.feedLaunch();
+
+	} else {
+		// launch.feedStop();
+
+	}
+
 }
 
 void Robot::TeleopInit()
@@ -57,23 +91,21 @@ void Robot::TeleopPeriodic() {
 	drive.remoteDrive(driver.GetRawAxis(xbox::axis::leftY),      // Left Tank
 					  driver.GetRawAxis(xbox::axis::rightY),     // Right Tank
 					  driver.GetRawButton(xbox::btn::rb),        // Boost
-					  driver.GetRawButton(xbox::btn::lb),		 // Auto Portcullis
+					  driver.GetRawButton(xbox::btn::lb),		 // Brake
 					  driver.GetRawAxis(xbox::axis::RT)-		 // Slow Turn
 					  driver.GetRawAxis(xbox::axis::LT));
 
     launch.remoteLaunch(launcher.GetRawButton(xbox::btn::y),     // Launch
                         launcher.GetRawButton(xbox::btn::x),     // Intake
-						launcher.GetRawButton(xbox::btn::rb),    // Launcher Up
-						launcher.GetRawButton(xbox::btn::lb),    // Launcher Down
-						driver.GetRawButton(xbox::btn::a),	     // Turtle
-						driver.GetRawButton(xbox::btn::lb),      // Auto Portcullis
-					   -launcher.GetRawAxis(xbox::axis::rightY));// Camera Gimble
+						launcher.GetRawButton(xbox::btn::lb),    // Launcher Up
+						launcher.GetRawButton(xbox::btn::rb),    // Launcher Down
+						driver.GetRawButton(xbox::btn::b));	     // Turtle
 
-    arm.remoteArm(driver.GetRawButton(xbox::btn::a),		     // Turtle
-					launcher.GetRawAxis(xbox::axis::leftY));     // Armer
+    arm.remoteArm(driver.GetRawButton(xbox::btn::b),		     // Turtle
+				  launcher.GetRawAxis(xbox::axis::leftY));       // Arm
 
-    lift.remoteLift(driver.GetRawButton(xbox::btn::x),
-    				driver.GetRawButton(xbox::btn::y));
+    lift.remoteLift(driver.GetRawButton(xbox::btn::x),			 // In
+    				driver.GetRawButton(xbox::btn::y));			 // Out
 }
 
 void Robot::DisabledInit()

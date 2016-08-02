@@ -21,7 +21,7 @@ void Drive::remoteDrive(float leftStick, float rightStick, bool boost, bool brak
 	//speed limiting
 	if (boost)
 	{
-		speedMult = .75;
+		speedMult = 1;
 	}
 	else if (brake && braked)
 	{
