@@ -70,7 +70,6 @@ void Robot::TeleopPeriodic() {
 					   -launcher.GetRawAxis(xbox::axis::rightY));// Camera Gimble
 
     arm.remoteArm(driver.GetRawButton(xbox::btn::a),		     // Turtle
-					driver.GetRawButton(xbox::btn::lb),          // Auto Portcullis
 					launcher.GetRawAxis(xbox::axis::leftY));     // Armer
 
     lift.remoteLift(driver.GetRawButton(xbox::btn::x),

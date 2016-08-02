@@ -33,7 +33,7 @@ private:
 public:
     Arm(int armPort, int armEncoderPortA, int armEncoderPortB, float armUpSpeed, float armDownSpeed);
     ~Arm(); // Arm does not use limit switches! Encoder
-    void remoteArm(bool turtleButton, bool autoPortcullis, float armAxis);
+    void remoteArm(bool turtleButton, float armAxis);
     void armUp(double speed);
     void armDown(double speed);
     void stopArm();

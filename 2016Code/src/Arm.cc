@@ -36,24 +36,19 @@ Arm::~Arm()
 
 }
 
-void Arm::remoteArm(bool turtleButton, bool autoPortcullis, float armAxis)
+void Arm::remoteArm(bool turtleButton, float armAxis)
 {
     if (turtleButton)
     	armUp(0.75);
     else
     {
 		// arm control
-		if (autoPortcullis)
-			armUp(0.15);
+		if(armAxis > .2)
+			armDown(armAxis * downSpeed);
+		else if(armAxis < -0.2)
+			armUp(-armAxis * upSpeed);
 		else
-		{
-			if(armAxis > .2)
-				armDown(armAxis * downSpeed);
-			else if(armAxis < -0.2)
-				armUp(-armAxis * upSpeed);
-			else
-				stopArm();
-		}
+			stopArm();
     }
 
     if (!(armEncoder.Get() > -10.0)) {
