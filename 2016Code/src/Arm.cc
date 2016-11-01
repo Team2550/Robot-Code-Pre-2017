@@ -19,8 +19,7 @@
 #include <Arm.hh>
 
 Arm::Arm(int armPort, int armEncoderPortA, int armEncoderPortB, float armUpSpeed, float armDownSpeed) :
-           arm(armPort), armEncoder(armEncoderPortA, armEncoderPortB, false,
-	        		       	   	   	   Encoder::EncodingType::k1X)
+           arm(armPort), armEncoder(armEncoderPortA, armEncoderPortB, false, Encoder::EncodingType::k1X)
 {
     armEncoder.SetMinRate(0);
     armEncoder.SetDistancePerPulse(1);
