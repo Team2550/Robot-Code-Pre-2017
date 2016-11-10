@@ -31,8 +31,9 @@ void Robot::TeleopInit()
 }
 
 void Robot::TeleopPeriodic() {
-	drive.remoteDrive(driver.GetRawAxis(xbox::axis::leftY),       // Left Stick
-					  driver.GetRawAxis(xbox::axis::rightY));     // Right Stick
+	drive.remoteDrive(driver.GetRawAxis(xbox::axis::leftX),   // For strafing
+	                  driver.GetRawAxis(xbox::axis::leftY),   // For strafing
+					  driver.GetRawAxis(xbox::axis::rightX)); // For rotation
 }
 
 void Robot::DisabledInit()

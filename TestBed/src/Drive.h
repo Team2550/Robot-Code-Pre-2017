@@ -10,8 +10,9 @@ private:
 	Victor frontLeft;
 	Victor frontRight;
 public:
-	Drive(int backLeftPort, int backrightPort, int frontLeftPort, int frontRightPort);
-	void remoteDrive(float leftStick, float rightStick);
+	Drive(int backLeftPort, int backrightPort, int frontLeftPort,
+	      int frontRightPort);
+	void remoteDrive(float leftX, float leftY, float rightX);
 	void stop();
 };
 
