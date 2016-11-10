@@ -38,3 +38,6 @@ Debug
 # Java source files
 # To stop certain people from using java (or at least annoy them for a while)
 *.java
+
+# swap/lock files
+*.swp
