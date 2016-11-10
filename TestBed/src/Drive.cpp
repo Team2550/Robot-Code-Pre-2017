@@ -21,8 +21,27 @@ void Drive::remoteDrive(float leftX, float leftY, float rightX)
 	/*float backLeftPower = 0, backRightPower = 0,
 	      frontLeftPower = 0, frontRightPower = 0;
 
-	leftX = fabs(leftX) < 0.2 ? 0 : leftX;
-	leftY = fabs(leftY) < 0.2 ? 0 : leftY;
+	leftX = fabs(leftX) < 0.2 ? 0 : leftX / 2;
+	leftY = fabs(leftY) < 0.2 ? 0 : leftY / 2;
+	rightX = fabs(rightX) < 0.2 ? 0 : rightX / 2;
+
+	// Adjust values for strafing
+	backLeftPower -= leftX;
+	backRightPower += leftX;
+	frontLeftPower += leftX;
+	frontRightPower -= leftX;
+
+	// Adjust values for normal (forwards and backwards) motion
+	backLeftPower += leftY;
+	backRightPower += leftY;
+	frontLeftPower += leftY;
+	frontRightPower += leftY;
+
+	// Adjust values for rotation
+	backLeftPower += rightX;
+	backRightPower -= rightX;
+	frontLeftPower += rightx;
+	frontRightPower -= rightX;
 
 	backLeft.Set(backLeftPower);
 	backRight.Set(backRightPower);
