@@ -13,7 +13,7 @@ private:
 public:
 	Drive(int backLeftPort, int backrightPort, int frontLeftPort,
 	      int frontRightPort, float motorPowerMult);
-	void remoteDrive(float leftX, float leftY, float rightX);
+	void remoteDrive(float leftX, float leftY, float rightX, bool goForward, bool goBackward);
 	void stop();
 };
 
