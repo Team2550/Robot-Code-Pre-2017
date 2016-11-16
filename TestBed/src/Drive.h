@@ -9,9 +9,10 @@ private:
 	Victor backRight;
 	Victor frontLeft;
 	Victor frontRight;
+	const float motorPower;
 public:
 	Drive(int backLeftPort, int backrightPort, int frontLeftPort,
-	      int frontRightPort);
+	      int frontRightPort, float motorPowerMult);
 	void remoteDrive(float leftX, float leftY, float rightX);
 	void stop();
 };

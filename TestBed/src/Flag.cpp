@@ -1,17 +1,17 @@
 #include "Flag.h"
 
-Flag::Flag(int solenoidPort) :
-           doubleSolenoid(solenoidPort)
+pneumaticFlag::pneumaticFlag(int solenoidPort1, int solenoidPort2) :
+           doubleSolenoid(solenoidPort1, solenoidPort2)
 {
 
 }
 
-void Flag::remoteFlag(bool leftButton, bool rightButton)
+void pneumaticFlag::remoteFlag(bool leftButton, bool rightButton)
 {
-	/*if(leftButton)
-		doubleSolenoid.set(DoubleSolenoid.Value.kForward);
+	if(leftButton)
+		doubleSolenoid.Set(DoubleSolenoid::Value::kForward);
 	else if(rightButton)
-		doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
+		doubleSolenoid.Set(DoubleSolenoid::Value::kReverse);
 	else
-		doubleSolenoid.set(DoubleSolenoid.Value.kOff);*/
+		doubleSolenoid.Set(DoubleSolenoid::Value::kOff);
 }

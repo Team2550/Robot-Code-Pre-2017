@@ -1,9 +1,12 @@
 #include "Drive.h"
 
+#include <iostream>
+
 Drive::Drive(int backLeftPort, int backRightPort, int frontLeftPort,
-             int frontRightPort) :
+             int frontRightPort, float motorPowerMult) :
              backLeft(backLeftPort), backRight(backRightPort),
-             frontLeft(frontLeftPort), frontRight(frontRightPort)
+             frontLeft(frontLeftPort), frontRight(frontRightPort),
+			 motorPower(motorPowerMult)
 {
 	backRight.SetInverted(true);
 	frontRight.SetInverted(true);
@@ -18,7 +21,12 @@ void Drive::stop() {
 
 void Drive::remoteDrive(float leftX, float leftY, float rightX)
 {
-	/*float backLeftPower = 0, backRightPower = 0,
+	/* back left: 500rpm
+	 * back right: 800rpm
+	 * front left:900rpm
+	 * front right:700rpm
+	 */
+	float backLeftPower = 0, backRightPower = 0,
 	      frontLeftPower = 0, frontRightPower = 0;
 
 	leftX = fabs(leftX) < 0.2 ? 0 : leftX / 2;
@@ -26,10 +34,10 @@ void Drive::remoteDrive(float leftX, float leftY, float rightX)
 	rightX = fabs(rightX) < 0.2 ? 0 : rightX / 2;
 
 	// Adjust values for strafing
-	backLeftPower -= leftX;
-	backRightPower += leftX;
-	frontLeftPower += leftX;
-	frontRightPower -= leftX;
+	backLeftPower += leftX;
+	backRightPower -= leftX;
+	frontLeftPower -= leftX;
+	frontRightPower += leftX;
 
 	// Adjust values for normal (forwards and backwards) motion
 	backLeftPower += leftY;
@@ -38,24 +46,27 @@ void Drive::remoteDrive(float leftX, float leftY, float rightX)
 	frontRightPower += leftY;
 
 	// Adjust values for rotation
-	backLeftPower += rightX;
-	backRightPower -= rightX;
-	frontLeftPower += rightx;
-	frontRightPower -= rightX;
+	backLeftPower -= rightX;
+	backRightPower += rightX;
+	frontLeftPower -= rightX;
+	frontRightPower += rightX;
 
-	backLeft.Set(backLeftPower);
-	backRight.Set(backRightPower);
-	frontLeft.Set(frontLeftPower);
-	frontRight.Set(frontRightPower);*/
+	std::cout << leftX << ' ' << leftY << ' ' << rightX << std::endl;
+	std::cout << backLeftPower << ' ' << backRightPower << ' ' << frontLeftPower << ' ' << frontRightPower;
 
-	if(leftY > 0.2)
+	backLeft.Set(backLeftPower * motorPower);
+	backRight.Set(backRightPower * motorPower);
+	frontLeft.Set(frontLeftPower * motorPower);
+	frontRight.Set(frontRightPower * motorPower);
+
+	/*if(leftY > 0.2)
 	{
 		backLeft.Set(-.5);
 		backRight.Set(-.5);
 		frontLeft.Set(-.5);
 		frontRight.Set(-.5);
 	}
-	else if(leftY < 0.2)
+	else if(leftY < -0.2)
 	{
 		backLeft.Set(.5);
 		backRight.Set(.5);
@@ -63,5 +74,5 @@ void Drive::remoteDrive(float leftX, float leftY, float rightX)
 		frontRight.Set(.5);
 	}
 	else
-		stop();
+		stop();*/
 }

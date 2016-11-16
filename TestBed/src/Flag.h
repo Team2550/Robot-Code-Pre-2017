@@ -3,11 +3,11 @@
 
 #include "WPILib.h"
 
-class Flag {
+class pneumaticFlag {
 private:
 	DoubleSolenoid doubleSolenoid;
 public:
-	Flag(int solenoidPort);
+	pneumaticFlag(int solenoidPort1, int solenoidPort2);
 	void remoteFlag(bool leftButton, bool rightButton);
 };
 

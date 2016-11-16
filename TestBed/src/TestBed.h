@@ -10,6 +10,7 @@
 
 #include "WPILib.h"
 #include "Drive.h"
+#include "Flag.h"
 #include "xBox.h"
 
 class Robot : public IterativeRobot {
@@ -17,6 +18,7 @@ private:
 	//Drive setup
 	Joystick driver;
 	Drive drive;
+	pneumaticFlag flag;
 public:
 	Robot();
 	~Robot();
