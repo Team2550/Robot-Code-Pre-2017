@@ -51,13 +51,14 @@ void Drive::remoteDrive(float leftX, float leftY, float rightX, bool goForward, 
 	rightX = fabs(rightX) < 0.2 ? 0 : rightX / 2;
 
 	// Adjust values for strafing
-	backLeftPower -= leftX;
-	backRightPower += leftX;
-	frontLeftPower += leftX;
-	frontRightPower -= leftX;
+	int strafeMult = 2;
+	backLeftPower -= leftX * strafeMult * 1.3;
+	backRightPower += leftX * strafeMult;
+	frontLeftPower += leftX * strafeMult;
+	frontRightPower -= leftX * strafeMult;
 
 	// Adjust values for normal (forwards and backwards) motion
-	backLeftPower += leftY;
+	backLeftPower += leftY * 1.7;
 	backRightPower += leftY;
 	frontLeftPower += leftY;
 	frontRightPower += leftY;
@@ -73,7 +74,7 @@ void Drive::remoteDrive(float leftX, float leftY, float rightX, bool goForward, 
 	//if(count++ % 1000 == 0)
 	//	std::cout << backLeftPower << ' ' << backRightPower << ' ' << frontLeftPower << ' ' << frontRightPower;
 
-	backLeft.Set(backLeftPower * motorPower * 2); // Because it's a victor 888
+	backLeft.Set(backLeftPower * motorPower); // Because it's a victor 888
 	backRight.Set(backRightPower * motorPower);
 	frontLeft.Set(frontLeftPower * motorPower);
 	frontRight.Set(frontRightPower * motorPower);
