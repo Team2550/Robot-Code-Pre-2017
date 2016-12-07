@@ -29,13 +29,21 @@
 
 class Robot : public IterativeRobot {
 private:
-	//Drive setup
+	// Drive members
 	Joystick driver;
 	Drive drive;
+	const float defaultNormalSpeed;
+	const float defaultBoostSpeed;
+
+	// Launcher members
 	Joystick launcher;
 	Launch launch;
+
 	Lift lift;
 	Timer autoTime;
+
+	// SmartDashboard members
+	LiveWindow *lw;
 public:
 	Robot();
 	~Robot();

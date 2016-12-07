@@ -18,7 +18,7 @@
 */
 #include "2016Code.hh"
 
-Robot::Robot() : driver(0), drive(0, 1),
+Robot::Robot() : driver(0), drive(0, 1), defaultNormalSpeed(0.4), defaultBoostSpeed(0.65),
                  launcher(1), launch(3, 4, 5, 2, 3, 6, 7, 8, 9, 90.0, 90.0, 2.0),
                  lift(2, 0, 1, 8, 9, 0.15)
 {
@@ -31,7 +31,15 @@ Robot::~Robot()
 
 void Robot::RobotInit()
 {
-	drive.setSpeeds(0.4, 0.65);
+	// If the dashboard class works as the documentation states, this next line should be meaningless. I'm
+	// going to leave it in anyway...
+	drive.setSpeeds(defaultNormalSpeed, defaultBoostSpeed);
+
+	lw = LiveWindow::GetInstance();
+	SmartDashboard::PutNumber("normalSpeed", defaultNormalSpeed);
+	SmartDashboard::PutNumber("boostSpeed", defaultBoostSpeed);
+
+	lw->Run();
 }
 
 void Robot::AutonomousInit()
@@ -49,7 +57,9 @@ void Robot::AutonomousPeriodic()
 
 void Robot::TeleopInit()
 {
-
+	lw->Run();
+	drive.setSpeeds(SmartDashboard::GetNumber("normalSpeed", defaultNormalSpeed),
+	                SmartDashboard::GetNumber("boostSpeed", defaultBoostSpeed));
 }
 
 void Robot::TeleopPeriodic() {
