@@ -11,7 +11,7 @@
 #include "WPILib.h"
 #include "Drive.h"
 #include "Flag.h"
-#include "xBox.h"
+#include "xbox.h"
 
 class Robot : public IterativeRobot {
 private:
