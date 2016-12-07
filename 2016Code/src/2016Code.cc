@@ -3,7 +3,7 @@
 
     This file is a part of the Team 2500 Robot Code.
 
-    The Team 2550 Robot Code program is free software: you can redistribute it and/or modify
+    The Team 2500 Robot Code program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
@@ -18,9 +18,8 @@
 */
 #include "2016Code.hh"
 
-Robot::Robot() : driver(0), drive(0, 1, 0.4, 0.65, 0.3), launcher(1),
-				 launch(3, 4, 5, 2, 3, 6, 7, 8, 0.0, 1.25), arm(2, 0, 1, 1.0, 0.8),
-				 lift(9, 1.0)
+Robot::Robot() : driver(0), drive(0, 1, 0.4, 0.65), launcher(1),
+				 launch(3, 4, 5, 2, 3, 6, 7, 8, 9, 90.0, 90.0, 2.0), lift(2, 0, 1, 8, 9, 0.15)
 {
 }
 
@@ -31,15 +30,13 @@ Robot::~Robot()
 
 void Robot::RobotInit()
 {
-    SmartDashboard::PutBoolean("Ignore Limit Switches?", false);
-    SmartDashboard::PutBoolean("Ultrasonic Ready?", false);
-    SmartDashboard::PutNumber("Arm Position", 0);
 }
 
 void Robot::AutonomousInit()
 {
     autoTime.Start();
     drive.driveForward(.25);
+
 }
 
 void Robot::AutonomousPeriodic()
@@ -57,9 +54,7 @@ void Robot::TeleopPeriodic() {
 	drive.remoteDrive(driver.GetRawAxis(xbox::axis::leftY),      // Left Tank
 					  driver.GetRawAxis(xbox::axis::rightY),     // Right Tank
 					  driver.GetRawButton(xbox::btn::rb),        // Boost
-					  driver.GetRawButton(xbox::btn::lb),		 // Auto Portcullis
-					  driver.GetRawAxis(xbox::axis::RT)-		 // Slow Turn
-					  driver.GetRawAxis(xbox::axis::LT));
+					  driver.GetRawButton(xbox::btn::lb));       // Auto Portcullis
 
     launch.remoteLaunch(launcher.GetRawButton(xbox::btn::y),     // Launch
                         launcher.GetRawButton(xbox::btn::x),     // Intake
@@ -67,13 +62,12 @@ void Robot::TeleopPeriodic() {
 						launcher.GetRawButton(xbox::btn::lb),    // Launcher Down
 						driver.GetRawButton(xbox::btn::a),	     // Turtle
 						driver.GetRawButton(xbox::btn::lb),      // Auto Portcullis
-					   -launcher.GetRawAxis(xbox::axis::rightY));// Camera Gimble
+						launcher.GetRawAxis(xbox::axis::rightX), // Camera Gimble Yaw
+						launcher.GetRawAxis(xbox::axis::rightY));// Camera Gimble Pitch
 
-    arm.remoteArm(driver.GetRawButton(xbox::btn::a),		     // Turtle
-					launcher.GetRawAxis(xbox::axis::leftY));     // Armer
-
-    lift.remoteLift(driver.GetRawButton(xbox::btn::x),
-    				driver.GetRawButton(xbox::btn::y));
+    lift.remoteLift(driver.GetRawButton(xbox::btn::a),		     // Turtle
+					driver.GetRawButton(xbox::btn::lb),          // Auto Portcullis
+					launcher.GetRawAxis(xbox::axis::leftY));     // Lifter
 }
 
 void Robot::DisabledInit()

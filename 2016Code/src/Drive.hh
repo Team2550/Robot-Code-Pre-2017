@@ -25,13 +25,11 @@ class Drive {
 private:
 	Talon left;
 	Talon right;
-	float normalSpeed;
-	float boostSpeed;
-	float slowSpeed;
-	float speedMult;
+	float nSpeed;
+	float bSpeed;
 public:
-	Drive(int leftPort, int rightPort, float normalSpeed, float boostSpeed, float slowSpeed);
-	void remoteDrive(float leftStick, float rightStick, bool boost, bool autoPortcullis, float slowTurn);
+	Drive(int leftPort, int rightPort, float normalSpeed, float boostSpeed);
+	void remoteDrive(float leftStick, float rightStick, bool boost, bool autoPortcullis);
 	void driveForward(float amount);
 	void stop();
 };

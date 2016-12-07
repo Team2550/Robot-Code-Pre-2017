@@ -16,36 +16,67 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <Lift.hh>
+#include "Lift.hh"
 
-Lift::Lift(int liftPort, float liftSpeed) :
-           lift(liftPort)
+Lift::Lift(int liftPort, int liftEncoderPortA, int liftEncoderPortB,
+		   int topLimitSwitchPort, int bottomLimitSwitchPort, float liftSpeed) :
+           lift(liftPort), liftEncoder(liftEncoderPortA, liftEncoderPortB, false,
+	        		       	   	   	   Encoder::EncodingType::k4X),
+		   topLimitSwitch(topLimitSwitchPort), bottomLimitSwitch(bottomLimitSwitchPort)
 {
-	speed = liftSpeed;
+    //liftEncoder.SetMaxPeriod(50);
+    liftEncoder.Reset();
+    lSpeed = liftSpeed;
 }
 
 Lift::~Lift()
 {
+
 }
 
-void Lift::remoteLift(bool in, bool out)
+void Lift::remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis)
 {
-	if (in)
-		liftIn(speed);
-	else if (out)
-		liftOut(speed);
-	else
-		stopLift();
+	std::cout << liftEncoder.Get() << '\n';
+	// feed control
+
+    if (turtleButton)
+    	liftUp(0.75);
+    else
+    {
+		// lift control
+		if (autoPortcullis)
+			liftUp(0.15);
+		else
+		{
+			if(liftAxis > .2)
+				liftDown(liftAxis * lSpeed);
+			else if(liftAxis < -0.2)
+				liftUp(-liftAxis * lSpeed);
+			else
+				stopLift();
+		}
+    }
+
+    if (topLimitSwitch.Get()) {
+    	liftEncoder.Reset();
+    }
+	SmartDashboard::PutBoolean("Lift Arm", topLimitSwitch.Get());
 }
 
-void Lift::liftOut(float speed)
+void Lift::liftDown(double speed)
 {
-	lift.Set(speed);
+    if (liftEncoder.Get() < -140.0 || bottomLimitSwitch.Get()) // Change angle // 360 degrees = 500 pulses
+    	stopLift();
+    else
+    	lift.Set(-speed);
 }
 
-void Lift::liftIn(float speed)
+void Lift::liftUp(double speed)
 {
-	lift.Set(-speed);
+    if (liftEncoder.Get() > 0.0 || topLimitSwitch.Get()) // Change angle
+    	stopLift();
+    else
+    	lift.Set(speed);
 }
 
 void Lift::stopLift()

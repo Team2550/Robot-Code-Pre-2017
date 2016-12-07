@@ -18,20 +18,25 @@
 */
 #ifndef LIFT_H_INCLUDED
 #define LIFT_H_INCLUDED
+#include <math.h>
 #include "WPILib.h"
 
 class Lift
 {
 private:
-	VictorSP lift;
-	float speed;
+    Victor lift; // I have no idea about what kind of motor we'll use. This needs to be changed.
+    Encoder liftEncoder;
+    DigitalInput topLimitSwitch;
+    DigitalInput bottomLimitSwitch;
+    float lSpeed;
 
 public:
-    Lift(int liftPort, float liftSpeed);
-    ~Lift(); // Arm does not use limit switches! Encoder
-    void remoteLift(bool in, bool out);
-    void liftOut(float speed);
-    void liftIn(float speed);
+    Lift(int liftPort, int liftEncoderPortA, int liftEncoderPortB,
+    	 int topLimitSwitchPort, int bottomLimitSwitchPort, float liftSpeed);
+    ~Lift(); // Lift does not use limit switches! Encoder
+    void remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis);
+    void liftUp(double speed);
+    void liftDown(double speed);
     void stopLift();
 };
 

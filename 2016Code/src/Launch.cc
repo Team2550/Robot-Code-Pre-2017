@@ -20,15 +20,15 @@
 
 Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort,
 		       int topLauncherSwitchPort, int bottomLauncherSwitchPort,
-			   int pushPortA, int pushPortB, int cameraMountPort,
-			   float cameraStart, float cameraSpeed)
+			   int pushPortA, int pushPortB, int cameraMountYawPort, int cameraMountPitchPort,
+			   float cameraStartYaw, float cameraStartPitch, float cameraSpeed)
 			   :
                left(leftLauncherPort), right(rightLauncherPort),
 			   tilt(rotatePort),
 	           topLaunchSwitch(topLauncherSwitchPort),
 			   bottomLaunchSwitch(bottomLauncherSwitchPort),
 			   pushA(pushPortA), pushB(pushPortB),
-			   cameraMount(cameraMountPort)
+			   cameraMountYaw(cameraMountYawPort), cameraMountPitch(cameraMountPitchPort)
 
 			   // pushA = port #6
 			   // pushB = port #7
@@ -36,11 +36,9 @@ Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort,
 {
 	launchPause.Reset();
 	launching = false;
-	camPitch = cameraStart;
+	camYaw = cameraStartYaw;
+	camPitch = cameraStartPitch;
 	camSpeed = cameraSpeed;
-	targetHeight = 85;
-	targetHeight *= targetHeight;
-	distance = 0;
 }
 
 Launch::~Launch()
@@ -89,10 +87,8 @@ void Launch::feedLaunch()
 }
 
 void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButton,
-						  bool turtleButton, bool autoPortcullis, float cameraPitch)
+						  bool turtleButton, bool autoPortcullis, float cameraYaw, float cameraPitch)
 {
-	ultra.ping();
-
     if(launch)
     {
         feedLaunch();
@@ -129,39 +125,31 @@ void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButt
     	}
     }
 
+    if (fabs(cameraYaw) > 0.2) {
+    	rotCamera(cameraYaw * camSpeed);
+    }
     if (fabs(cameraPitch) > 0.2) {
     	tiltCamera(cameraPitch * camSpeed);
     }
 
-    cameraMount.SetAngle(camPitch);
-    SmartDashboard::PutNumber("Camera Pitch", camPitch);
-
-    distance = ultra.getRange();
-	SmartDashboard::PutNumber("Horizontal Distance", distance);
-
-	if (distance > 0) {
-		distance = sqrt(distance * distance + targetHeight); // Needs to take into account height of sensor and distance between target and wall
-		SmartDashboard::PutNumber("Target Distance (Ultrasonic)", distance);
-        SmartDashboard::PutBoolean("Ultrasonic Ready?", true);
-    } else {
-        SmartDashboard::PutBoolean("Ultrasonic Ready?", false);
-    }
+    cameraMountYaw.SetAngle(camYaw);
+    cameraMountPitch.SetAngle(camPitch);
 }
 
 void Launch::rotateLauncherUp()
 { // note to self: rotating might be backwards.
 
-    /*if (topLaunchSwitch.Get() && !SmartDashboard::GetBoolean("Ignore Limit Switches?", true))
+    if (topLaunchSwitch.Get())
     	stopRotate();
-    else*/
+    else
     	tilt.Set(0.6);
 
 }
 void Launch::rotateLauncherDown()
 {
-    /*if (bottomLaunchSwitch.Get() && !SmartDashboard::GetBoolean("Ignore Limit Switches?", true))
+    if (bottomLaunchSwitch.Get())
     	stopRotate();
-    else*/
+    else
     	tilt.Set(-0.45);
 
 }
@@ -170,13 +158,24 @@ void Launch::stopRotate()
     tilt.Set(0);
 }
 
+void Launch::rotCamera(float speed) {
+	camYaw += speed;
+
+	if (camYaw > 180.0) {
+		camYaw = 180.0;
+	}
+	if (camYaw < 0.0) {
+		camYaw = 0.0;
+	}
+}
+
 void Launch::tiltCamera(float speed) {
 	camPitch += speed;
 
-	if (camPitch > 90.0) {
-		camPitch = 90.0;
+	if (camPitch > 160.0) {
+		camPitch = 160.0;
 	}
-	if (camPitch < 0.0) {
-		camPitch = 0.0;
+	if (camPitch < 75.0) {
+		camPitch = 75.0;
 	}
 }

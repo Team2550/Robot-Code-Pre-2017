@@ -20,7 +20,6 @@
 #define LAUNCH_H_INCLUDED
 #include <math.h>
 #include "WPILib.h"
-#include "MaxSonarI2C.hh"
 
 class Launch
 {
@@ -32,12 +31,11 @@ private:
     DigitalInput bottomLaunchSwitch;
     Servo pushA;
     Servo pushB;
-    Servo cameraMount;
+    Servo cameraMountYaw;
+    Servo cameraMountPitch;
+    float camYaw;
     float camPitch;
     float camSpeed;
-    MaxSonarI2C ultra;
-    float distance;
-    float targetHeight;
     bool launching;
     Timer launchPause;
 
@@ -45,8 +43,8 @@ public:
     Launch(int leftLauncherPort, int rightLauncherPort,
     	   int rotatePort, int topLauncherSwitchPort,
 		   int bottomLauncherSwitchPort,
-		   int pushPortA, int pushPortB, int cameraMountPort,
-		   float cameraStart, float cameraSpeed);
+		   int pushPortA, int pushPortB, int cameraMountYawPort, int cameraMountPitchPort,
+		   float cameraStartYaw, float cameraStartPitch, float cameraSpeed);
     ~Launch(); // Lift does not use limit switches! Encoder
     void feedIntake();
     void feedStop();
@@ -54,10 +52,11 @@ public:
     void remoteLaunch(bool launch, bool intake,
     		          bool upButton, bool downButton,
 					  bool turtleButton, bool autoPortcullis,
-					  float cameraTilt);
+					  float cameraYaw, float cameraPitch);
     void rotateLauncherUp();
     void rotateLauncherDown();
     void stopRotate();
+    void rotCamera(float speed);
     void tiltCamera(float speed);
 };
 

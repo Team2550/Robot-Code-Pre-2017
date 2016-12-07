@@ -18,14 +18,12 @@
 */
 #include "Drive.hh"
 
-Drive::Drive(int leftPort, int rightPort, float normalSpeed, float boostSpeed, float slowSpeed) :
+Drive::Drive(int leftPort, int rightPort, float normalSpeed, float boostSpeed) :
     left(leftPort), right(rightPort)
 {
 	left.SetInverted(true);
-	this->normalSpeed = normalSpeed;
-	this->boostSpeed = boostSpeed;
-	this->slowSpeed = slowSpeed;
-	speedMult = normalSpeed;
+	nSpeed = normalSpeed;
+	bSpeed = boostSpeed;
 }
 
 void Drive::stop() {
@@ -33,34 +31,30 @@ void Drive::stop() {
 	right.Set(0);
 }
 
-void Drive::remoteDrive(float leftStick, float rightStick, bool boost, bool autoPortcullis,
-						float slowTurn) {
+void Drive::remoteDrive(float leftStick, float rightStick, bool boost, bool autoPortcullis) {
 	if (autoPortcullis) {
 		driveForward(0.6);
 	} else {
-		speedMult = normalSpeed;
+		float speedMult = nSpeed;
 
 		if (boost) {
-			speedMult = boostSpeed;
+			speedMult = bSpeed;
 		}
 
-		float power = 0;
-		if (fabs(leftStick) > 0.2) //number accounts for dead zone
-			power += leftStick * speedMult;
-		power -= slowTurn * slowSpeed;
+		if (fabs(leftStick * speedMult) > 0.2) //number accounts for dead zone
+			left.Set(leftStick * speedMult);
+		else
+			left.Set(0);
 
-		left.Set(power);
-
-		power = 0;
-		if (fabs(rightStick) > 0.2) //number accounts for dead zone
-			power += rightStick * speedMult;
-		power += slowTurn * slowSpeed;
-
-		right.Set(power);
+		if (fabs(rightStick * speedMult) > 0.2) //number accounts for dead zone
+			right.Set(rightStick * speedMult);
+		else
+			right.Set(0);
 	}
 }
 
 void Drive::driveForward(float speed) { //sets motors to certain drive speed
-    left.Set(speed * normalSpeed);
-    right.Set(speed * normalSpeed);
-}
+    float speedMult = nSpeed;
+    left.Set(speed * speedMult);
+    right.Set(speed * speedMult);
+} 
