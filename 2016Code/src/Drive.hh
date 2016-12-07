@@ -28,10 +28,11 @@ private:
 	float nSpeed;
 	float bSpeed;
 public:
-	Drive(int leftPort, int rightPort, float normalSpeed, float boostSpeed);
+	Drive(int leftPort, int rightPort);
 	void remoteDrive(float leftStick, float rightStick, bool boost, bool autoPortcullis);
 	void driveForward(float amount);
 	void stop();
+	void setSpeeds(float normalSpeed, float boostSpeed);
 };
 
 #endif
