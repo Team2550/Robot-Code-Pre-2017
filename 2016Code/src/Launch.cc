@@ -144,30 +144,26 @@ void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButt
 void Launch::rotateLauncherUp()
 { // note to self: rotating might be backwards.
 
-    if (topLaunchSwitch.Get())
+    /*if (topLaunchSwitch.Get())
     {
-    	std::cout << "Top limit switch is pressed!" << std::endl;
     	stopRotate();
     }
     else
-    {
-    	std::cout << "Tilt motor is going up!" << std::endl;
+    {*/
     	tilt.Set(0.6);
-    }
+    //}
 
 }
 void Launch::rotateLauncherDown()
 {
-    if (bottomLaunchSwitch.Get())
+    /*if (bottomLaunchSwitch.Get())
     {
-    	std::cout << "Bottom limit switch is pressed!" << std::endl;
     	stopRotate();
 	}
     else
-    {
-    	std::cout << "Tilt motor is going down!" << std::endl;
+    {*/
     	tilt.Set(-0.45);
-    }
+    //}
 
 }
 void Launch::stopRotate()
