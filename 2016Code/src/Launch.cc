@@ -16,6 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include <iostream>
 #include "Launch.hh"
 
 Launch::Launch(int leftLauncherPort, int rightLauncherPort, int rotatePort,
@@ -117,11 +118,15 @@ void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButt
     	{
 			// rotation control
 			if(upButton)
+			{
 				rotateLauncherUp();
+			}
 			else if(downButton)
+			{
 				rotateLauncherDown();
-			else
-				stopRotate();
+			}
+			//else
+				//stopRotate();
     	}
     }
 
@@ -140,17 +145,29 @@ void Launch::rotateLauncherUp()
 { // note to self: rotating might be backwards.
 
     if (topLaunchSwitch.Get())
+    {
+    	std::cout << "Top limit switch is pressed!" << std::endl;
     	stopRotate();
+    }
     else
+    {
+    	std::cout << "Tilt motor is going up!" << std::endl;
     	tilt.Set(0.6);
+    }
 
 }
 void Launch::rotateLauncherDown()
 {
     if (bottomLaunchSwitch.Get())
+    {
+    	std::cout << "Bottom limit switch is pressed!" << std::endl;
     	stopRotate();
+	}
     else
+    {
+    	std::cout << "Tilt motor is going down!" << std::endl;
     	tilt.Set(-0.45);
+    }
 
 }
 void Launch::stopRotate()

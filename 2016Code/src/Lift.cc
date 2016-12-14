@@ -36,7 +36,6 @@ Lift::~Lift()
 
 void Lift::remoteLift(bool turtleButton, bool autoPortcullis, float liftAxis)
 {
-	std::cout << liftEncoder.Get() << '\n';
 	// feed control
 
     if (turtleButton)
