@@ -18,7 +18,7 @@
 */
 #include "2016Code.hh"
 
-Robot::Robot() : driver(0), drive(0, 1), defaultNormalSpeed(0.3), defaultBoostSpeed(0.5),
+Robot::Robot() : driver(0), drive(0, 1), defaultNormalSpeed(0.4), defaultBoostSpeed(0.65),
                  launcher(1), launch(3, 4, 5, 2, 3, 6, 7, 8, 9, 90.0, 90.0, 2.0),
                  lift(2, 0, 1, 8, 9, 0.15)
 {
