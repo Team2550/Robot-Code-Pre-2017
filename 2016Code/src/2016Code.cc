@@ -74,12 +74,12 @@ void Robot::TeleopPeriodic() {
 						driver.GetRawButton(xbox::btn::lb), //launcher.GetRawButton(xbox::btn::lb),    // Launcher Down
 						driver.GetRawButton(xbox::btn::a),	     // Turtle
 						false, //driver.GetRawButton(xbox::btn::lb),      // Auto Portcullis
-						0f, //launcher.GetRawAxis(xbox::axis::rightX), // Camera Gimble Yaw
-						0f); //launcher.GetRawAxis(xbox::axis::rightY));// Camera Gimble Pitch
+						0, //launcher.GetRawAxis(xbox::axis::rightX), // Camera Gimble Yaw
+						0); //launcher.GetRawAxis(xbox::axis::rightY));// Camera Gimble Pitch
 
     lift.remoteLift(driver.GetRawButton(xbox::btn::a),		     // Turtle
 					false, //driver.GetRawButton(xbox::btn::lb),          // Auto Portcullis
-					0f); //launcher.GetRawAxis(xbox::axis::leftY));     // Lifter
+					0); //launcher.GetRawAxis(xbox::axis::leftY));     // Lifter
 }
 
 void Robot::DisabledInit()
