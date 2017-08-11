@@ -74,8 +74,8 @@ void Launch::feedLaunch()
     right.Set(1.0);
     if (launchPause.Get() > 0.3)
     {
-    	pushA.Set(0.65);
-    	pushB.Set(0.38);
+    	pushA.Set(0.35);
+    	pushB.Set(0.68);
     }
     else
     {
@@ -125,8 +125,8 @@ void Launch::remoteLaunch(bool launch, bool intake, bool upButton, bool downButt
 			{
 				rotateLauncherDown();
 			}
-			//else
-				//stopRotate();
+			else
+				stopRotate();
     	}
     }
 
