@@ -65,21 +65,21 @@ void Robot::TeleopInit()
 void Robot::TeleopPeriodic() {
 	drive.remoteDrive(driver.GetRawAxis(xbox::axis::leftY),      // Left Tank
 					  driver.GetRawAxis(xbox::axis::rightY),     // Right Tank
-					  driver.GetRawButton(xbox::btn::rb),        // Boost
-					  driver.GetRawButton(xbox::btn::lb));       // Auto Portcullis
+					  false, //driver.GetRawButton(xbox::btn::rb),        // Boost
+					  false); //driver.GetRawButton(xbox::btn::lb));       // Auto Portcullis
 
-    launch.remoteLaunch(launcher.GetRawButton(xbox::btn::y),     // Launch
-                        launcher.GetRawButton(xbox::btn::x),     // Intake
-						launcher.GetRawButton(xbox::btn::rb),    // Launcher Up
-						launcher.GetRawButton(xbox::btn::lb),    // Launcher Down
+    launch.remoteLaunch(driver.GetRawButton(xbox::btn::y), //launcher.GetRawButton(xbox::btn::y),     // Launch
+    					driver.GetRawButton(xbox::btn::x), //launcher.GetRawButton(xbox::btn::x),     // Intake
+						driver.GetRawButton(xbox::btn::rb), //launcher.GetRawButton(xbox::btn::rb),    // Launcher Up
+						driver.GetRawButton(xbox::btn::lb), //launcher.GetRawButton(xbox::btn::lb),    // Launcher Down
 						driver.GetRawButton(xbox::btn::a),	     // Turtle
-						driver.GetRawButton(xbox::btn::lb),      // Auto Portcullis
-						launcher.GetRawAxis(xbox::axis::rightX), // Camera Gimble Yaw
-						launcher.GetRawAxis(xbox::axis::rightY));// Camera Gimble Pitch
+						false, //driver.GetRawButton(xbox::btn::lb),      // Auto Portcullis
+						0f, //launcher.GetRawAxis(xbox::axis::rightX), // Camera Gimble Yaw
+						0f); //launcher.GetRawAxis(xbox::axis::rightY));// Camera Gimble Pitch
 
     lift.remoteLift(driver.GetRawButton(xbox::btn::a),		     // Turtle
-					driver.GetRawButton(xbox::btn::lb),          // Auto Portcullis
-					launcher.GetRawAxis(xbox::axis::leftY));     // Lifter
+					false, //driver.GetRawButton(xbox::btn::lb),          // Auto Portcullis
+					0f); //launcher.GetRawAxis(xbox::axis::leftY));     // Lifter
 }
 
 void Robot::DisabledInit()
