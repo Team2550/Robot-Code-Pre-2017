@@ -51,16 +51,16 @@ void Launch::feedIntake()
 {
     left.Set(-.5);
     right.Set(-.5);
-    pushA.Set(0.95); // Value needs to be changed
-    pushB.Set(0.08);
+    pushA.Set(0.65); // Value needs to be changed
+    pushB.Set(0.00);
 }
 
 void Launch::feedStop()
 {
     left.Set(0);
     right.Set(0);
-    pushA.Set(0.95);
-    pushB.Set(0.08);
+    pushA.Set(0.65);
+    pushB.Set(0.00);
 }
 
 void Launch::feedLaunch()
@@ -75,12 +75,12 @@ void Launch::feedLaunch()
     if (launchPause.Get() > 0.3)
     {
     	pushA.Set(0.35);
-    	pushB.Set(0.68);
+    	pushB.Set(0.25);
     }
     else
     {
-        pushA.Set(0.95);
-        pushB.Set(0.08);
+        pushA.Set(0.65);
+        pushB.Set(0.00);
     }
     // Add more things here e.g. something to push
     // the lauched item into the wheels after a
