@@ -20,7 +20,7 @@
 
 Robot::Robot() : driver(0), drive(0, 1), defaultNormalSpeed(0.4), defaultBoostSpeed(0.65),
                  launcher(1), launch(3, 4, 5, 2, 3, 6, 7, 8, 9, 90.0, 90.0, 2.0),
-                 lift(2, 0, 1, 8, 9, 0.15)
+                 lift(2, 0, 1, 8, 9, 0.15), ultra(0, 1000 / 9.8)
 {
 }
 
@@ -38,6 +38,7 @@ void Robot::RobotInit()
 	lw = LiveWindow::GetInstance();
 	SmartDashboard::PutNumber("normalSpeed", defaultNormalSpeed);
 	SmartDashboard::PutNumber("boostSpeed", defaultBoostSpeed);
+	SmartDashboard::PutNumber("dist", 0);
 
 	lw->Run();
 }
@@ -80,6 +81,8 @@ void Robot::TeleopPeriodic() {
     lift.remoteLift(driver.GetRawButton(xbox::btn::a),		     // Turtle
 					driver.GetRawButton(xbox::btn::lb),          // Auto Portcullis
 					launcher.GetRawAxis(xbox::axis::leftY));     // Lifter
+
+    SmartDashboard::PutNumber("dist", ultra.getDist());
 }
 
 void Robot::DisabledInit()

@@ -16,47 +16,20 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef SRC_2016CODE_HH_
-#define SRC_2016CODE_HH_
+#include <UltrasonicAnalog.hh>
 
-#include "WPILib.h"
-#include "Drive.hh"
-#include "Launch.hh"
-#include "Lift.hh"
-#include "xBox.hh"
-#include "UltrasonicAnalog.hh"
-#include "Timer.h"
+UltrasonicAnalog::UltrasonicAnalog(int port, float scale):
+               	   	   	   	   	   sensor(port), scale(scale)
+{
+	sensor.SetAverageBits(4);
+}
 
-class Robot : public IterativeRobot {
-private:
-	// Drive members
-	Joystick driver;
-	Drive drive;
-	const float defaultNormalSpeed;
-	const float defaultBoostSpeed;
+UltrasonicAnalog::~UltrasonicAnalog()
+{
 
-	// Launcher members
-	Joystick launcher;
-	Launch launch;
+}
 
-	Lift lift;
-	Timer autoTime;
-
-	// Sensors
-	UltrasonicAnalog ultra;
-
-	// SmartDashboard members
-	LiveWindow *lw;
-public:
-	Robot();
-	~Robot();
-	void RobotInit();
-	void AutonomousInit();
-	void AutonomousPeriodic();
-	void TeleopInit();
-	void TeleopPeriodic();
-	void DisabledInit();
-	void DisabledPeriodic();
-};
-
-#endif /* SRC_2016CODE_HH_ */
+float UltrasonicAnalog::getDist()
+{
+	return sensor.GetAverageVoltage() * scale;
+}
